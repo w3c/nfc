@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html lang="en"><head>
+
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+<title>Web NFC API Specification</title>
+<style type="text/css">
+   pre.idl { border:solid thin; background:#eee; color:#000; padding:0.5em }
+   pre.idl :link, pre.idl :visited { color:inherit; background:transparent }
+   pre code { color:inherit; background:transparent }
+   div.example { margin-left:1em; padding-left:1em; border-left:double; color:#222; background:#fcfcfc }
+   .note { margin-left:2em; font-weight:bold; font-style:italic; color:#008000 }
+   p.note::before { content:"Note: " }
+   .XXX { padding:.5em; border:solid #f00 }
+   p.XXX::before { content:"Issue: " }
+   dl.switch { padding-left:2em }
+   dl.switch > dt { text-indent:-1.5em }
+   dl.switch > dt:before { content:'\21AA'; padding:0 0.5em 0 0; display:inline-block; width:1em; text-align:right; line-height:0.5em }
+   dl.domintro { color: green; margin: 2em 0 2em 2em; padding: 0.5em 1em; border: none; background: #DDFFDD; }
+   dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
+   dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
+   dl.domintro dd p { margin: 0.5em 0; }
+   dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This box is non-normative. Implementation requirements are given below this box.'; color: red; border: solid 2px; background: white; padding: 0 0.25em; }
+   em.ct { text-transform:lowercase; font-variant:small-caps; font-style:normal }
+   dfn { font-weight:bold; font-style:normal }
+   code { color:orangered }
+   code :link, code :visited { color:inherit }
+   hr:not(.top) { display:block; background:none; border:none; padding:0; margin:2em 0; height:auto }
+   table { border-collapse:collapse; border-style:hidden hidden none hidden }
+   table thead { border-bottom:solid }
+   table tbody th:first-child { border-left:solid }
+   table td, table th { border-left:solid; border-right:solid; border-bottom:solid thin; vertical-align:top; padding:0.2em }
+</style>
+<link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
+
+<body class="draft">
+
+<div class="head">
+	<h1>Web NFC API Specification</h1>
+	
+	<h2 class="no-num no-toc" id="editor-draft-13-december-2012">Editor Draft &mdash; 13 December 2012</h2>
+	
+	<dl>
+		<dt>This version:
+		<dd><!--begin-link--><a href="http://www.w3.org/2012/nfc/">http://www.w3.org/2012/nfc/</a><!--end-link-->
+
+		<dt class="dontpublish">Participate:</dt>
+		<dd class="dontpublish"><a href="mailto:public-nfc@w3.org?subject=[nfc-api]%20">public-nfc@w3.org</a> (<a href="http://lists.w3.org/Archives/Public/public-nfc/">archives</a>)
+		
+		<dt>Latest version:
+		<dd><!--begin-link--><a href="http://www.w3.org/2012/nfc/">http://www.w3.org/2012/nfc/</a><!--end-link-->
+		
+		<dt>Previous versions:
+		<dd><!--begin-link--><a href="http://www.w3.org/2012/nfc/">http://www.w3.org/2012/nfc/</a><!--end-link-->
+		
+		<dt>Editors:
+		<dd class="vcard">
+			<span class="fn">Luc Yriarte</span>,
+			<span class="org"><a href="http://www.intel.com">Intel Corporation</a></span>,
+			<span class="email"><a href="mailto:luc.yriarte@intel.com">luc.yriarte@intel.com</a></span>
+		<dd class="vcard">
+			<span class="fn">Samuel Ortiz</span>,
+			<span class="org"><a href="http://www.intel.com">Intel Corporation</a></span>,
+			<span class="email"><a href="mailto:samuel.ortiz@intel.com">samuel.ortiz@intel.com</a></span>
+	</dl>
+	
+        <div class="w3conly">
+<!--begin-copyright-->
+<p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> &copy; 2012 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>&reg;</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
+<!--end-copyright--></div>
+</div>
+
+
+
+<h2 class="no-num no-toc" id="abstract">Abstract</h2>
+
+<p>
+Near Field Communication (NFC) is an international standard (ISO/IEC 18092) that specifies an interface and protocol 
+for simple wireless interconnection of closely coupled devices operating at 13.56 MHz. 
+(<!--begin-link--><a href="http://www.nfc-forum.org/specs/spec_list/">http://www.nfc-forum.org/specs/spec_list/</a><!--end-link-->). 
+There are three groups of application scenarios for NFC: 
+<ul>
+<li>The first one is to hold a device close to a wireless tag to exchange some digital information or data.</li>
+<li>The second is to hold two devices close to each other in order to exchange some information or data between them.</li>
+<li>The third one is to make payments by holding mobile phones close to point of sales terminals instead of swiping smart cards.</li>
+</ul>
+<p></p>
+
+
+<h2 class="no-num no-toc" id="toc">Table of Contents</h2>
+
+
+<!--begin-toc-->
+<ol class="toc">
+ <li><a href="#web-nfc-api"><span class="secno">1 </span>Web NFC API</a>
+  <ol class="toc">
+   <li><a href="#interface-navigator"><span class="secno">1.1 </span>Interface <code title="">Navigator</code></a></li>
+   <li><a href="#interface-nfcmanager"><span class="secno">1.2 </span>Interface <code title="">NFCManager</code></a></li>
+   <li><a href="#interface-nfcadapter"><span class="secno">1.3 </span>Interface <code title="">NFCAdapter</code></a></li>
+   <li><a href="#interface-nfctag"><span class="secno">1.4 </span>Interface <code title="">NFCTag</code></a></li>
+   <li><a href="#interface-nfcpeer"><span class="secno">1.5 </span>Interface <code title="">NFCPeer</code></a></li>
+   <li><a href="#interface-ndefmessage"><span class="secno">1.6 </span>Interface <code title="">NDEFMessage</code></a></li>
+   <li><a href="#interface-ndefrecord"><span class="secno">1.7 </span>Interface <code title="">NDEFRecord</code></a></li>
+   <li><a href="#interface-ndefrecordtext"><span class="secno">1.8 </span>Interface <code title="">NDEFRecordText</code></a></li>
+   <li><a href="#interface-ndefrecorduri"><span class="secno">1.9 </span>Interface <code title="">NDEFRecordURI</code></a></li>
+   <li><a href="#interface-nfctagdetectcallback"><span class="secno">1.10 </span>Interface <code title="">NFCTagDetectCallback</code></a></li>
+   <li><a href="#interface-nfcpeerdetectcallback"><span class="secno">1.11 </span>Interface <code title="">NFCPeerDetectCallback</code></a></li>
+   <li><a href="#interface-ndefmessagereadcallback"><span class="secno">1.12 </span>Interface <code title="">NDEFMessageReadCallback</code></a></ol></li>
+ <li><a class="no-num" href="#references">References</a></li>
+ <li><a class="no-num" href="#acknowledgments">Acknowledgements</a></ol>
+<!--end-toc-->
+
+
+
+<h2 id="web-nfc-api"><span class="secno">1 </span>Web NFC API</h2>
+
+The NFC API supports the following features:
+<ul>
+<li>Reading and writing NDEF messages on NFC Tags</li>
+<li>Sending and receiving NDEF messages on peer targets</li>
+</ul>
+
+
+
+<h3 id="interface-navigator"><span class="secno">1.1 </span>Interface <code title="">Navigator</code></h3>
+<pre class="idl">partial interface Navigator {
+  readonly attribute <a href="#nfcmanager">NFCManager</a> <a href="#navigator-nfc" title="Navigator-nfc">nfc</a>;
+}</pre>
+
+<p>The <dfn id="navigator-nfc" title="Navigator-nfc"><code>nfc</code></dfn> attribute must return the object 
+through which the nfc functionality can be accessed.
+</p>
+
+
+<h3 id="interface-nfcmanager"><span class="secno">1.2 </span>Interface <code title="">NFCManager</code></h3>
+
+The <a href="#nfcmanager"><code>NFCManager</code></a> interface exposes the default NFC adapter on the device.
+
+<pre class="idl">enum <dfn id="ndefrecordtextencoding">NDEFRecordTextEncoding</dfn> { "UTF-8", "UTF-16" };
+enum <dfn id="nfctagtype">NFCTagType</dfn> { "Type 1", "Type 2", "Type 3", "Type 4" };
+
+[NoInterfaceObject]
+interface <dfn id="nfcmanager">NFCManager</dfn> {
+  <a href="#nfcadapter">NFCAdapter</a> <a href="#nfcmanager-getdefaultadapter" title="NFCManager-getDefaultAdapter">getDefaultAdapter</a>();
+};
+</pre>
+<p>The <dfn id="nfcmanager-getdefaultadapter" title="NFCManager-getDefaultAdapter"> <code>getDefaultAdapter</code></dfn>
+method returns the default <a href="#nfcadapter">NFCAdapter</a> on the device.
+</p>
+
+
+
+<h3 id="interface-nfcadapter"><span class="secno">1.3 </span>Interface <code title="">NFCAdapter</code></h3>
+
+The <a href="#nfcadapter"><code>NFCAdapter</code></a> interface provides access to control the adapter.
+
+<pre class="idl">[NoInterfaceObject]
+interface <dfn id="nfcadapter">NFCAdapter</dfn> {
+    readonly attribute boolean <a href="#nfcadapter-powered" title="NFCAdapter-powered">powered</a> ;
+    readonly attribute boolean <a href="#nfcadapter-polling" title="NFCAdapter-polling">polling</a> ;
+    void <a href="#nfcadapter-setpowered" title="NFCAdapter-setPowered">setPowered</a>(boolean <var title="">state</var>,
+        optional Function? <var title="">successCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+    void <a href="#nfcadapter-setpolling" title="NFCAdapter-setPolling">setPolling</a>(boolean <var title="">state</var>,
+        optional Function? <var title="">successCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+    void <a href="#nfcadapter-settaglistener" title="NFCAdapter-setTagListener">setTagListener</a>(<a href="#nfctagdetectcallback">NFCTagDetectCallback</a> <var title="">detectCallback</var>,
+        optional Function? <var title="">errorCallback</var>,
+        optional <a href="#nfctagtype">NFCTagType[]</a>? <var title="">tagFilter</var>);
+    void <a href="#nfcadapter-setpeerlistener" title="NFCAdapter-setPeerListener">setPeerListener</a>(<a href="#nfcpeerdetectcallback">NFCPeerDetectCallback</a> <var title="">detectCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+    void <a href="#nfcadapter-unsettaglistener" title="NFCAdapter-unsetTagListener">unsetTagListener</a>();
+    void <a href="#nfcadapter-unsetpeerlistener" title="NFCAdapter-unsetPeerListener">unsetPeerListener</a>();
+};
+</pre>
+<p>The <dfn id="nfcadapter-powered" title="NFCAdapter-powered"><code>powered</code></dfn> property indicates that the adapter is powered.
+</p>
+<p>The <dfn id="nfcadapter-polling" title="NFCAdapter-polling"><code>polling</code></dfn> property indicates that the adapter is 
+currently polling for NFC tags or peer devices.</p>
+<p>The <dfn id="nfcadapter-setpowered" title="NFCAdapter-setPowered"><code>setPowered</code></dfn>
+method turns the adapter on or off.
+</p>
+<p>The <dfn id="nfcadapter-setpolling" title="NFCAdapter-setPolling"><code>setPolling</code></dfn>
+method lets the adapter start / stop polling for NFC tags or peer devices.
+</p>
+<p>The <dfn id="nfcadapter-settaglistener" title="NFCAdapter-setTagListener"><code>setTagListener</code></dfn>
+method registers a listener to invoke on <a href="#nfctag">NFCTag</a> detection.
+The <code><var>detectCallback</var></code> parameter is the <a href="#nfctagdetectcallback"><code>NFCTagDetectCallback</code></a>
+to be invoked when a <a href="#nfctag"><code>NFCTag</code></a> is detected or lost.
+The <code><var>tagFilter</var></code> parameter used to filter the <a href="#nfctagtype"><code>NFCTagType</code></a>.
+</p>
+<p>The <dfn id="nfcadapter-setpeerlistener" title="NFCAdapter-setPeerListener"><code>setPeerListener</code></dfn>
+method registers a listener to invoke on <a href="#nfcpeer">NFCPeer</a> device detection.
+The <code><var>detectCallback</var></code> parameter is the <a href="#nfcpeerdetectcallback"><code>NFCPeerDetectCallback</code></a>
+to be invoked when a <a href="#nfcpeer"><code>NFCPeer</code></a> device is detected or lost.
+</p>
+<p>The <dfn id="nfcadapter-unsettaglistener" title="NFCAdapter-unsetTagListener"><code>unsetTagListener</code></dfn>
+method unregisters the <a href="#nfctag">NFCTag</a> listener.
+</p>
+<p>The <dfn id="nfcadapter-unsetpeerlistener" title="NFCAdapter-unsetPeerListener"><code>unsetPeerListener</code></dfn>
+method unregisters the <a href="#nfcpeer">NFCPeer</a> listener.
+</p>
+
+
+
+
+<h3 id="interface-nfctag"><span class="secno">1.4 </span>Interface <code title="">NFCTag</code></h3>
+
+The <a href="#nfctag"><code>NFCTag</code></a> interface provides access to control the NFC tag.
+
+<pre class="idl">[NoInterfaceObject]
+interface <dfn id="nfctag">NFCTag</dfn> {
+    readonly attribute <a href="#nfctagtype">NFCTagType</a> <span title="NFCTag-type">type</span> ;
+    void <a href="#nfctag-readndef" title="NFCTag-readNDEF">readNDEF</a>(<a href="#ndefmessagereadcallback">NDEFMessageReadCallback</a> <var title="">readCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+    void <a href="#nfctag-writendef" title="NFCTag-writeNDEF">writeNDEF</a>(<a href="#ndefmessage">NDEFMessage</a> <var title="">ndefMessage</var>,
+        optional Function? <var title="">successCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+};
+</pre>
+<p>The <dfn id="nfctag-readndef" title="NFCTag-readNDEF"><code>readNDEF</code></dfn> 
+method reads a <a href="#ndefmessage">NDEFMessage</a> on a <a href="#nfctag">NFCTag</a>.
+The <code><var>readCallback</var></code> parameter is the <a href="#ndefmessagereadcallback"><code>NDEFMessageReadCallback</code></a>
+to be invoked with the <a href="#ndefmessage">NDEFMessage</a> content.
+</p>
+<p>The <dfn id="nfctag-writendef" title="NFCTag-writeNDEF"><code>writeNDEF</code></dfn>
+method writes a <a href="#ndefmessage">NDEFMessage</a> to a <a href="#nfctag">NFCTag</a>.
+The <code><a href="#ndefmessage"><var>ndefMessage</var></a></code> parameter is the <a href="#ndefmessage">NDEFMessage</a> content to write.
+</p>
+
+
+
+<h3 id="interface-nfcpeer"><span class="secno">1.5 </span>Interface <code title="">NFCPeer</code></h3>
+
+The <a href="#nfcpeer"><code>NFCPeer</code></a> interface provides access to the NFC peer-to-peer target.
+
+<pre class="idl">[NoInterfaceObject]
+interface <dfn id="nfcpeer">NFCPeer</dfn> {
+    readonly attribute boolean <a href="#nfcpeer-isconnected" title="NFCPeer-isConnected">isConnected</a> ;
+    void <a href="#nfcpeer-setreceivendeflistener" title="NFCPeer-setReceiveNDEFListener">setReceiveNDEFListener</a>(<a href="#ndefmessagereadcallback">NDEFMessageReadCallback</a> <var title="">successCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+    void <a href="#nfcpeer-unsetreceivendeflistener" title="NFCPeer-unsetReceiveNDEFListener">unsetReceiveNDEFListener</a>();
+    void <a href="#nfcpeer-sendndef" title="NFCPeer-sendNDEF">sendNDEF</a>(<a href="#ndefmessage">NDEFMessage</a> <var title="">ndefMessage</var>,
+        optional Function? <var title="">successCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
+};
+</pre>
+<p>The <dfn id="nfcpeer-isconnected" title="NFCPeer-isConnected"><code>isConnected</code></dfn> property indicates that the peer-to-peer target is connected.
+</p>
+<p>The <dfn id="nfcpeer-setreceivendeflistener" title="NFCPeer-setReceiveNDEFListener"><code>setReceiveNDEFListener</code></dfn>
+method registers a listener to invoke when a <a href="#ndefmessage">NDEFMessage</a> is received.
+The <code><var>successCallback</var></code> parameter is the <a href="#ndefmessagereadcallback"><code>NDEFMessageReadCallback</code></a>
+to be invoked with the <a href="#ndefmessage">NDEFMessage</a> content.
+</p>
+<p>The <dfn id="nfcpeer-unsetreceivendeflistener" title="NFCPeer-unsetReceiveNDEFListener"><code>unsetReceiveNDEFListener</code></dfn>
+method unregisters the <a href="#ndefmessagereadcallback">NDEFMessageReadCallback</a>.
+</p>
+<p>The <dfn id="nfcpeer-sendndef" title="NFCPeer-sendNDEF"><code>sendNDEF</code></dfn>
+method sends a <a href="#ndefmessage">NDEFMessage</a> to a <a href="#nfcpeer">NFCPeer</a> target.
+The <code><a href="#ndefmessage"><var>ndefMessage</var></a></code> parameter is the <a href="#ndefmessage">NDEFMessage</a> content to send.
+</p>
+
+
+
+<h3 id="interface-ndefmessage"><span class="secno">1.6 </span>Interface <code title="">NDEFMessage</code></h3>
+
+The <a href="#ndefmessage"><code>NDEFMessage</code></a> interface provides access to the NDEF records it contains.
+
+<pre class="idl">[Constructor(), Constructor(<a href="#ndefrecord">NDEFRecord[]</a> <var title="">ndefRecords</var>)]
+interface <dfn id="ndefmessage">NDEFMessage</dfn> {
+    attribute <a href="#ndefrecord">NDEFRecord[]</a> <span title="NDEFMessage-records">records</span> ;
+};
+</pre>
+
+
+
+<h3 id="interface-ndefrecord"><span class="secno">1.7 </span>Interface <code title="">NDEFRecord</code></h3>
+
+The <a href="#ndefrecord"><code>NDEFRecord</code></a> interface is the base for all record types.
+
+<pre class="idl">interface <dfn id="ndefrecord">NDEFRecord</dfn> {
+};
+</pre>
+
+
+
+<h3 id="interface-ndefrecordtext"><span class="secno">1.8 </span>Interface <code title="">NDEFRecordText</code></h3>
+
+The <a href="#ndefrecord"><code>NDEFRecord</code></a> that has a text type payload.
+
+<pre class="idl">[Constructor(DOMString <var title="">text</var>, DOMString <var title="">languageCode</var>, optional DOMString? <var title="">encoding</var>)]
+interface <dfn id="ndefrecordtext">NDEFRecordText</dfn> : <a href="#ndefrecord">NDEFRecord</a> {
+    readonly attribute DOMString <span title="NDEFRecordText-text">text</span>;
+    readonly attribute DOMString <span title="NDEFRecordText-languageCode">languageCode</span>;
+    readonly attribute <a href="#ndefrecordtextencoding">NDEFRecordTextEncoding</a> <span title="NDEFRecordText-encoding">encoding</span>;
+};
+</pre>
+
+
+
+<h3 id="interface-ndefrecorduri"><span class="secno">1.9 </span>Interface <code title="">NDEFRecordURI</code></h3>
+
+The <a href="#ndefrecord"><code>NDEFRecord</code></a> that has a URI type payload.
+
+<pre class="idl">[Constructor(DOMString <var title="">uri</var>)]
+interface <dfn id="ndefrecorduri">NDEFRecordURI</dfn> : <a href="#ndefrecord">NDEFRecord</a> {
+    readonly attribute DOMString <span title="NDEFRecordText-uri">uri</span>;
+};
+</pre>
+
+
+
+<h3 id="interface-nfctagdetectcallback"><span class="secno">1.10 </span>Interface <code title="">NFCTagDetectCallback</code></h3>
+
+The success callback to be invoked when a <a href="#nfctag"><code>NFCTag</code></a> is detected or lost.
+
+<pre class="idl">[Callback, NoInterfaceObject] interface <dfn id="nfctagdetectcallback">NFCTagDetectCallback</dfn> {
+    void <span title="NFCTagDetectCallback-onattach">onattach</span>(<a href="#nfctag">NFCTag</a> <span title="">nfcTag</span>);
+    void <span title="NFCTagDetectCallback-ondetach">ondetach</span>();
+};
+</pre>
+
+
+
+<h3 id="interface-nfcpeerdetectcallback"><span class="secno">1.11 </span>Interface <code title="">NFCPeerDetectCallback</code></h3>
+
+The success callback to be invoked when a <a href="#nfcpeer"><code>NFCPeer</code></a> is detected or lost.
+
+<pre class="idl">[Callback, NoInterfaceObject] interface <dfn id="nfcpeerdetectcallback">NFCPeerDetectCallback</dfn> {
+    void <span title="NFCPeerDetectCallback-onattach">onattach</span>(<a href="#nfcpeer">NFCPeer</a> <span title="">nfcPeer</span>);
+    void <span title="NFCPeerDetectCallback-ondetach">ondetach</span>();
+};
+</pre>
+
+
+
+<h3 id="interface-ndefmessagereadcallback"><span class="secno">1.12 </span>Interface <code title="">NDEFMessageReadCallback</code></h3>
+
+The success callback to be invoked when a <a href="#ndefmessage"><code>NDEFMessage</code></a> has been read successfully.
+
+<pre class="idl">[Callback, NoInterfaceObject] interface <dfn id="ndefmessagereadcallback">NDEFMessageReadCallback</dfn> {
+    void <span title="NDEFMessageReadCallback-onsuccess">onsuccess</span>(<a href="#ndefmessage">NDEFMessage</a> <span title="">ndefMessage</span>);
+};
+</pre>
+
+
+
+<h2 class="no-num" id="references">References</h2>
+<div id="anolis-references"><dl></dl></div>
+
+<h2 class="no-num" id="acknowledgments">Acknowledgements</h2>
+
+<p>
+This proposal is based on the 
+<a href="https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.web.device.apireference%2Ftizen%2Fnfc.html">
+Tizen NFC device API</a>.
+We would like to thank Jaehyun Park and Taehee Lee of Samsung for their work on the API design.
+</p>
