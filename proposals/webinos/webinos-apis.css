@@ -1,0 +1,639 @@
+
+#content pre {
+    text-align: left;
+        font-family: 'Droid Sans Mono', Courier;        
+    font-family: "Consolas", "Lucida Sans Unicode", "Monaco", "Courier New", Courier, mono, serif;
+    -webkit-border-radius: 8px;
+    -khtml-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display:block;
+    color:#2c3123;
+    margin:15px 0px 15px -8px;
+    padding:12px 20px 12px 35px;
+    font-size: 14px;
+    overflow:hidden;
+    word-wrap:break-word;
+    white-space: pre-wrap;
+}
+
+
+
+#content pre code { font-family: 'Droid Sans Mono', Courier;        
+    font-family: "Consolas", "Lucida Sans Unicode", "Monaco", "Courier New", Courier, mono, serif;
+    font-size: 1em;
+    margin:0px;
+    11px;
+    padding: 2px; 
+    border: 1px solid #888;
+}
+
+#content pre webidl {
+    font-family: 'Droid Sans Mono', Courier;        
+    font-family: "Consolas", "Lucida Sans Unicode", "Monaco", "Courier New", Courier, mono, serif;
+    font-size: 1em;
+    margin:0px;
+    11px;
+    padding: 2px; 
+    border: 1px solid #888;
+}
+
+#content .prettyprint {
+}
+
+
+#content .signature {
+  background-color: #EFF6F1;
+}
+
+#content .examplecode {
+  background-color: #D5E9F9;
+}
+
+#content .webidl {
+  background-color: #FCF2F2;
+}
+
+#content pre.signature::before {
+    content:    "Method Signature";
+    display:    block;
+    background: #007900;
+    width: 200px;
+    color:  #fff;
+    font-family:    "Helvetica";
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+    padding: 2px; 
+    border: 1px solid #888;
+}
+
+#content pre.examplecode::before {
+    content:    "Code Example";
+    display:    block;
+    background: #00C;
+    width: 200px;
+    color:  #fff;
+    font-family:    "Helvetica";
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+#content pre.webidl::before {
+    content:    "WebIDL Specification";
+    display:    block;
+    background: #C00;
+    width: 200px;
+    color:  #fff;
+    font-family:    "Helvetica";
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+      #content .prettyprint b {
+        font-weight: normal;
+        color: #c61800;
+        text-shadow: #c61800 0 0 1px;
+        /*letter-spacing: -1px;*/
+      }
+
+
+      #content pre select {
+        font-family: Monaco, Courier;
+        border: 1px solid #c61800;
+      }
+        
+      #content input {
+        font-size: 16px;
+        margin-right: 10px;
+        font-family: Helvetica;
+        padding: 3px;
+      }
+      #content input[type="range"] {
+        width: 100%;
+      }
+      
+      #content button {
+        margin: 20px 10px 0 0;
+        font-family: Verdana;
+      }
+      
+      #content button.large {
+        font-size: 32px;
+      }
+        
+      #content pre b {
+        font-weight: normal;
+        color: #c61800;
+        text-shadow: #c61800 0 0 1px;
+        /*letter-spacing: -1px;*/
+      }
+      #content pre em {
+        font-weight: normal;
+        font-style: normal;
+        color: #18a600;
+        text-shadow: #18a600 0 0 1px;
+      }
+      #content pre input[type="range"] {
+        height: 6px;
+        cursor: pointer;
+        width: auto;
+      }
+
+
+
+#content {
+	font-size: 1.1em;
+	counter-reset: assertion;
+}
+
+#content .product, #content .product-ua, #content .product-cc {
+}
+
+#content dfn.external {
+	font-weight: normal;
+	font-style: italic;
+}
+
+#content pre.idl {
+	border:solid thin;
+	background:#eee;
+	color:#000;
+	padding:0.5em
+}
+
+#content pre.idl :link, #content pre.idl :visited {
+	color:inherit;
+	background:transparent
+}
+
+#content dfn {
+	font-style:normal;
+	font-weight:bolder;
+}
+#content em.ct, #content em.ct-samp {
+	text-transform:uppercase;
+	font-style:normal;
+	font-weight:normal;
+}
+
+#content .issue {
+    padding:    1em;
+    border: 1px solid #f00;
+    background: #ffc;
+}
+ 
+#content .issue::before {
+    content:    "Issue";
+    display:    block;
+    width:  150px;
+    margin: -1.5em 0 0.5em 0;
+    font-weight:    bold;
+    border: 1px solid #f00;
+    background: #fff;
+    padding:    3px 1em;
+}
+
+#content .comment {
+    padding:    1em;
+    border: 1px solid #f00;
+    background: #fff	;
+}
+ 
+#content .comment::before {
+    content:    "Comment";
+    display:    block;
+    width:  150px;
+    margin: -1.5em 0 0.5em 0;
+    font-weight:    bold;
+    border: 1px solid #f00;
+    background: #fff;
+    padding:    3px 1em;
+}
+
+#content .ws3 {
+    padding:    1em;
+    border: 1px solid #f00;
+    background: lightblue;
+}
+ 
+#content .ws3::before {
+    content:    "For WS3 Review";
+    display:    block;
+    width:  150px;
+    margin: -1.5em 0 0.5em 0;
+    font-weight:    bold;
+    border: 1px solid #f00;
+    background: #fff;
+    padding:    3px 1em;
+}
+
+#content .ws4 {
+    padding:    1em;
+    border: 1px solid #f00;
+    background: lightblue;
+}
+ 
+#content .ws4::before {
+    content:    "Under discussion";
+    display:    block;
+    width:  150px;
+    margin: -1.5em 0 0.5em 0;
+    font-weight:    bold;
+    border: 1px solid #f00;
+    background: #fff;
+    padding:    3px 1em;
+}
+
+#content .note {
+	margin-left: 2em;
+	border: 2px solid #CFF6D9;
+	padding: .5em;
+	padding-top: 0px;
+	padding-bottom: 1em;
+	color: #444;
+	background-color: #E2FFF0;
+	font-size: 0.8em;
+}
+
+#content dd > dl {
+	margin:0px;
+	padding:0px
+}
+
+#content code {
+	font-size: 1.1em;
+	text-decoration: none;
+	color: #002108;
+}
+
+
+#content .dir_listing li {
+	list-style-type:none;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+}
+
+#content span span {
+	background-color: yellow;
+}
+
+#content li.folder {
+	list-style-image:url(images/expanded_folder.png)
+}
+
+#content .authorguide {
+	border: 1px solid #67BBB5;
+	background:#E8EBFC;
+	padding: 1em;
+	font-size: .9em;
+	color: #003;
+}
+
+#content .authorguide strong {
+	padding: .2em;
+	color: #003;
+	border: none;
+	position:relative;
+	display: block;
+	width: 200px;
+	left: -1.5em;
+	top: -1.5em;
+	background: #C6D8E6;
+	text-align: center;
+}
+
+#content span.notetitle {
+	padding: .2em;
+	color:#066;
+	border: none;
+	position:relative;
+	display: block;
+	width: 40px;
+	left: -1.5em;
+	top: -.7em;
+	background: #F2FFF1;
+	padding-left: .2em;
+	text-align: center;
+}
+
+#content var {
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+#content li.folder li {
+	list-style-image: none;
+}
+
+#content .dir_listing .comment {
+	border: none;
+	font-family:"Courier New", Courier, monospace;
+	color: #669933;
+}
+
+#content .dir_listing img {
+	vertical-align: middle;
+}
+
+#content .redNote {
+	color: red;
+}
+
+#content dl.procedure dt {
+	font-weight: normal;
+}
+
+#content .editorialNote {
+	padding: 5px;
+	background-color: #F3B9B7;
+	border: 3px dashed #FFEEB8;
+	color: #444;
+	font-size:0.8em;
+}
+
+#content li>ol {
+	list-style-type:upper-alpha;
+}
+
+#content p[id]:after {
+	font-size: .8em;
+}
+
+#content table.webinos {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: #808080;
+	border-collapse: collapse;
+	background-color: #ffffff;
+}
+
+#content table.webinos th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: #808080;
+	background-color: #ffffff;
+	-moz-border-radius: ;
+}
+
+#content table.webinos td {
+	vertical-align: top;
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: #808080;
+	background-color: #ffffff;
+	-moz-border-radius: ;
+}
+
+#content .webinosreqid {
+	font-weight:bold;
+}
+
+#content .webinoseqid_ext {
+	font-weight:bold;
+}
+
+#content webinosreqtext {
+	font-style:normal;
+}
+	
+/* Table styles */
+#content table {
+          border-spacing: 0;
+          border-collapse:    collapse;
+          border-bottom:  3px solid #005a9c;
+          margin-bottom:  1em;
+      }
+ 
+#content th {
+          background: #005a9c;
+          color:  #fff;
+          padding:    3px 5px;
+          text-align: left;
+          border-right: 1px solid #ddd;
+      }
+ 
+#content  th[scope="row"] {
+          background: inherit;
+          color:  inherit;
+          border-top: 1px solid #ddd;
+      }
+ 
+#content  td {
+          padding:    3px 10px;
+          border-top: 1px solid #ddd;
+          border-right: 1px solid #ddd;
+      }
+ 
+#content th:last-of-type, td:last-of-type {
+          border-right: none;
+      }
+ 
+#content tr:nth-child(even) {
+          background: #f0f6ff;
+      }
+
+#content .attrName, .methodName {
+    background: #ffffd2;
+}
+
+
+	#content  {
+	  padding: 0px 1em 2em 0px;
+	  margin: 0;
+	  font-family: sans-serif;
+	  color: black;
+	  background: white;
+	  background-position: top left;
+	  background-attachment: fixed;
+	  background-repeat: no-repeat;
+	}
+
+	#content :link { color: #00C; background: transparent }
+	#content :visited { color: #609; background: transparent }
+	#content a:active { color: #C00; background: transparent }
+
+	#content a:link img, #content a:visited img { border-style: none } /* no border on img links */
+
+	#content a img { color: white; }        /* trick to hide the border in Netscape 4 */
+	@media all {                   /* hide the next rule from Netscape 4 */
+	#content   a img { color: inherit; }    /* undo the color change above */
+	}
+
+	#content th, #content td { /* ns 4 */
+	  font-family: sans-serif;
+	}
+
+	#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 { text-align: left }
+	/* background should be transparent, but WebTV has a bug */
+	#content h1, #content h2, #content h3 { color: #005A9C; background: white; padding-top: 0.2em }
+	#content h1 { font: 170% sans-serif }
+	#content h2 { font: 140% sans-serif }
+	#content h3 { font: 120% sans-serif }
+	#content h4 { font: bold 100% sans-serif }
+	#content h5 { font: bold italic 100% sans-serif }
+	#content h6 { font: bold small-caps 100% sans-serif }
+
+
+	#content .hide { display: none }
+
+	#content div.head { margin-bottom: 1em }
+	#content div.head h1 { margin-top: 2em; clear: both }
+	#content div.head table { margin-left: 2em; margin-top: 2em }
+
+	#content p.copyright { font-size: small }
+	#content p.copyright small { font-size: small }
+
+
+	#content a[href] img:hover { background:white}
+
+	@media screen {  /* hide from IE3 */
+	#content a[href]:hover { background: #ffa }
+	}
+
+	#content pre { margin-left: 2em }
+	/*
+	#content  p {
+	  margin-top: 0.6em;
+	  margin-bottom: 0.6em;
+	}
+	*/
+	#content dt, #content dd { margin-top: 0; margin-bottom: 0 } /* opera 3.50 */
+
+	#content pre, #content code { font-family: monospace } /* navigator 4 requires this */
+
+	#content ul.toc, #content ol.toc {
+	  list-style: disc;		/* Mac NS has problem with 'none' */
+	  list-style: none;
+	}
+
+	@media aural {  
+	  #content h1, #content h2, #content h3 { stress: 20; richness: 90 }
+	  #content .hide { speak: none }
+	  #content p.copyright { volume: x-soft; speech-rate: x-fast }
+	  #content dt { pause-before: 20% }
+	  #content pre { speak-punctuation: code } 
+	}
+
+
+
+	#content  {
+	}
+
+
+
+#content .toc {
+    list-style-type: none;
+}
+
+#content div.exampleInner pre { margin-left: 1em; margin-top: 0em; margin-bottom: 0em}
+#content div.exampleOuter {border: 4px double gray; margin: 0em; padding: 0em}
+#content div.exampleInner { background-color: #d5dee3;
+     	           border-top-width: 4px;
+       	           border-top-style: double;
+       	           border-top-color: #d3d3d3;
+       	           border-bottom-width: 4px;
+       	           border-bottom-style: double;
+       	           border-bottom-color: #d3d3d3;
+       	           padding: 4px; margin: 0em }
+#content div.exampleWrapper { margin: 4px }
+#content div.exampleHeader { font-weight: bold; margin: 4px}
+
+
+
+#content .def-api-feature dt, #content dt .def-device-cap, #content dt.const code { font: bold 100% sans-serif; }
+#content dt.attribute code, #content dt.method code { font: italic 100% sans-serif; }
+
+#content .def-device-caps dd { margin-bottom: 2em }
+
+#content dt.method { margin-top: 2em }
+
+#content .summary td {
+    text-align: left;
+    background-color: white;
+    color: inherit;
+    font-family: monospace;
+    white-space:pre;
+    padding: .3em 1em .3em 1em;
+}
+/* Pretty printing styles. Used with prettify.js. */
+
+#content .str { color: #080; }
+#content .kwd { color: #008; }
+#content .com { color: #800; }
+#content .typ { color: #606; }
+#content .lit { color: #066; }
+#content .pun { color: #660; }
+#content .pln { color: #000; }
+#content .tag { color: #008; }
+#content .atn { color: #606; }
+#content .atv { color: #080; }
+#content .dec { color: #606; }
+
+/* Specify class=linenums on a pre to get line numbering */
+#content ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+#content li.L0,
+#content li.L1,
+#content li.L2,
+#content li.L3,
+#content li.L5,
+#content li.L6,
+#content li.L7,
+#content li.L8 { list-style-type: none }
+/* Alternate shading for lines */
+#content li.L1,
+#content li.L3,
+#content li.L5,
+#content li.L7,
+#content li.L9 { background: #eee }
+
+/*@media print {*/
+  #content .str { color: #060; }
+  #content .kwd { color: #006; font-weight: bold; }
+  #content .com { color: #600; font-style: italic; }
+  #content .typ { color: #404; font-weight: bold; }
+  #content .lit { color: #044; }
+  #content .pun { color: #440; }
+  #content .pln { color: #000; }
+  #content .tag { color: #006; font-weight: bold; }
+  #content .atn { color: #404; }
+  #content .atv { color: #060; }
+/*}*/
+
+ol.toc {
+    list-style: none; 
+    margin: 0px 0px 0px 10px; 
+    padding: 0;
+    counter-reset: num;
+}
+
+ol.toc li:before {
+    content: counter(num) '. ';
+    counter-increment: num;
+}
+
+ol.toc ol li:before {
+    content: counters(num, '.') ' ';
+}
+
+#method-summary {
+    counter-reset: section;
+}
+
+h2.section:before {
+    content: counter(section) '. ';
+    counter-increment: section;
+}
+
+h2.section {
+   counter-reset: subsection;
+}
+
+h3.section:before {
+    content: counter(section) '.' counter(subsection) ' ';
+    counter-increment: subsection;
+}
