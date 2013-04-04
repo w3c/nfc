@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Web NFC API</title>
+  <meta charset="UTF-8">
+  <script src='https://www.w3.org/Tools/respec/respec-w3c-common'
+          class='remove'></script>
+  <script class="remove">
+    var respecConfig = {
+          specStatus:           "ED",
+          shortName:            "nfc",
+          publishDate:          "",
+          previousPublishDate:  "",
+          previousMaturity:     "",
+          edDraftURI:           "http://www.w3.org/2012/nfc/",
+          // lcEnd:                "",
+          crEnd:                "",
+          editors: [
+            { name: "Luc Yriarte", company: "Intel",
+                    companyURL: "http://www.intel.com/" },
+            { name: "Samuel Ortiz", company: "Intel",
+                    companyURL: "http://www.intel.com/" }
+          ],
+          inlineCSS:    true,
+          noIDLIn:      true,
+          extraCSS:     ["../ReSpec.js/css/respec.css"],
+          wg:           "NFC working group",
+          wgURI:        "http://www.w3.org/2012/nfc/",
+          wgPublicList: "public-nfc",
+          wgPatentURI:  "http://www.w3.org/Consortium/Patent-Policy-20040205/",
+    };
+  </script>
+</head>
+
+<!-----------------------------------------------------------------------------
+Style guide to contributors:
+============================
+- this document uses ReSpec, see
+  http://dev.w3.org/2009/dap/ReSpec.js/documentation.html
+- use 80 characters wide lines, whenever possible (except long links)
+- keep sections 2 empty lines apart
+- put comments in front of sections, for better readability with syntax coloring
+  editors
+- use indentation with care: it may improve readability, but at the expense of
+  line lenght
+- when descriptions of attributes is short, use the <dd> elements even when
+  the text also contains conformance statements (e.g. MUST, SHOULD, MAY).
+  No use repeating the same information in a separate paragraph.
+------------------------------------------------------------------------------>
+
+<body>
+
+<!------------------------------ Abstract ------------------------------------>
+<section id="abstract">
+Near Field Communication (NFC) is an international standard (ISO/IEC 18092) 
+that specifies an interface and protocol for simple wireless interconnection of
+closely coupled devices operating at 13.56 MHz. 
+(see <a href="http://www.nfc-forum.org/specs/spec_list/">http://www.nfc-forum.org/specs/spec_list/</a>). 
+There are three groups of application scenarios for NFC: 
+<ul>
+<li>The first one is to hold a device close to a wireless tag to exchange some
+  digital information or data.</li>
+<li>The second is to hold two devices close to each other in order to exchange
+  some information or data between them.</li>
+<li>The third one is to make payments by holding mobile phones close to point
+  of sales terminals instead of swiping smart cards.</li>
+</ul>
+</section>
+
+
+<!----------------------- Status of this document ---------------------------->
+<section id="sotd">
+</section>
+
+
+<!----------------------------- Introduction --------------------------------->
+<section class="informative">
+  <h2>Introduction</h2>
+The NFC API supports the following features:
+<ul>
+<li>Reading and writing NDEF messages on NFC Tags</li>
+<li>Sending and receiving NDEF messages on peer targets</li>
+</ul>
+</section>
+
+
+<!---------------------------- Conformance ----------------------------------->
+<section id="conformance">
+  <p>This specification defines conformance criteria that apply to a single
+  product: the <dfn id="ua">user agent</dfn> that implements the interfaces
+  that it contains.
+  </p>
+  <p>Implementations that use ECMAScript to implement the APIs defined in
+  this specification MUST implement them in a manner consistent with the
+  ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]], as
+  this specification uses that specification and terminology.</p>
+</section>
+
+
+<!----------------------------- Terminology ---------------------------------->
+<section>
+  <h2>Terminology</h2>
+  <p>The <code>
+  <a href="http://dev.w3.org/html5/spec/webappapis.html#eventhandler">
+  EventHandler</a></code> interface represents a callback used for event
+  handlers as defined in [[!HTML5]].</p>
+
+  <p>The concepts <dfn>
+  <a href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task">
+       queue a task</a></dfn> and <dfn>
+  <a href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">
+  fire a simple event</a></dfn> are defined in [[!HTML5]].</p>
+
+  <p>The terms <dfn>
+  <a href="http://dev.w3.org/html5/spec/webappapis.html#event-handlers">
+  event handler</a></dfn>  and <dfn>
+<a href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">
+  event handler event types</a></dfn> are defined in [[!HTML5]].</p>
+
+<!---------------------- Extended interface Navigator ------------------------>
+<section>
+  <h2><a>NFC</a> object</h2>
+  <p>The <a>NFCManager</a> interface is exposed on the <code>Navigator
+  </code> object.
+  </p>
+  <dl title="partial interface Navigator" class="idl">
+    <dt>readonly attribute NFCManager nfc</dt>
+    <dd>The object that exposes the default NFC adapter on the device.</dd>
+  </dl>
+</section>
+
+
+<!------------------------ Interface NFCManager ------------------------------>
+<section>
+  <h2><a>NFCManager</a> Interface</h2>
+  <p>The <a>NFCManager</a> interface defines access to NFC functionality.
+  </p>
+
+  <dl title="[NoInterfaceObject]
+             interface NFCManager"
+          class="idl">
+
+    <dt>readonly attribute NFCAdapter defaultAdapter</dt>
+    <dd>MUST return a <a>NFCAdapter</a> object representing the <a>default
+    NFC adapter</a>, otherwise it MUST return <code>null</code>.</dd>
+  </dl>
+</section> <!-- NFCManager -->      
+
+
+<!------------------------ Interface NFCAdapter ------------------------------>
+<section>
+  <h2><a>NFCAdapter</a> Interface</h2>
+  <p>The <a>NFCAdapter</a> interface offers methods to control local NFC 
+  behavior, such as:
+  <ul>
+    <li>Turn on/off NFC adapter.</li>
+    <li>Poll for targets.</li>
+  </ul>
+  </p>
+
+  <dl title="[NoInterfaceObject]
+             interface NFCAdapter : EventTarget"
+          class="idl">
+
+    <dt>readonly attribute boolean polling</dt>
+    <dd>Indicates that the adapter is polling.</dd>
+    
+    <dt>void setPolling(boolean state)</dt>
+    <dd>Let the adapter start / stop polling for NFC tags or peer devices.</dd>
+    
+    <dt class="no-docs"> attribute EventHandler onpollstart</dt>
+    <dd></dd>
+    
+    <dt class="no-docs"> attribute EventHandler onpollstop</dt>
+    <dd></dd>
+    
+    <dt class="no-docs"> attribute EventHandler ontagfound</dt>
+    <dd>The <code>tagfound</code> event of type <code>NFCEvent</code> MUST
+    be fired whenever a new <a>NFCTag</a> is detected by the adapter.
+    The <code>param</code> property of the event MUST contain the 
+    corresponding <a>NFCTag</a> object.</dd>
+    
+    <dt class="no-docs"> attribute EventHandler ontaglost</dt>
+    <dd></dd>
+    
+    <dt class="no-docs"> attribute EventHandler onpeerfound</dt>
+    <dd>The <code>peerfound</code> event of type <code>NFCEvent</code> MUST
+    be fired whenever a new <a>NFCPeer</a> is detected by the adapter.
+    The <code>param</code> property of the event MUST contain the 
+    corresponding <a>NFCPeer</a> object.</dd>
+    
+    <dt class="no-docs"> attribute EventHandler onpeerlost</dt>
+    <dd></dd>
+  </dl>
+
+  <section>
+  <h3>Event handlers</h3>
+  <p>The following are the <a>event handlers</a> (and their corresponding
+  <a>event handler types</a>) that MUST be supported as attributes by the
+  <a>NFC</a> object.
+  <table class="simple">
+    <thead>
+      <tr>
+        <th>event handler</th>
+        <th>event name</th>
+        <th>event type</th>
+        <th>short description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong><code>onpollstart</code></strong></td>
+        <td><code><dfn>pollstart</dfn></code></td>
+        <td><a>simple event</a></td>
+        <td>fired when the <code>polling</code> state changes to 
+          <code>true</code></td>
+      </tr>
+      <tr>
+        <td><strong><code>onpollstop</code></strong></td>
+        <td><code><dfn>pollstop</dfn></code></td>
+        <td><a>simple event</a></td>
+        <td>fired when the <code>polling</code> state changes to 
+          <code>false</code></td>
+      </tr>
+      <tr>
+        <td><strong><code>ontagfound</code></strong></td>
+        <td><code><dfn>tagfound</dfn></code></td>
+        <td><code>NFCEvent</code> with <code>param</code> property set to
+          the new <a>NFCTag</a> object.</td>
+        <td>detect a new <code>NFCTag</code></td>
+      </tr>
+      <tr>
+        <td><strong><code>ontaglost</code></strong></td>
+        <td><code><dfn>taglost</dfn></code></td>
+        <td><a>simple event</a></td>
+        <td>fired when the <code>NFCTag</code> detected by the 
+          adaptor moves out of range.</td>
+      </tr>
+      <tr>
+        <td><strong><code>onpeerfound</code></strong></td>
+        <td><code><dfn>peerfound</dfn></code></td>
+        <td><code>NFCEvent</code> with <code>param</code> property set to
+          the new <a>NFCPeer</a> object.</td>
+        <td>detect a new <code>NFCPeer</code></td>
+      </tr>
+      <tr>
+        <td><strong><code>onpeerlost</code></strong></td>
+        <td><code><dfn>peerlost</dfn></code></td>
+        <td><a>simple event</a></td>
+        <td>fired when the <code>NFCPeer</code> detected by the 
+          adaptor moves out of range.</td>
+      </tr>
+    </tbody>
+  </table>
+  </section> <!-- Event handlers -->
+</section> <!-- NFCAdapter -->      
+
+
+<!------------------------ Interface NFCTag ---------------------------------->
+<section>
+  <h2><a>NFCTag</a> Interface</h2>
+  
+  <dl title="[NoInterfaceObject]
+             interface NFCTag"
+          class="idl">
+
+    <dt>readonly attribute DOMString type</dt>
+    <dd>The type of the NFC tag.</dd>
+    
+    <dt><a>NFCRequest</a> readNDEF()</dt>
+    <dd>Read NDEF data from the NFC tag.</dd>
+    
+    <dt><a>NFCRequest</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
+    <dd>Write a NDEF message on the NFC tag.</dd>
+    
+  </dl>
+
+</section> <!-- NFCTag -->
+
+
+<!------------------------ Interface NFCPeer --------------------------------->
+<section>
+  <h2><a>NFCPeer</a> Interface</h2>
+  
+  <dl title="[NoInterfaceObject]
+             interface NFCPeer : EventTarget"
+          class="idl">
+    
+    <dt><a>NFCRequest</a> sendNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
+    <dd>Send a NDEF message to the NFC peer device.</dd>
+    
+    <dt><a>NFCRequest</a> startHandover(DOMString type)</dt>
+    <dd>Initiates pairing with the NFC peer-to-peer target. Handover type
+      can be "bluetooth" or "wifi".</dd>
+    
+    <dt class="no-docs"> attribute EventHandler onmessageread</dt>
+    <dd>The <code>messageread</code> event of type <code>NFCEvent</code> MUST
+    be fired whenever a new <a>NDEFMessage</a> is sent by the peer device.
+    The <code>param</code> property of the event MUST contain the 
+    corresponding <a>NDEFMessage</a> object.</dd>
+  </dl>
+
+  <section>
+  <h3>Event handlers</h3>
+  <p>The following are the <a>event handlers</a> (and their corresponding
+  <a>event handler types</a>) that MUST be supported as attributes by the
+  <a>NFCPeer</a> object.
+  <table class="simple">
+    <thead>
+      <tr>
+        <th>event handler</th>
+        <th>event name</th>
+        <th>event type</th>
+        <th>short description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong><code>onmessageread</code></strong></td>
+        <td><code><dfn>messageread</dfn></code></td>
+        <td><code>NFCEvent</code> with <code>param</code> property set to
+          the new <a>NDEFMessage</a> object.</td>
+        <td>fired when a <code>NDEFMessage</code> is sent by the peer device.
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  </section> <!-- Event handlers -->
+</section> <!-- NFCPeer -->
+
+
+<!------------------------ Interface NDEFMessage ----------------------------->
+<section>
+  <h2><a>NDEFMessage</a> Interface</h2>
+  
+  <dl title="[Constructor(NDEFRecord［］ records)]
+             interface NDEFMessage"
+          class="idl">
+          
+    <dt>readonly attribute NDEFRecord[] records</dt>
+    <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
+    the NDEF message. Otherwise it MUST return an empty list.</dd>
+  </dl>
+
+</section> <!-- NDEFMessage -->
+
+
+<!------------------------ Interface NDEFRecord ------------------------------>
+<section>
+  <h2><a>NDEFRecord</a> Interface</h2>
+  
+  <dl title="[Constructor] interface NDEFRecord"
+          class="idl">
+  </dl>
+
+</section> <!-- NDEFRecord -->
+
+
+<!------------------------ Interface NDEFRecordText -------------------------->
+<section>
+  <h2><a>NDEFRecordText</a> Interface</h2>
+  
+  <dl title="[Constructor(DOMString text, 
+             optional DOMString languageCode,
+             optional DOMString encoding)]
+             interface NDEFRecordText : NDEFRecord"
+          class="idl">
+          
+    <dt>readonly attribute DOMString text</dt>
+    <dd>The encoded text.</dd>
+          
+    <dt>readonly attribute DOMString languageCode</dt>
+    <dd>The language code string value, followed by 
+      <a href="http://www.ietf.org/rfc/rfc3066.txt">IANA[RFC 3066]</a>
+      (ex: en-US, ko-KR).</dd>
+          
+    <dt>readonly attribute DOMString encoding</dt>
+    <dd>The encoding type.</dd>
+  </dl>
+
+</section> <!-- NDEFRecordText -->
+
+
+<!------------------------ Interface NDEFRecordURI --------------------------->
+<section>
+  <h2><a>NDEFRecordURI</a> Interface</h2>
+  
+  <dl title="[Constructor(DOMString uri)]
+             interface NDEFRecordURI : NDEFRecord"
+          class="idl">
+          
+    <dt>readonly attribute DOMString uri</dt>
+    <dd>The URI string that will be stored in the payload.</dd>
+  </dl>
+
+</section> <!-- NDEFRecordURI -->
+
+
+<!------------------------ Interface NDEFRecordMIME -------------------------->
+<section>
+  <h2><a>NDEFRecordMIME</a> Interface</h2>
+  
+  <dl title="[Constructor]
+             interface NDEFRecordMIME : NDEFRecord"
+          class="idl">
+  </dl>
+
+</section> <!-- NDEFRecordMIME -->
+
+
+<!------------------------ Interface NFCRequest ------------------------------>
+<section>
+  <h2><a>NFCRequest</a> Interface</h2>
+  <p>The <a>NFCRequest</a> interface represents an ongoing operation. It
+  provides callbacks that are called when the operation completes, as well as a
+  reference to the operation's result. A method that initiates an operation
+  (e.g. read a NDEF message via the <code>readNDEF</code> method of the
+  <code>NFCTag</code> interface) MUST return a <code>NFCRequest</code> object 
+  that can be used to monitor the progress of that operation.</p>
+  <dl title="interface NFCRequest"
+      class="idl">
+    <dt>readonly attribute DOMError? error</dt>
+    <dd>An error that occured during the request. Errors are as defined in
+    [[!DOM4]].</dd>
+
+    <dt>readonly attribute any? result</dt>
+    <dd>Indicates the result of the request. The type depends on the sort of
+    request, and is specified in the description of each method that returns a
+    <code>NFCRequest</code> object, e.g. <code>readNDEF</code> method of the
+    <code>NFCTag</code> object.</dd>
+
+    <dt class="no-docs">
+      attribute EventHandler onsuccess
+    </dt>
+    <dd></dd>
+
+    <dt class="no-docs">
+      attribute EventHandler onerror
+    </dt>
+    <dd></dd>
+  </dl>
+
+  <section>
+    <h2>Event handlers</h2>
+    <p>
+      The following are the <a>event handlers</a> (and their corresponding
+      <a>event handler event types</a>) that MUST be supported as attributes by
+      the <a>NFCRequest</a> object:
+    <table class="simple">
+      <thead>
+        <tr>
+          <th>event handler</th>
+          <th>event handler event type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>onsuccess</code></strong></td>
+          <td><code><dfn>success</dfn></code></td>
+        </tr>
+        <tr>
+          <td><strong><code>onerror</code></strong></td>
+          <td><code><dfn>error</dfn></code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+  <p class="issue">
+  Use of DOMRequest / DOMFuture to be assessed as part of a broader discussion
+  in W3C SysApps.
+  </p>
+
+
+<section>
+<h2>Acknowledgements</h2>
+<p>The editors would like to thank Jaehyun Park and Taehee Lee of Samsung for
+their work on the initial API design. We would also like to thank the members
+of the W3C SysApps group for their help on the API specification process, and
+the members of the W3C NFC group for their feedback on this API.</p>
+</section>
+
+</body>
+</html>
