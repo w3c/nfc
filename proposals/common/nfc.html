@@ -265,9 +265,6 @@ The NFC API supports the following features:
              interface NFCTag"
           class="idl">
 
-    <dt>readonly attribute DOMString type</dt>
-    <dd>The type of the NFC tag.</dd>
-    
     <dt><a>NFCRequest</a> readNDEF()</dt>
     <dd>Read NDEF data from the NFC tag.</dd>
     
@@ -352,8 +349,12 @@ The NFC API supports the following features:
   
   <dl title="[Constructor] interface NDEFRecord"
           class="idl">
-  </dl>
 
+    <dt><a>NFCRequest</a> getPayload()</dt>
+    <dd>Get the binary payload for the record. The result is of type
+    <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
+  </dl>
+    
 </section> <!-- NDEFRecord -->
 
 
@@ -376,7 +377,7 @@ The NFC API supports the following features:
       (ex: en-US, ko-KR).</dd>
           
     <dt>readonly attribute DOMString encoding</dt>
-    <dd>The encoding type.</dd>
+    <dd>The encoding type, e.g. UTF-8, US-ASCII...</dd>
   </dl>
 
 </section> <!-- NDEFRecordText -->
@@ -404,6 +405,9 @@ The NFC API supports the following features:
   <dl title="[Constructor]
              interface NDEFRecordMIME : NDEFRecord"
           class="idl">
+
+    <dt>readonly attribute DOMString mime</dt>
+    <dd>The MIME type of the payload.</dd>
   </dl>
 
 </section> <!-- NDEFRecordMIME -->
