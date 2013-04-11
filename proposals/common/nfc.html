@@ -347,7 +347,8 @@ The NFC API supports the following features:
 <section>
   <h2><a>NDEFRecord</a> Interface</h2>
   
-  <dl title="[Constructor] interface NDEFRecord"
+  <dl title="[Constructor(optional byte［］ payload)]
+             interface NDEFRecord"
           class="idl">
 
     <dt><a>NFCRequest</a> getPayload()</dt>
@@ -402,15 +403,61 @@ The NFC API supports the following features:
 <section>
   <h2><a>NDEFRecordMIME</a> Interface</h2>
   
-  <dl title="[Constructor]
+  <dl title="[Constructor(DOMString mime,
+             byte［］content)]
              interface NDEFRecordMIME : NDEFRecord"
           class="idl">
 
     <dt>readonly attribute DOMString mime</dt>
-    <dd>The MIME type of the payload.</dd>
+    <dd>The MIME type of the content, as defined in
+      <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>.</dd>
+
+    <dt><a>NFCRequest</a> getContent()</dt>
+    <dd>Extract the binary content of the MIME record. The result is of type
+    <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
   </dl>
 
 </section> <!-- NDEFRecordMIME -->
+
+
+<!------------------------ Interface NDEFRecordSmartPoster ------------------->
+<section>
+  <h2><a>NDEFRecordSmartPoster</a> Interface</h2>
+  
+  <dl title="[Constructor(DOMString uri,
+             optional NDEFRecordText［］titles,
+             optional DOMString action,
+             optional NDEFRecordMIME［］icons,
+             optional unsigned long targetSize,
+             optional DOMString targetMIME)]
+             interface NDEFRecordSmartPoster : NDEFRecord"
+          class="idl">
+
+    <dt>readonly attribute DOMString uri</dt>
+    <dd>The URI field of the Smart Poster record, REQUIRED by the 
+      NFC forum specification.</dd>
+
+    <dt>readonly attribute NDEFRecordText[]? titles</dt>
+    <dd>The title in different languages. There MUST NOT be more than
+      one title record with the same language code string value.</dd>
+
+    <dt>readonly attribute DOMString? action</dt>
+    <dd>The possible actions defined by the NFC forum Smart Poster Record Type 
+      Definition are "do", "save", "open".</dd>
+
+    <dt>readonly attribute NDEFRecordMIME[]? icons</dt>
+    <dd>The Smart Poster Record can contain one or more icons, that can
+      also be animated.</dd>
+
+    <dt>readonly attribute unsigned long? targetSize</dt>
+    <dd>The size of the URI target in bytes.</dd>
+
+    <dt>readonly attribute DOMString? targetMIME</dt>
+    <dd>The MIME type of the URI target.</dd>
+
+  </dl>
+
+</section> <!-- NDEFRecordSmartPoster -->
 
 
 <!------------------------ Interface NFCRequest ------------------------------>
