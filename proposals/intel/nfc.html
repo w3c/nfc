@@ -36,7 +36,7 @@
 <div class="head">
 	<h1>Web NFC API Specification</h1>
 	
-	<h2 class="no-num no-toc" id="editor-draft-13-december-2012">Editor Draft &mdash; 13 December 2012</h2>
+	<h2 class="no-num no-toc" id="editor-draft-19-february-2013">Editor Draft &mdash; 19 February 2013</h2>
 	
 	<dl>
 		<dt>This version:
@@ -64,7 +64,7 @@
 	
         <div class="w3conly">
 <!--begin-copyright-->
-<p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> &copy; 2012 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>&reg;</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
+<p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> &copy; 2013 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>&reg;</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
 <!--end-copyright--></div>
 </div>
 
@@ -136,6 +136,7 @@ The <a href="#nfcmanager"><code>NFCManager</code></a> interface exposes the defa
 
 <pre class="idl">enum <dfn id="ndefrecordtextencoding">NDEFRecordTextEncoding</dfn> { "UTF-8", "UTF-16" };
 enum <dfn id="nfctagtype">NFCTagType</dfn> { "Type 1", "Type 2", "Type 3", "Type 4" };
+enum <dfn id="handovertype">HandoverType</dfn> { "bluetooth", "wifi" };
 
 [NoInterfaceObject]
 interface <dfn id="nfcmanager">NFCManager</dfn> {
@@ -241,6 +242,9 @@ interface <dfn id="nfcpeer">NFCPeer</dfn> {
     void <a href="#nfcpeer-sendndef" title="NFCPeer-sendNDEF">sendNDEF</a>(<a href="#ndefmessage">NDEFMessage</a> <var title="">ndefMessage</var>,
         optional Function? <var title="">successCallback</var>,
         optional Function? <var title="">errorCallback</var>);
+    void <a href="#nfcpeer-starthandover" title="NFCPeer-startHandover">startHandover</a>(<a href="#handovertype">HandoverType</a> <var title="">type</var>,
+        optional Function? <var title="">successCallback</var>,
+        optional Function? <var title="">errorCallback</var>);
 };
 </pre>
 <p>The <dfn id="nfcpeer-isconnected" title="NFCPeer-isConnected"><code>isConnected</code></dfn> property indicates that the peer-to-peer target is connected.
@@ -256,6 +260,10 @@ method unregisters the <a href="#ndefmessagereadcallback">NDEFMessageReadCallbac
 <p>The <dfn id="nfcpeer-sendndef" title="NFCPeer-sendNDEF"><code>sendNDEF</code></dfn>
 method sends a <a href="#ndefmessage">NDEFMessage</a> to a <a href="#nfcpeer">NFCPeer</a> target.
 The <code><a href="#ndefmessage"><var>ndefMessage</var></a></code> parameter is the <a href="#ndefmessage">NDEFMessage</a> content to send.
+</p>
+<p>The <dfn id="nfcpeer-starthandover" title="NFCPeer-startHandover"><code>startHandover</code></dfn>
+method initiates pairing with the <a href="#nfcpeer">NFCPeer</a> target.
+The <code><var>type</var></code> parameter is the <a href="#handovertype">HandoverType</a>, "bluetooth" or "wifi".
 </p>
 
 
