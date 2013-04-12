@@ -40,8 +40,8 @@ Style guide to contributors:
   http://dev.w3.org/2009/dap/ReSpec.js/documentation.html
 - use 80 characters wide lines, whenever possible (except long links)
 - keep sections 2 empty lines apart
-- put comments in front of sections, for better readability with syntax coloring
-  editors
+- put comments in front of sections, for better readability with syntax
+  coloring editors
 - use indentation with care: it may improve readability, but at the expense of
   line lenght
 - when descriptions of attributes is short, use the <dd> elements even when
@@ -56,7 +56,8 @@ Style guide to contributors:
 Near Field Communication (NFC) is an international standard (ISO/IEC 18092) 
 that specifies an interface and protocol for simple wireless interconnection of
 closely coupled devices operating at 13.56 MHz. 
-(see <a href="http://www.nfc-forum.org/specs/spec_list/">http://www.nfc-forum.org/specs/spec_list/</a>). 
+(see <a href="http://www.nfc-forum.org/specs/spec_list/">
+http://www.nfc-forum.org/specs/spec_list/</a>). 
 There are three groups of application scenarios for NFC: 
 <ul>
 <li>The first one is to hold a device close to a wireless tag to exchange some
@@ -81,7 +82,20 @@ The NFC API supports the following features:
 <ul>
 <li>Reading and writing NDEF messages on NFC Tags</li>
 <li>Sending and receiving NDEF messages on peer targets</li>
+<li>Bluetooth or WiFi pairing (or "handover") with a peer target</li>
 </ul>
+  <p>An example of use is provided below:
+  <pre class="example highlight">
+    navigator.nfc.ontagfound = function() {
+        window.console.log('NFC Tag found!');
+    }
+    
+    var req = navigator.nfc.startPoll();
+    req.onerror = function(e) {
+        window.console.error(e);
+    }
+  </pre>
+
 </section>
 
 
@@ -117,6 +131,8 @@ The NFC API supports the following features:
   event handler</a></dfn>  and <dfn>
 <a href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">
   event handler event types</a></dfn> are defined in [[!HTML5]].</p>
+</section>
+
 
 <!---------------------- Extended interface Navigator ------------------------>
 <section>
@@ -126,7 +142,7 @@ The NFC API supports the following features:
   </p>
   <dl title="partial interface Navigator" class="idl">
     <dt>readonly attribute NFCManager nfc</dt>
-    <dd>The object that exposes the default NFC adapter on the device.</dd>
+    <dd>The object that exposes the default NFC manager on the device.</dd>
   </dl>
 </section>
 
@@ -134,40 +150,22 @@ The NFC API supports the following features:
 <!------------------------ Interface NFCManager ------------------------------>
 <section>
   <h2><a>NFCManager</a> Interface</h2>
-  <p>The <a>NFCManager</a> interface defines access to NFC functionality.
+  <p>The <a>NFCManager</a> interface defines access to NFC functionality and
+    offers methods to control local NFC behavior like polling for targets.
   </p>
-
+  
   <dl title="[NoInterfaceObject]
-             interface NFCManager"
-          class="idl">
-
-    <dt>readonly attribute NFCAdapter defaultAdapter</dt>
-    <dd>MUST return a <a>NFCAdapter</a> object representing the <a>default
-    NFC adapter</a>, otherwise it MUST return <code>null</code>.</dd>
-  </dl>
-</section> <!-- NFCManager -->      
-
-
-<!------------------------ Interface NFCAdapter ------------------------------>
-<section>
-  <h2><a>NFCAdapter</a> Interface</h2>
-  <p>The <a>NFCAdapter</a> interface offers methods to control local NFC 
-  behavior, such as:
-  <ul>
-    <li>Turn on/off NFC adapter.</li>
-    <li>Poll for targets.</li>
-  </ul>
-  </p>
-
-  <dl title="[NoInterfaceObject]
-             interface NFCAdapter : EventTarget"
+             interface NFCManager : EventTarget"
           class="idl">
 
     <dt>readonly attribute boolean polling</dt>
-    <dd>Indicates that the adapter is polling.</dd>
+    <dd>Indicates that the NFC manager is polling.</dd>
     
-    <dt>void setPolling(boolean state)</dt>
-    <dd>Let the adapter start / stop polling for NFC tags or peer devices.</dd>
+    <dt>NFCRequest startPoll()</dt>
+    <dd>Start polling for NFC tags or peer devices.</dd>
+    
+    <dt>NFCRequest stopPoll()</dt>
+    <dd>Stop polling for NFC tags or peer devices.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
     <dd></dd>
@@ -177,7 +175,7 @@ The NFC API supports the following features:
     
     <dt class="no-docs"> attribute EventHandler ontagfound</dt>
     <dd>The <code>tagfound</code> event of type <code>NFCEvent</code> MUST
-    be fired whenever a new <a>NFCTag</a> is detected by the adapter.
+    be fired whenever a new <a>NFCTag</a> is detected by the NFC manager.
     The <code>param</code> property of the event MUST contain the 
     corresponding <a>NFCTag</a> object.</dd>
     
@@ -186,7 +184,7 @@ The NFC API supports the following features:
     
     <dt class="no-docs"> attribute EventHandler onpeerfound</dt>
     <dd>The <code>peerfound</code> event of type <code>NFCEvent</code> MUST
-    be fired whenever a new <a>NFCPeer</a> is detected by the adapter.
+    be fired whenever a new <a>NFCPeer</a> is detected by the NFC manager.
     The <code>param</code> property of the event MUST contain the 
     corresponding <a>NFCPeer</a> object.</dd>
     
@@ -254,7 +252,7 @@ The NFC API supports the following features:
     </tbody>
   </table>
   </section> <!-- Event handlers -->
-</section> <!-- NFCAdapter -->      
+</section> <!-- NFCManager -->      
 
 
 <!------------------------ Interface NFCTag ---------------------------------->
@@ -284,7 +282,7 @@ The NFC API supports the following features:
              interface NFCPeer : EventTarget"
           class="idl">
     
-    <dt><a>NFCRequest</a> sendNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
+    <dt><a>NFCRequest</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
     <dd>Send a NDEF message to the NFC peer device.</dd>
     
     <dt><a>NFCRequest</a> startHandover(DOMString type)</dt>
@@ -347,13 +345,14 @@ The NFC API supports the following features:
 <section>
   <h2><a>NDEFRecord</a> Interface</h2>
   
-  <dl title="[Constructor(optional byte［］ payload)]
+  <dl title="[Constructor(optional byte［］recordBytes)]
              interface NDEFRecord"
           class="idl">
 
-    <dt><a>NFCRequest</a> getPayload()</dt>
-    <dd>Get the binary payload for the record. The result is of type
-    <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
+    <dt><a>NFCRequest</a> getRecordBytes()</dt>
+    <dd>Get the binary representation of the record, i.e. the record's header
+      and the record's payload. The result is of type
+    <code>byte[]</code> i.e. a Javascript Array of Number objects.</dd>
   </dl>
     
 </section> <!-- NDEFRecord -->
@@ -378,7 +377,7 @@ The NFC API supports the following features:
       (ex: en-US, ko-KR).</dd>
           
     <dt>readonly attribute DOMString encoding</dt>
-    <dd>The encoding type, e.g. UTF-8, US-ASCII...</dd>
+    <dd>The encoding type MUST be either UTF-8 or UTF-16</dd>
   </dl>
 
 </section> <!-- NDEFRecordText -->
@@ -404,16 +403,16 @@ The NFC API supports the following features:
   <h2><a>NDEFRecordMIME</a> Interface</h2>
   
   <dl title="[Constructor(DOMString mime,
-             byte［］content)]
+             byte［］payload)]
              interface NDEFRecordMIME : NDEFRecord"
           class="idl">
 
     <dt>readonly attribute DOMString mime</dt>
-    <dd>The MIME type of the content, as defined in
+    <dd>The MIME type of the payload, as defined in
       <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>.</dd>
 
-    <dt><a>NFCRequest</a> getContent()</dt>
-    <dd>Extract the binary content of the MIME record. The result is of type
+    <dt><a>NFCRequest</a> getPayload()</dt>
+    <dd>Extract the binary payload of the MIME record. The result is of type
     <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
   </dl>
 
