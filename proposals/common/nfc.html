@@ -20,7 +20,9 @@
             { name: "Luc Yriarte", company: "Intel",
                     companyURL: "http://www.intel.com/" },
             { name: "Samuel Ortiz", company: "Intel",
-                    companyURL: "http://www.intel.com/" }
+                    companyURL: "http://www.intel.com/" },
+            { name: "Don Coleman", company: "Chariot Solutions",
+                    companyURL: "http://chariotsolutions.com/" }
           ],
           inlineCSS:    true,
           noIDLIn:      true,
@@ -329,13 +331,20 @@ The NFC API supports the following features:
 <section>
   <h2><a>NDEFMessage</a> Interface</h2>
   
-  <dl title="[Constructor(NDEFRecord［］ records)]
+  <dl title="[
+Constructor(byte［］bytes)
+Constructor(NDEFRecord［］records)
+]
              interface NDEFMessage"
           class="idl">
           
     <dt>readonly attribute NDEFRecord[] records</dt>
     <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
     the NDEF message. Otherwise it MUST return an empty list.</dd>
+
+    <dt><a>NFCRequest</a> getBytes()</dt>
+    <dd>Get the binary representation of the NDEF message. The result is of
+    type <code>byte[]</code> i.e. a Javascript Array of Number objects.</dd>
   </dl>
 
 </section> <!-- NDEFMessage -->
@@ -345,14 +354,28 @@ The NFC API supports the following features:
 <section>
   <h2><a>NDEFRecord</a> Interface</h2>
   
-  <dl title="[Constructor(optional byte［］recordBytes)]
+  <dl title="[
+Constructor(byte tnf, 
+  optional DOMString type, 
+  optional byte［］payload, 
+  optional DOMString id)
+]
              interface NDEFRecord"
           class="idl">
 
-    <dt><a>NFCRequest</a> getRecordBytes()</dt>
-    <dd>Get the binary representation of the record, i.e. the record's header
-      and the record's payload. The result is of type
-    <code>byte[]</code> i.e. a Javascript Array of Number objects.</dd>
+    <dt>readonly attribute byte tnf</dt>
+    <dd>The record's Type Name Format. Possible values are 0 (Empty),
+      1 (Well known), 2 (Media), 3 (URI), 4 (External), 5 (Unknown)</dd>
+
+    <dt>readonly attribute DOMString? type</dt>
+    <dd>A string identifier describing the type of the payload.</dd>
+
+    <dt>readonly attribute DOMString? id</dt>
+    <dd>An identifier for the record, in the form of a URI reference.</dd>
+
+    <dt><a>NFCRequest</a> getPayload()</dt>
+    <dd>Extract the binary payload of the NDEF record. The result is of type
+    <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
   </dl>
     
 </section> <!-- NDEFRecord -->
@@ -410,10 +433,6 @@ The NFC API supports the following features:
     <dt>readonly attribute DOMString mime</dt>
     <dd>The MIME type of the payload, as defined in
       <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>.</dd>
-
-    <dt><a>NFCRequest</a> getPayload()</dt>
-    <dd>Extract the binary payload of the MIME record. The result is of type
-    <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
   </dl>
 
 </section> <!-- NDEFRecordMIME -->
