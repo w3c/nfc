@@ -363,6 +363,10 @@ Constructor(byte tnf,
              interface NDEFRecord"
           class="idl">
 
+    <dt>readonly attribute DOMString recordType</dt>
+    <dd>The record type, according to the sub-interface in implements.
+      Possible values are "text", "uri", "mime", "smartPoster", "unknown"</dd>
+
     <dt>readonly attribute byte tnf</dt>
     <dd>The record's Type Name Format. Possible values are 0 (Empty),
       1 (Well known), 2 (Media), 3 (URI), 4 (External), 5 (Unknown)</dd>
