@@ -365,7 +365,7 @@ Constructor(byte tnf,
 
     <dt>readonly attribute DOMString recordType</dt>
     <dd>The record type, according to the sub-interface in implements.
-      Possible values are "text", "uri", "mime", "smartPoster", "unknown"</dd>
+      Possible values are "text", "uri", "media", "smartPoster", "unknown"</dd>
 
     <dt>readonly attribute byte tnf</dt>
     <dd>The record's Type Name Format. Possible values are 0 (Empty),
@@ -425,21 +425,21 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecordURI -->
 
 
-<!------------------------ Interface NDEFRecordMIME -------------------------->
+<!------------------------ Interface NDEFRecordMedia -------------------------->
 <section>
-  <h2><a>NDEFRecordMIME</a> Interface</h2>
+  <h2><a>NDEFRecordMedia</a> Interface</h2>
   
-  <dl title="[Constructor(DOMString mime,
+  <dl title="[Constructor(DOMString mimeType,
              byte［］payload)]
-             interface NDEFRecordMIME : NDEFRecord"
+             interface NDEFRecordMedia : NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute DOMString mime</dt>
+    <dt>readonly attribute DOMString mimeType</dt>
     <dd>The MIME type of the payload, as defined in
       <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>.</dd>
   </dl>
 
-</section> <!-- NDEFRecordMIME -->
+</section> <!-- NDEFRecordMedia -->
 
 
 <!------------------------ Interface NDEFRecordSmartPoster ------------------->
@@ -449,7 +449,7 @@ Constructor(byte tnf,
   <dl title="[Constructor(DOMString uri,
              optional NDEFRecordText［］titles,
              optional DOMString action,
-             optional NDEFRecordMIME［］icons,
+             optional NDEFRecordMedia［］icons,
              optional unsigned long targetSize,
              optional DOMString targetMIME)]
              interface NDEFRecordSmartPoster : NDEFRecord"
@@ -467,7 +467,7 @@ Constructor(byte tnf,
     <dd>The possible actions defined by the NFC forum Smart Poster Record Type 
       Definition are "do", "save", "open".</dd>
 
-    <dt>readonly attribute NDEFRecordMIME[]? icons</dt>
+    <dt>readonly attribute NDEFRecordMedia[]? icons</dt>
     <dd>The Smart Poster Record can contain one or more icons, that can
       also be animated.</dd>
 
