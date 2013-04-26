@@ -84,8 +84,8 @@ usually less than a few centimeters.
   <h2>Introduction</h2>
 The NFC API supports the following features:
 <ul>
-<li>Reading and writing NDEF messages on NFC Tags</li>
-<li>Sending and receiving NDEF messages on peer targets</li>
+<li>Reading and writing <a>NDEF message</a>s on <a>NFC tag</a>s</li>
+<li>Sending and receiving <a>NDEF message</a>s on peer targets</li>
 <li>Bluetooth or WiFi pairing (or "handover") with a peer target</li>
 </ul>
   <p>An example of use is provided below:
@@ -141,8 +141,8 @@ The NFC API supports the following features:
   event handler event types</a></dfn> are defined in [[!HTML5]].</p>
   
   <p>A <dfn title="NFC tag">NFC tag</dfn> is a passive, unpowered NFC device.
-  The NFC tag is powered by magnetic induction when an active NFC device is 
-  in close vicinity. A NFC Tag contains a single <a>NDEF message</a>.</p>
+  The <a>NFC tag</a> is powered by magnetic induction when an active NFC device is 
+  in close vicinity. A <a>NFC tag</a> contains a single <a>NDEF message</a>.</p>
   
   <p>A <dfn title="NDEF message">NDEF message</dfn> encapsulates one or more
   application-defined <a>NDEF record</a>s. NDEF stands for 
@@ -185,10 +185,10 @@ The NFC API supports the following features:
     <dd>Indicates that the NFC manager is polling.</dd>
     
     <dt>NFCRequest startPoll()</dt>
-    <dd>Start polling for NFC tags or peer devices.</dd>
+    <dd>Start polling for <a>NFC tag</a>s or peer devices.</dd>
     
     <dt>NFCRequest stopPoll()</dt>
-    <dd>Stop polling for NFC tags or peer devices.</dd>
+    <dd>Stop polling for <a>NFC tag</a>s or peer devices.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
     <dd>Event handler called when the <code>pollstart</code>
@@ -291,10 +291,10 @@ The NFC API supports the following features:
           class="idl">
 
     <dt><a>NFCRequest</a> readNDEF()</dt>
-    <dd>Read NDEF data from the NFC tag.</dd>
+    <dd>Read NDEF data from the <a>NFC tag</a>.</dd>
     
     <dt><a>NFCRequest</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
-    <dd>Write a NDEF message on the NFC tag.</dd>
+    <dd>Write a <a>NDEF message</a> on the <a>NFC tag</a>.</dd>
     
   </dl>
 
@@ -310,7 +310,7 @@ The NFC API supports the following features:
           class="idl">
     
     <dt><a>NFCRequest</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
-    <dd>Send a NDEF message to the NFC peer device.</dd>
+    <dd>Send a <a>NDEF message</a> to the NFC peer device.</dd>
     
     <dt><a>NFCRequest</a> startHandover(DOMString type)</dt>
     <dd>Initiates pairing with the NFC peer-to-peer target. Handover type
@@ -365,10 +365,10 @@ Constructor(NDEFRecord［］records)
           
     <dt>readonly attribute NDEFRecord[] records</dt>
     <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
-    the NDEF message. Otherwise it MUST return an empty list.</dd>
+    the <a>NDEF message</a>. Otherwise it MUST return an empty list.</dd>
 
     <dt><a>NFCRequest</a> getBytes()</dt>
-    <dd>Get the binary representation of the NDEF message. The result is of
+    <dd>Get the binary representation of the <a>NDEF message</a>. The result is of
     type <code>byte[]</code> i.e. a Javascript Array of Number objects.</dd>
   </dl>
 
@@ -403,7 +403,7 @@ Constructor(byte tnf,
     <dd>An identifier for the record, in the form of a URI reference.</dd>
 
     <dt><a>NFCRequest</a> getPayload()</dt>
-    <dd>Extract the binary payload of the NDEF record. The result is of type
+    <dd>Extract the binary payload of the <a>NDEF record</a>. The result is of type
     <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
   </dl>
     
@@ -513,7 +513,7 @@ Constructor(byte tnf,
   <p>The <a>NFCRequest</a> interface represents an ongoing operation. It
   provides callbacks that are called when the operation completes, as well as a
   reference to the operation's result. A method that initiates an operation
-  (e.g. read a NDEF message via the <code>readNDEF</code> method of the
+  (e.g. read a <a>NDEF message</a> via the <code>readNDEF</code> method of the
   <code>NFCTag</code> interface) MUST return a <code>NFCRequest</code> object 
   that can be used to monitor the progress of that operation.</p>
   <dl title="interface NFCRequest"
