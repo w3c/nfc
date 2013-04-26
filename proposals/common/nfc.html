@@ -90,8 +90,12 @@ The NFC API supports the following features:
 </ul>
   <p>An example of use is provided below:
   <pre class="example highlight">
-    navigator.nfc.ontagfound = function() {
+    var hello = new NDEFRecordText("hello world", "en-US", "UTF-8");
+    
+    navigator.nfc.ontagfound = function(e) {
         window.console.log('NFC Tag found!');
+        var tag = e.param;
+        tag.writeNDEF(new NDEFMessage([hello]));
     }
     
     var req = navigator.nfc.startPoll();
