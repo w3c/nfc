@@ -187,10 +187,12 @@ The NFC API supports the following features:
     <dd>Stop polling for NFC tags or peer devices.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
-    <dd></dd>
+    <dd>Event handler called when the <code>pollstart</code>
+    event is dispatched.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstop</dt>
-    <dd></dd>
+    <dd>Event handler called when the <code>pollstop</code>
+    event is dispatched.</dd>
     
     <dt class="no-docs"> attribute EventHandler ontagfound</dt>
     <dd>The <code>tagfound</code> event of type <code>NFCEvent</code> MUST
@@ -199,7 +201,8 @@ The NFC API supports the following features:
     corresponding <a>NFCTag</a> object.</dd>
     
     <dt class="no-docs"> attribute EventHandler ontaglost</dt>
-    <dd></dd>
+    <dd>Event handler called when the <code>taglost</code>
+    event is dispatched.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpeerfound</dt>
     <dd>The <code>peerfound</code> event of type <code>NFCEvent</code> MUST
@@ -208,7 +211,8 @@ The NFC API supports the following features:
     corresponding <a>NFCPeer</a> object.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpeerlost</dt>
-    <dd></dd>
+    <dd>Event handler called when the <code>peerlost</code>
+    event is dispatched.</dd>
   </dl>
 
   <section>
@@ -523,12 +527,13 @@ Constructor(byte tnf,
     <dt class="no-docs">
       attribute EventHandler onsuccess
     </dt>
-    <dd></dd>
+    <dd>Event handler invoked when the caller method succeeds.</dd>
 
     <dt class="no-docs">
       attribute EventHandler onerror
     </dt>
-    <dd></dd>
+    <dd>Event handler called when the <code>error</code>
+    event is dispatched.</dd>
   </dl>
 
   <section>
