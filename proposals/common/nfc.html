@@ -69,6 +69,8 @@ There are three groups of application scenarios for NFC:
 <li>The third one is to make payments by holding mobile phones close to point
   of sales terminals instead of swiping smart cards.</li>
 </ul>
+NFC enables wireless communication between two devices at close proximity,
+usually less than a few centimeters.
 </section>
 
 
@@ -133,6 +135,21 @@ The NFC API supports the following features:
   event handler</a></dfn>  and <dfn>
 <a href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">
   event handler event types</a></dfn> are defined in [[!HTML5]].</p>
+  
+  <p>A <dfn title="NFC tag">NFC tag</dfn> is a passive, unpowered NFC device.
+  The NFC tag is powered by magnetic induction when an active NFC device is 
+  in close vicinity. A NFC Tag contains a single <a>NDEF message</a>.</p>
+  
+  <p>A <dfn title="NDEF message">NDEF message</dfn> encapsulates one or more
+  application-defined <a>NDEF record</a>s. NDEF stands for 
+  NFC Forum Data Exchange Format, a lightweight binary message format. NDEF
+  messages can be stored on a <a>NFC tag</a> or exchanged between NFC-enabled
+  devices.</p>
+  
+  <p>A <dfn title="NDEF record">NDEF record</dfn> has a maximum payload of
+  2^32-1 bytes. The record also contains information about the payload size,
+  type, and an optional identifier.</p>
+  
 </section>
 
 
