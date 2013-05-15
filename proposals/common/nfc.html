@@ -516,8 +516,12 @@ Constructor(byte tnf,
   (e.g. read a <a>NDEF message</a> via the <code>readNDEF</code> method of the
   <code>NFCTag</code> interface) MUST return a <code>NFCRequest</code> object 
   that can be used to monitor the progress of that operation.</p>
-  <dl title="interface NFCRequest"
+  <dl title="interface NFCRequest : EventTarget"
       class="idl">
+
+    <dt>readonly attribute ReadyState readyState</dt>
+    <dd>Indicates the state of the request.</dd>
+        
     <dt>readonly attribute DOMError? error</dt>
     <dd>An error that occured during the request. Errors are as defined in
     [[!DOM4]].</dd>
@@ -540,7 +544,24 @@ Constructor(byte tnf,
     event is dispatched.</dd>
   </dl>
 
-  <section>
+    <section>
+    <h2>Enumerations</h2>
+
+    <p>A <a>NFCRequest</a> can be in one of the following states:
+    <dl class="idl" title="enum ReadyState">
+          <dt>processing</dt>
+          <dd>
+              The request has been made and it is progressing.
+          </dd>
+
+          <dt>done</dt>
+          <dd>
+              The request has been already completed.
+          </dd>
+    </dl>
+    </section>  
+    
+    <section>
     <h2>Event handlers</h2>
     <p>
       The following are the <a>event handlers</a> (and their corresponding
