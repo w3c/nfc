@@ -402,9 +402,8 @@ Constructor(byte tnf,
              interface NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute DOMString recordType</dt>
-    <dd>The record type, according to the sub-interface in implements.
-      Possible values are "text", "uri", "media", "smartPoster", "unknown"</dd>
+    <dt>readonly attribute NDEFRecordType recordType</dt>
+    <dd>The record type, according to the sub-interface in implements.</dd>
 
     <dt>readonly attribute byte tnf</dt>
     <dd>The record's Type Name Format. Possible values are 0 (Empty),
@@ -504,9 +503,9 @@ Constructor(byte tnf,
     <dd>The title in different languages. There MUST NOT be more than
       one title record with the same language code string value.</dd>
 
-    <dt>readonly attribute DOMString? action</dt>
-    <dd>The possible actions defined by the NFC forum Smart Poster Record Type 
-      Definition are "do", "save", "open".</dd>
+    <dt>readonly attribute SmartPosterAction? action</dt>
+    <dd>The possible actions defined by the NFC forum Smart Poster 
+    Record Type.</dd>
 
     <dt>readonly attribute NDEFRecordMedia[]? icons</dt>
     <dd>The Smart Poster Record can contain one or more icons, that can
@@ -521,6 +520,54 @@ Constructor(byte tnf,
   </dl>
 
 </section> <!-- NDEFRecordSmartPoster -->
+    
+
+<!------------------------ Interface Enumerations ---------------------------->
+<section>
+  <h2>Enumerations</h2>
+  
+  <p>The attribute <code>recordType</code> can have the following values:
+  <dl class="idl" title="enum NDEFRecordType">
+    <dt>text</dt>
+    <dd>
+      Corresponding to NDEFRecordText.
+    </dd>
+    <dt>uri</dt>
+    <dd>
+      Corresponding to NDEFRecordURI.
+    </dd>
+    <dt>media</dt>
+    <dd>
+      Corresponding to NDEFRecordMedia.
+    </dd>
+    <dt>smartPoster</dt>
+    <dd>
+      Corresponding to NDEFRecordSmartPoster.
+    </dd>
+    <dt>unknown</dt>
+    <dd>
+      Corresponding to the base NDEFRecord interface.
+    </dd>
+  </dl>
+  
+  <p>The attribute <code>action</code> can have the following values:
+  <dl class="idl" title="enum SmartPosterAction">
+    <dt>do</dt>
+    <dd>
+      Do the action. For instance, send a SMS, dial a phone number, or open
+      a URI.
+    </dd>
+    <dt>save</dt>
+    <dd>
+      Store a SMS, bookmark a URI, save a phone number in the address book.
+    </dd>
+    <dt>open</dt>
+    <dd>
+      Open for edition.
+    </dd>
+  </dl>
+  
+</section> <!-- Enumerations -->
 
 
 <section>
