@@ -184,10 +184,10 @@ The NFC API supports the following features:
     <dt>readonly attribute boolean polling</dt>
     <dd>Indicates that the NFC manager is polling.</dd>
     
-    <dt>NFCRequest startPoll()</dt>
+    <dt>Future startPoll()</dt>
     <dd>Start polling for <a>NFC tag</a>s or peer devices.</dd>
     
-    <dt>NFCRequest stopPoll()</dt>
+    <dt>Future stopPoll()</dt>
     <dd>Stop polling for <a>NFC tag</a>s or peer devices.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
@@ -290,10 +290,10 @@ The NFC API supports the following features:
              interface NFCTag"
           class="idl">
 
-    <dt><a>NFCRequest</a> readNDEF()</dt>
+    <dt><a>Future</a> readNDEF()</dt>
     <dd>Read NDEF data from the <a>NFC tag</a>.</dd>
     
-    <dt><a>NFCRequest</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
+    <dt><a>Future</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
     <dd>Write a <a>NDEF message</a> on the <a>NFC tag</a>.</dd>
     
   </dl>
@@ -309,10 +309,10 @@ The NFC API supports the following features:
              interface NFCPeer : EventTarget"
           class="idl">
     
-    <dt><a>NFCRequest</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
+    <dt><a>Future</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
     <dd>Send a <a>NDEF message</a> to the NFC peer device.</dd>
     
-    <dt><a>NFCRequest</a> startHandover(DOMString type)</dt>
+    <dt><a>Future</a> startHandover(DOMString type)</dt>
     <dd>Initiates pairing with the NFC peer-to-peer target. Handover type
       can be "bluetooth" or "wifi".</dd>
     
@@ -367,7 +367,7 @@ Constructor(NDEFRecord［］records)
     <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
     the <a>NDEF message</a>. Otherwise it MUST return an empty list.</dd>
 
-    <dt><a>NFCRequest</a> getBytes()</dt>
+    <dt><a>Future</a> getBytes()</dt>
     <dd>Get the binary representation of the <a>NDEF message</a>. The result is of
     type <code>byte[]</code> i.e. a Javascript Array of Number objects.</dd>
   </dl>
@@ -402,7 +402,7 @@ Constructor(byte tnf,
     <dt>readonly attribute DOMString? id</dt>
     <dd>An identifier for the record, in the form of a URI reference.</dd>
 
-    <dt><a>NFCRequest</a> getPayload()</dt>
+    <dt><a>Future</a> getPayload()</dt>
     <dd>Extract the binary payload of the <a>NDEF record</a>. The result is of type
     <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
   </dl>
@@ -505,93 +505,6 @@ Constructor(byte tnf,
   </dl>
 
 </section> <!-- NDEFRecordSmartPoster -->
-
-
-<!------------------------ Interface NFCRequest ------------------------------>
-<section>
-  <h2><a>NFCRequest</a> Interface</h2>
-  <p>The <a>NFCRequest</a> interface represents an ongoing operation. It
-  provides callbacks that are called when the operation completes, as well as a
-  reference to the operation's result. A method that initiates an operation
-  (e.g. read a <a>NDEF message</a> via the <code>readNDEF</code> method of the
-  <code>NFCTag</code> interface) MUST return a <code>NFCRequest</code> object 
-  that can be used to monitor the progress of that operation.</p>
-  <dl title="interface NFCRequest : EventTarget"
-      class="idl">
-
-    <dt>readonly attribute ReadyState readyState</dt>
-    <dd>Indicates the state of the request.</dd>
-        
-    <dt>readonly attribute DOMError? error</dt>
-    <dd>An error that occured during the request. Errors are as defined in
-    [[!DOM4]].</dd>
-
-    <dt>readonly attribute any? result</dt>
-    <dd>Indicates the result of the request. The type depends on the sort of
-    request, and is specified in the description of each method that returns a
-    <code>NFCRequest</code> object, e.g. <code>readNDEF</code> method of the
-    <code>NFCTag</code> object.</dd>
-
-    <dt class="no-docs">
-      attribute EventHandler onsuccess
-    </dt>
-    <dd>Event handler invoked when the caller method succeeds.</dd>
-
-    <dt class="no-docs">
-      attribute EventHandler onerror
-    </dt>
-    <dd>Event handler called when the <code>error</code>
-    event is dispatched.</dd>
-  </dl>
-
-    <section>
-    <h2>Enumerations</h2>
-
-    <p>A <a>NFCRequest</a> can be in one of the following states:
-    <dl class="idl" title="enum ReadyState">
-          <dt>processing</dt>
-          <dd>
-              The request has been made and it is progressing.
-          </dd>
-
-          <dt>done</dt>
-          <dd>
-              The request has been already completed.
-          </dd>
-    </dl>
-    </section>  
-    
-    <section>
-    <h2>Event handlers</h2>
-    <p>
-      The following are the <a>event handlers</a> (and their corresponding
-      <a>event handler event types</a>) that MUST be supported as attributes by
-      the <a>NFCRequest</a> object:
-    <table class="simple">
-      <thead>
-        <tr>
-          <th>event handler</th>
-          <th>event handler event type</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong><code>onsuccess</code></strong></td>
-          <td><code><dfn>success</dfn></code></td>
-        </tr>
-        <tr>
-          <td><strong><code>onerror</code></strong></td>
-          <td><code><dfn>error</dfn></code></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-</section>
-
-  <p class="issue">
-  Use of DOMRequest / DOMFuture to be assessed as part of a broader discussion
-  in W3C SysApps.
-  </p>
 
 
 <section>
