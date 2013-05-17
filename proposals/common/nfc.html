@@ -185,10 +185,14 @@ The NFC API supports the following features:
     <dd>Indicates that the NFC manager is polling.</dd>
     
     <dt>Future startPoll()</dt>
-    <dd>Start polling for <a>NFC tag</a>s or peer devices.</dd>
+    <dd>Start polling for <a>NFC tag</a>s or peer devices. This method returns 
+    a new <code>Future</code> to notify the caller that the NFC hardware is 
+    now polling.</dd>
     
     <dt>Future stopPoll()</dt>
-    <dd>Stop polling for <a>NFC tag</a>s or peer devices.</dd>
+    <dd>Stop polling for <a>NFC tag</a>s or peer devices. This method returns 
+    a new <code>Future</code> to notify the caller that the NFC hardware 
+    stopped polling.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
     <dd>Event handler called when the <code>pollstart</code>
@@ -291,10 +295,14 @@ The NFC API supports the following features:
           class="idl">
 
     <dt><a>Future</a> readNDEF()</dt>
-    <dd>Read NDEF data from the <a>NFC tag</a>.</dd>
+    <dd>Read NDEF data from the <a>NFC tag</a>. This method returns 
+    a new <code>Future</code> that will notify the caller with the result of
+    the operation, which is a <a>NDEFRecord</a>.</dd>
     
     <dt><a>Future</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
-    <dd>Write a <a>NDEF message</a> on the <a>NFC tag</a>.</dd>
+    <dd>Write a <a>NDEF message</a> on the <a>NFC tag</a>. This method returns 
+    a new <code>Future</code> to notify the caller about the operation 
+    success or failure.</dd>
     
   </dl>
 
@@ -310,11 +318,15 @@ The NFC API supports the following features:
           class="idl">
     
     <dt><a>Future</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
-    <dd>Send a <a>NDEF message</a> to the NFC peer device.</dd>
+    <dd>Send a <a>NDEF message</a> to the NFC peer device. This method returns 
+    a new <code>Future</code> to notify the caller about the operation 
+    success or failure.</dd>
     
     <dt><a>Future</a> startHandover(DOMString type)</dt>
     <dd>Initiates pairing with the NFC peer-to-peer target. Handover type
-      can be "bluetooth" or "wifi".</dd>
+      can be "bluetooth" or "wifi". This method returns 
+    a new <code>Future</code> to notify the caller about the operation 
+    success or failure.</dd>
     
     <dt class="no-docs"> attribute EventHandler onmessageread</dt>
     <dd>The <code>messageread</code> event of type <code>NFCEvent</code> MUST
@@ -368,8 +380,10 @@ Constructor(NDEFRecord［］records)
     the <a>NDEF message</a>. Otherwise it MUST return an empty list.</dd>
 
     <dt><a>Future</a> getBytes()</dt>
-    <dd>Get the binary representation of the <a>NDEF message</a>. The result is of
-    type <code>byte[]</code> i.e. a Javascript Array of Number objects.</dd>
+    <dd>Get the binary representation of the <a>NDEF message</a>. This method  
+    returns a new <code>Future</code> to notify the caller with the result of
+    the operation, which is of type <code>byte[]</code> i.e. a Javascript 
+    Array of Number objects. </dd>
   </dl>
 
 </section> <!-- NDEFMessage -->
@@ -403,8 +417,10 @@ Constructor(byte tnf,
     <dd>An identifier for the record, in the form of a URI reference.</dd>
 
     <dt><a>Future</a> getPayload()</dt>
-    <dd>Extract the binary payload of the <a>NDEF record</a>. The result is of type
-    <code>byte[]</code> e.g. a Javascript Array of Number objects.</dd>
+    <dd>Extract the binary payload of the <a>NDEF record</a>. This method  
+    returns a new <code>Future</code> to notify the caller with the result of
+    the operation, which is of type <code>byte[]</code> i.e. a Javascript 
+    Array of Number objects. </dd>
   </dl>
     
 </section> <!-- NDEFRecord -->
