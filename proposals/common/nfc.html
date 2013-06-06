@@ -322,11 +322,10 @@ The NFC API supports the following features:
     a new <code>Future</code> to notify the caller about the operation 
     success or failure.</dd>
     
-    <dt><a>Future</a> startHandover(DOMString type)</dt>
-    <dd>Initiates pairing with the NFC peer-to-peer target. Handover type
-      can be "bluetooth" or "wifi". This method returns 
-    a new <code>Future</code> to notify the caller about the operation 
-    success or failure.</dd>
+    <dt><a>Future</a> startHandover(HandoverType handoverType)</dt>
+    <dd>Initiates WiFi or Bluetooth pairing with the NFC peer-to-peer target.
+    This method returns a new <code>Future</code> to notify the caller about
+    the operation success or failure.</dd>
     
     <dt class="no-docs"> attribute EventHandler onmessageread</dt>
     <dd>The <code>messageread</code> event of type <code>NFCEvent</code> MUST
@@ -567,6 +566,17 @@ Constructor(byte tnf,
     </dd>
   </dl>
   
+  <p>The attribute <code>handoverType</code> can have the following values:
+  <dl class="idl" title="enum HandoverType">
+    <dt>wifi</dt>
+    <dd>
+      Initiate WiFi handover.
+    </dd>
+    <dt>bluetooth</dt>
+    <dd>
+      Initiate bluetooth pairing.
+    </dd>
+  </dl>
 </section> <!-- Enumerations -->
 
 
