@@ -348,10 +348,15 @@ The NFC API supports the following features:
     a new <code>Promise</code> that will notify the caller with the result of
     the operation, which is a <a>NDEFRecord</a>.</dd>
     
-    <dt><a>Promise</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
+    <dt><a>Promise</a> writeNDEF(in NDEFMessage message)</dt>
     <dd>Write a <a>NDEF message</a> on the <a>NFC tag</a>. This method returns 
     a new <code>Promise</code> to notify the caller about the operation 
-    success or failure.</dd>
+    success or failure.
+      <dl class='parameters'>
+        <dt>NDEFMessage message</dt>
+        <dd>The <a>NDEF message</a> to write on the <a>NFC Tag</a></dd>
+      </dl>
+    </dd>
     
   </dl>
 
@@ -366,15 +371,25 @@ The NFC API supports the following features:
              interface NFCPeer : EventTarget"
           class="idl">
     
-    <dt><a>Promise</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
+    <dt><a>Promise</a> sendNDEF(in NDEFMessage message)</dt>
     <dd>Send a <a>NDEF message</a> to the NFC peer device. This method returns 
     a new <code>Promise</code> to notify the caller about the operation 
-    success or failure.</dd>
+    success or failure.
+      <dl class='parameters'>
+        <dt>NDEFMessage message</dt>
+        <dd>The <a>NDEF message</a> to send to the NFC peer device.</dd>
+      </dl>
+    </dd>
     
-    <dt><a>Promise</a> startHandover(HandoverType handoverType)</dt>
+    <dt><a>Promise</a> startHandover(in HandoverType handoverType)</dt>
     <dd>Initiates WiFi or Bluetooth pairing with the NFC peer-to-peer target.
     This method returns a new <code>Promise</code> to notify the caller about
-    the operation success or failure.</dd>
+    the operation success or failure.
+      <dl class='parameters'>
+        <dt>HandoverType handoverType</dt>
+        <dd>Select <code>"wifi"</code> or <code>"bluetooth"</code> pairing.</dd>
+      </dl>
+    </dd>
     
     <dt class="no-docs"> attribute EventHandler onmessageread</dt>
     <dd>The <code>messageread</code> event of type <code><a>NDEFMessageEvent</a></code> MUST
