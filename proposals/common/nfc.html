@@ -94,7 +94,7 @@ The NFC API supports the following features:
     
     navigator.nfc.ontagfound = function(e) {
         window.console.log('NFC Tag found!');
-        var tag = e.param;
+        var tag = e.tag;
         tag.writeNDEF(new NDEFMessage([hello]));
     }
     
@@ -210,9 +210,9 @@ The NFC API supports the following features:
     event is dispatched.</dd>
     
     <dt class="no-docs"> attribute EventHandler ontagfound</dt>
-    <dd>The <code>tagfound</code> event of type <code>NFCEvent</code> MUST
+    <dd>The <code>tagfound</code> event of type <code><a>NFCTagEvent</a></code> MUST
     be fired whenever a new <a>NFCTag</a> is detected by the NFC manager.
-    The <code>param</code> property of the event MUST contain the 
+    The <code><a>tag</a></code> property of the event MUST contain the 
     corresponding <a>NFCTag</a> object.</dd>
     
     <dt class="no-docs"> attribute EventHandler ontaglost</dt>
@@ -220,9 +220,9 @@ The NFC API supports the following features:
     event is dispatched.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpeerfound</dt>
-    <dd>The <code>peerfound</code> event of type <code>NFCEvent</code> MUST
+    <dd>The <code>peerfound</code> event of type <code><a>NFCPeerEvent</a></code> MUST
     be fired whenever a new <a>NFCPeer</a> is detected by the NFC manager.
-    The <code>param</code> property of the event MUST contain the 
+    The <code><a>peer</a></code> property of the event MUST contain the 
     corresponding <a>NFCPeer</a> object.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpeerlost</dt>
@@ -262,7 +262,7 @@ The NFC API supports the following features:
       <tr>
         <td><strong><code>ontagfound</code></strong></td>
         <td><code><dfn>tagfound</dfn></code></td>
-        <td><code>NFCEvent</code> with <code>param</code> property set to
+        <td><code><a>NFCTagEvent</a></code> with <a>tag</a> property set to
           the new <a>NFCTag</a> object.</td>
         <td>detect a new <code>NFCTag</code></td>
       </tr>
@@ -276,7 +276,7 @@ The NFC API supports the following features:
       <tr>
         <td><strong><code>onpeerfound</code></strong></td>
         <td><code><dfn>peerfound</dfn></code></td>
-        <td><code>NFCEvent</code> with <code>param</code> property set to
+        <td><code><a>NFCPeerEvent</a></code> with <a>peer</a> property set to
           the new <a>NFCPeer</a> object.</td>
         <td>detect a new <code>NFCPeer</code></td>
       </tr>
@@ -291,6 +291,48 @@ The NFC API supports the following features:
   </table>
   </section> <!-- Event handlers -->
 </section> <!-- NFCManager -->      
+
+
+<!------------------------ Interface NFCTagEvent ----------------------------->
+<section>
+  <h2><a>NFCTagEvent</a> Interface</h2>
+
+  <dl title="interface NFCTagEvent : Event" class="idl">
+
+    <dt>readonly attribute NFCTag tag</dt>
+    <dd>When getting, the user agent MUST return the <a>NFCTag</a>
+    that triggered the event.</dd>
+  </dl>
+
+</section><!-- NFCTagEvent -->
+
+
+<!------------------------ Interface NFCPeerEvent ---------------------------->
+<section>
+  <h2><a>NFCPeerEvent</a> Interface</h2>
+
+  <dl title="interface NFCPeerEvent : Event" class="idl">
+
+    <dt>readonly attribute NFCPeer peer</dt>
+    <dd>When getting, the user agent MUST return the <a>NFCPeer</a>
+    that triggered the event.</dd>
+  </dl>
+
+</section><!-- NFCPeerEvent -->
+
+
+<!------------------------ Interface NDEFMessageEvent ------------------------>
+<section>
+  <h2><a>NDEFMessageEvent</a> Interface</h2>
+
+  <dl title="interface NDEFMessageEvent : Event" class="idl">
+
+    <dt>readonly attribute NDEFMessage message</dt>
+    <dd>When getting, the user agent MUST return the <a>NDEFMessage</a>
+    that triggered the event.</dd>
+  </dl>
+
+</section><!-- NDEFMessageEvent -->
 
 
 <!------------------------ Interface NFCTag ---------------------------------->
@@ -335,9 +377,9 @@ The NFC API supports the following features:
     the operation success or failure.</dd>
     
     <dt class="no-docs"> attribute EventHandler onmessageread</dt>
-    <dd>The <code>messageread</code> event of type <code>NFCEvent</code> MUST
+    <dd>The <code>messageread</code> event of type <code><a>NDEFMessageEvent</a></code> MUST
     be fired whenever a new <a>NDEFMessage</a> is sent by the peer device.
-    The <code>param</code> property of the event MUST contain the 
+    The <code><a>message</a></code> property of the event MUST contain the 
     corresponding <a>NDEFMessage</a> object.</dd>
   </dl>
 
@@ -359,7 +401,7 @@ The NFC API supports the following features:
       <tr>
         <td><strong><code>onmessageread</code></strong></td>
         <td><code><dfn>messageread</dfn></code></td>
-        <td><code>NFCEvent</code> with <code>param</code> property set to
+        <td><code><a>NDEFMessageEvent</a></code> with <a>message</a> property set to
           the new <a>NDEFMessage</a> object.</td>
         <td>fired when a <code>NDEFMessage</code> is sent by the peer device.
           </td>
