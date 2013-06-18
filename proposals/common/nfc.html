@@ -123,9 +123,9 @@ The NFC API supports the following features:
 <!----------------------------- Terminology ---------------------------------->
 <section>
   <h2>Terminology</h2>
-  <p>The <code>
-  <a href="http://dev.w3.org/html5/spec/webappapis.html#eventhandler">
-  EventHandler</a></code> interface represents a callback used for event
+  <p>The <dfn>
+  <a href="http://dev.w3.org/html5/spec/webappapis.html#eventhandler"><code>
+  EventHandler</code></a></dfn> interface represents a callback used for event
   handlers as defined in [[!HTML5]].</p>
 
   <p>The concepts <dfn>
@@ -140,6 +140,13 @@ The NFC API supports the following features:
 <a href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">
   event handler event types</a></dfn> are defined in [[!HTML5]].</p>
   
+  <p>The <dfn><a href="http://dom.spec.whatwg.org/#event"><code>Event</code>
+  </a></dfn> interface and the <dfn>
+  <a href="http://dom.spec.whatwg.org/#promise"><code>Promise</code></a></dfn>
+  interface as well as the concept of a 
+  <a href="http://dom.spec.whatwg.org/#concept-resolver"><dfn>resolver</dfn>
+  </a>are defined in [[!DOM4]].</p>
+
   <p>A <dfn title="NFC tag">NFC tag</dfn> is a passive, unpowered NFC device.
   The <a>NFC tag</a> is powered by magnetic induction when an active NFC device is 
   in close vicinity. A <a>NFC tag</a> contains a single <a>NDEF message</a>.</p>
@@ -184,14 +191,14 @@ The NFC API supports the following features:
     <dt>readonly attribute boolean polling</dt>
     <dd>Indicates that the NFC manager is polling.</dd>
     
-    <dt>Future startPoll()</dt>
+    <dt>Promise startPoll()</dt>
     <dd>Start polling for <a>NFC tag</a>s or peer devices. This method returns 
-    a new <code>Future</code> to notify the caller that the NFC hardware is 
+    a new <code>Promise</code> to notify the caller that the NFC hardware is 
     now polling.</dd>
     
-    <dt>Future stopPoll()</dt>
+    <dt>Promise stopPoll()</dt>
     <dd>Stop polling for <a>NFC tag</a>s or peer devices. This method returns 
-    a new <code>Future</code> to notify the caller that the NFC hardware 
+    a new <code>Promise</code> to notify the caller that the NFC hardware 
     stopped polling.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
@@ -294,14 +301,14 @@ The NFC API supports the following features:
              interface NFCTag"
           class="idl">
 
-    <dt><a>Future</a> readNDEF()</dt>
+    <dt><a>Promise</a> readNDEF()</dt>
     <dd>Read NDEF data from the <a>NFC tag</a>. This method returns 
-    a new <code>Future</code> that will notify the caller with the result of
+    a new <code>Promise</code> that will notify the caller with the result of
     the operation, which is a <a>NDEFRecord</a>.</dd>
     
-    <dt><a>Future</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
+    <dt><a>Promise</a> writeNDEF(<a>NDEFMessage</a> ndefMessage)</dt>
     <dd>Write a <a>NDEF message</a> on the <a>NFC tag</a>. This method returns 
-    a new <code>Future</code> to notify the caller about the operation 
+    a new <code>Promise</code> to notify the caller about the operation 
     success or failure.</dd>
     
   </dl>
@@ -317,14 +324,14 @@ The NFC API supports the following features:
              interface NFCPeer : EventTarget"
           class="idl">
     
-    <dt><a>Future</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
+    <dt><a>Promise</a> sendNDEF(<a>NDEFMessage</a> message)</dt>
     <dd>Send a <a>NDEF message</a> to the NFC peer device. This method returns 
-    a new <code>Future</code> to notify the caller about the operation 
+    a new <code>Promise</code> to notify the caller about the operation 
     success or failure.</dd>
     
-    <dt><a>Future</a> startHandover(HandoverType handoverType)</dt>
+    <dt><a>Promise</a> startHandover(HandoverType handoverType)</dt>
     <dd>Initiates WiFi or Bluetooth pairing with the NFC peer-to-peer target.
-    This method returns a new <code>Future</code> to notify the caller about
+    This method returns a new <code>Promise</code> to notify the caller about
     the operation success or failure.</dd>
     
     <dt class="no-docs"> attribute EventHandler onmessageread</dt>
@@ -378,9 +385,9 @@ Constructor(NDEFRecord［］records)
     <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
     the <a>NDEF message</a>. Otherwise it MUST return an empty list.</dd>
 
-    <dt><a>Future</a> getBytes()</dt>
+    <dt><a>Promise</a> getBytes()</dt>
     <dd>Get the binary representation of the <a>NDEF message</a>. This method  
-    returns a new <code>Future</code> to notify the caller with the result of
+    returns a new <code>Promise</code> to notify the caller with the result of
     the operation, which is of type <code>byte[]</code> i.e. a Javascript 
     Array of Number objects. </dd>
   </dl>
@@ -414,9 +421,9 @@ Constructor(byte tnf,
     <dt>readonly attribute DOMString? id</dt>
     <dd>An identifier for the record, in the form of a URI reference.</dd>
 
-    <dt><a>Future</a> getPayload()</dt>
+    <dt><a>Promise</a> getPayload()</dt>
     <dd>Extract the binary payload of the <a>NDEF record</a>. This method  
-    returns a new <code>Future</code> to notify the caller with the result of
+    returns a new <code>Promise</code> to notify the caller with the result of
     the operation, which is of type <code>byte[]</code> i.e. a Javascript 
     Array of Number objects. </dd>
   </dl>
