@@ -98,10 +98,10 @@ The NFC API supports the following features:
         tag.writeNDEF(new NDEFMessage([hello]));
     }
     
-    var req = navigator.nfc.startPoll();
-    req.onerror = function(e) {
+    navigator.nfc.startPoll().catch(
+      function(e) {
         window.console.error(e);
-    }
+      });
   </pre>
 
 </section>
