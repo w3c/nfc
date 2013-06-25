@@ -189,8 +189,21 @@ The NFC API supports the following features:
              interface NFCManager : EventTarget"
           class="idl">
 
+    <dt>readonly attribute boolean powered</dt>
+    <dd>Indicates that the NFC manager is powered.</dd>
+    
     <dt>readonly attribute boolean polling</dt>
     <dd>Indicates that the NFC manager is polling.</dd>
+    
+    <dt>Promise powerOn()</dt>
+    <dd>Turns NFC hardware power on. This method returns a new 
+    <code>Promise</code> to notify the caller that the NFC hardware is 
+    now powered.</dd>
+    
+    <dt>Promise powerOff()</dt>
+    <dd>Turns NFC hardware power off. This method returns a new 
+    <code>Promise</code> to notify the caller that the NFC hardware power is 
+    turned off.</dd>
     
     <dt>Promise startPoll()</dt>
     <dd>Start polling for <a>NFC tag</a>s or peer devices. This method returns 
@@ -201,6 +214,14 @@ The NFC API supports the following features:
     <dd>Stop polling for <a>NFC tag</a>s or peer devices. This method returns 
     a new <code>Promise</code> to notify the caller that the NFC hardware 
     stopped polling.</dd>
+    
+    <dt class="no-docs"> attribute EventHandler onpoweron</dt>
+    <dd>Event handler called when the <code>poweron</code>
+    event is dispatched.</dd>
+    
+    <dt class="no-docs"> attribute EventHandler onpoweroff</dt>
+    <dd>Event handler called when the <code>poweroff</code>
+    event is dispatched.</dd>
     
     <dt class="no-docs"> attribute EventHandler onpollstart</dt>
     <dd>Event handler called when the <code>pollstart</code>
@@ -246,6 +267,20 @@ The NFC API supports the following features:
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><strong><code>onpoweron</code></strong></td>
+        <td><code><dfn>poweron</dfn></code></td>
+        <td><a>simple event</a></td>
+        <td>fired when the <code>powered</code> state changes to 
+          <code>true</code></td>
+      </tr>
+      <tr>
+        <td><strong><code>onpoweroff</code></strong></td>
+        <td><code><dfn>poweroff</dfn></code></td>
+        <td><a>simple event</a></td>
+        <td>fired when the <code>powered</code> state changes to 
+          <code>false</code></td>
+      </tr>
       <tr>
         <td><strong><code>onpollstart</code></strong></td>
         <td><code><dfn>pollstart</dfn></code></td>
