@@ -88,6 +88,24 @@ The NFC API supports the following features:
 <li>Sending and receiving <a>NDEF message</a>s on peer targets</li>
 <li>Bluetooth or WiFi pairing (or "handover") with a peer target</li>
 </ul>
+
+<p>
+Here are some possible use cases:
+<ul>
+<li><b>Tap to Play</b>: tap your device to another to play a peer-to-peer game,
+using the <a>NFCPeer</a> interface to exchange <a>NDEF message</a>s.</li>
+<li><b>Tap to Share</b>: tap to share some data, e.g. coupons, contacts,
+using the <a>NFCPeer</a> interface to exchange <a>NDEF message</a>s.</li>
+<li><b>Tap to Control</b>: tap to control another device, like a TV remote,
+using the "handover" capability of the <a>NFCPeer</a> interface.</li>
+<li><b>Tap to Connect</b>: tap to connect via WiFi or Bluetooth,
+using the "handover" capability of the <a>NFCPeer</a> interface.</li>
+<li><b>Tap to Read</b>: tap to read NFC tags,
+using the <a>NFCTag</a> interface.</li>
+<li><b>Tap to Write</b>: tap to write NFC tags,
+using the <a>NFCTag</a> interface.</li>
+</ul>
+
   <p>An example of use is provided below:
   <pre class="example highlight">
     var hello = new NDEFRecordText("hello world", "en-US", "UTF-8");
