@@ -35,7 +35,7 @@
   </script>
 </head>
 
-<!-----------------------------------------------------------------------------
+<!--
 Style guide to contributors:
 ============================
 - this document uses ReSpec, see
@@ -45,15 +45,15 @@ Style guide to contributors:
 - put comments in front of sections, for better readability with syntax
   coloring editors
 - use indentation with care: it may improve readability, but at the expense of
-  line lenght
+  line length
 - when descriptions of attributes is short, use the <dd> elements even when
   the text also contains conformance statements (e.g. MUST, SHOULD, MAY).
   No use repeating the same information in a separate paragraph.
------------------------------------------------------------------------------->
+-->
 
 <body>
 
-<!------------------------------ Abstract ------------------------------------>
+<!-- Abstract -->
 <section id="abstract">
 Near Field Communication (NFC) is an international standard (ISO/IEC 18092) 
 that specifies an interface and protocol for simple wireless interconnection of
@@ -74,12 +74,12 @@ usually less than a few centimeters.
 </section>
 
 
-<!----------------------- Status of this document ---------------------------->
+<!-- Status of this document -->
 <section id="sotd">
 </section>
 
 
-<!----------------------------- Introduction --------------------------------->
+<!-- Introduction -->
 <section class="informative">
   <h2>Introduction</h2>
 The NFC API supports the following features:
@@ -125,7 +125,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!---------------------------- Conformance ----------------------------------->
+<!-- Conformance -->
 <section id="conformance">
   <p>This specification defines conformance criteria that apply to a single
   product: the <dfn id="ua">user agent</dfn> that implements the interfaces
@@ -138,7 +138,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!----------------------------- Terminology ---------------------------------->
+<!-- Terminology -->
 <section>
   <h2>Terminology</h2>
   <p>The <dfn>
@@ -182,7 +182,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!---------------------- Extended interface Navigator ------------------------>
+<!-- Extended interface Navigator -->
 <section>
   <h2>Extensions to <code>Navigator</code> object</h2>
   <p>The <a>NFCManager</a> interface is exposed on [[!HTML]]'s
@@ -196,7 +196,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!------------------------ Interface NFCManager ------------------------------>
+<!-- Interface NFCManager -->
 <section>
   <h2><a>NFCManager</a> Interface</h2>
   <p>The <a>NFCManager</a> interface defines access to NFC functionality and
@@ -312,7 +312,7 @@ using the <a>NFCTag</a> interface.</li>
 </section> <!-- NFCManager -->      
 
 
-<!------------------------ Interface NFCTagEvent ----------------------------->
+<!-- Interface NFCTagEvent -->
 <section>
   <h2><a>NFCTagEvent</a> Interface</h2>
 
@@ -326,7 +326,7 @@ using the <a>NFCTag</a> interface.</li>
 </section><!-- NFCTagEvent -->
 
 
-<!------------------------ Interface NFCPeerEvent ---------------------------->
+<!-- Interface NFCPeerEvent -->
 <section>
   <h2><a>NFCPeerEvent</a> Interface</h2>
 
@@ -340,7 +340,7 @@ using the <a>NFCTag</a> interface.</li>
 </section><!-- NFCPeerEvent -->
 
 
-<!------------------------ Interface NDEFMessageEvent ------------------------>
+<!-- Interface NDEFMessageEvent -->
 <section>
   <h2><a>NDEFMessageEvent</a> Interface</h2>
 
@@ -354,7 +354,7 @@ using the <a>NFCTag</a> interface.</li>
 </section><!-- NDEFMessageEvent -->
 
 
-<!------------------------ Interface NFCTag ---------------------------------->
+<!-- Interface NFCTag -->
 <section>
   <h2><a>NFCTag</a> Interface</h2>
   
@@ -382,7 +382,7 @@ using the <a>NFCTag</a> interface.</li>
 </section> <!-- NFCTag -->
 
 
-<!------------------------ Interface NFCPeer --------------------------------->
+<!-- Interface NFCPeer -->
 <section>
   <h2><a>NFCPeer</a> Interface</h2>
   
@@ -446,7 +446,7 @@ using the <a>NFCTag</a> interface.</li>
 </section> <!-- NFCPeer -->
 
 
-<!------------------------ Interface NDEFMessage ----------------------------->
+<!-- Interface NDEFMessage -->
 <section>
   <h2><a>NDEFMessage</a> Interface</h2>
   
@@ -471,7 +471,7 @@ Constructor(NDEFRecord［］records)
 </section> <!-- NDEFMessage -->
 
 
-<!------------------------ Interface NDEFRecord ------------------------------>
+<!-- Interface NDEFRecord -->
 <section>
   <h2><a>NDEFRecord</a> Interface</h2>
   
@@ -507,7 +507,7 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecord -->
 
 
-<!------------------------ Interface NDEFRecordText -------------------------->
+<!-- Interface NDEFRecordText -->
 <section>
   <h2><a>NDEFRecordText</a> Interface</h2>
   
@@ -532,7 +532,7 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecordText -->
 
 
-<!------------------------ Interface NDEFRecordURI --------------------------->
+<!-- Interface NDEFRecordURI -->
 <section>
   <h2><a>NDEFRecordURI</a> Interface</h2>
   
@@ -547,7 +547,7 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecordURI -->
 
 
-<!------------------------ Interface NDEFRecordMedia -------------------------->
+<!-- Interface NDEFRecordMedia -->
 <section>
   <h2><a>NDEFRecordMedia</a> Interface</h2>
   
@@ -564,7 +564,7 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecordMedia -->
 
 
-<!------------------------ Interface NDEFRecordSmartPoster ------------------->
+<!-- Interface NDEFRecordSmartPoster -->
 <section>
   <h2><a>NDEFRecordSmartPoster</a> Interface</h2>
   
@@ -604,7 +604,7 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecordSmartPoster -->
     
 
-<!------------------------ Interface Enumerations ---------------------------->
+<!-- Interface Enumerations -->
 <section>
   <h2>Enumerations</h2>
   
