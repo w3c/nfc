@@ -487,9 +487,6 @@ Constructor(byte tnf,
              interface NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute NDEFRecordType recordType</dt>
-    <dd>The record type, according to the sub-interface in implements.</dd>
-
     <dt>readonly attribute byte tnf</dt>
     <dd>The record's Type Name Format. Possible values are 0 (Empty),
       1 (Well known), 2 (Media), 3 (URI), 4 (External), 5 (Unknown)</dd>
@@ -780,31 +777,7 @@ Constructor(byte tnf,
     
   </dl>
   
-  
-  <p>The attribute <code>recordType</code> can have the following values:
-  <dl class="idl" title="enum NDEFRecordType">
-    <dt>text</dt>
-    <dd>
-      Corresponding to NDEFRecordText.
-    </dd>
-    <dt>uri</dt>
-    <dd>
-      Corresponding to NDEFRecordURI.
-    </dd>
-    <dt>media</dt>
-    <dd>
-      Corresponding to NDEFRecordMedia.
-    </dd>
-    <dt>smartPoster</dt>
-    <dd>
-      Corresponding to NDEFRecordSmartPoster.
-    </dd>
-    <dt>unknown</dt>
-    <dd>
-      Corresponding to the base NDEFRecord interface.
-    </dd>
-  </dl>
-  
+    
   <p>The attribute <code>action</code> can have the following values:
   <dl class="idl" title="enum SmartPosterAction">
     <dt>do</dt>
