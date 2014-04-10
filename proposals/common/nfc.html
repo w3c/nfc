@@ -450,8 +450,10 @@ using the <a>NFCTag</a> interface.</li>
 <section>
   <h2><a>NDEFMessage</a> Interface</h2>
   
+  <p>A NDEFMessage contains one or more NDEFRecords.</p>
+  
   <dl title="[
-Constructor(byte［］bytes)
+Constructor(byte［］bytes),
 Constructor(NDEFRecord［］records)
 ]
              interface NDEFMessage"
@@ -459,7 +461,7 @@ Constructor(NDEFRecord［］records)
           
     <dt>readonly attribute NDEFRecord[] records</dt>
     <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
-    the <a>NDEF message</a>. Otherwise it MUST return an empty list.</dd>
+    the <a>NDEF message</a>.</dd>
 
     <dt><a>Promise</a> getBytes()</dt>
     <dd>Get the binary representation of the <a>NDEF message</a>. This method  
@@ -474,12 +476,9 @@ Constructor(NDEFRecord［］records)
 <!-- Interface NDEFRecord -->
 <section>
   <h2><a>NDEFRecord</a> Interface</h2>
-  
-  <p>TODO: use Enum for TNF?</p>
-  <p>TODO: Clarify that TNF is the 3 bit TNF value with any bit-flags removed</p>
-  
+    
   <dl title="[
-Constructor(byte tnf, 
+Constructor(TNF tnf, 
   optional DOMString type, 
   optional byte［］payload, 
   optional DOMString id)
@@ -487,9 +486,8 @@ Constructor(byte tnf,
              interface NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute byte tnf</dt>
-    <dd>The record's Type Name Format. Possible values are 0 (Empty),
-      1 (Well known), 2 (Media), 3 (URI), 4 (External), 5 (Unknown)</dd>
+    <dt>readonly attribute TNF tnf</dt>
+    <dd>The record's 3-bit Type Name Format constant.</dd>
 
     <dt>readonly attribute DOMString? type</dt>
     <dd>A string identifier describing the type of the payload.</dd>
@@ -523,13 +521,13 @@ Constructor(byte tnf,
 
 <section>
     <h2>Well-known</h2>
-    <p>Well-known record types are defined in the [NFC RTD] "NFC Record Type Definition (RTD) Specification", NFC Forum, 2006. All well-known records have TNF 0x01.</p>
+    <p>Well-known record types are defined in the "NFC Record Type Definition (RTD) Specification", NFC Forum, 2006. All well-known records have TNF 0x01.</p>
 
     <!-- Interface NDEFRecordText -->
     <section>
       <h2><a>NDEFRecordText</a> Interface</h2>
       
-      <p>Record type "T", see "NFC Text RTD Specification", NFC Forum, 2006.</p>
+      <p>TNF 0x01, Record type "T", see "NFC Text RTD Specification", NFC Forum, 2006.</p>
   
       <dl title="[Constructor(DOMString text, 
                  optional DOMString languageCode,
@@ -556,7 +554,7 @@ Constructor(byte tnf,
     <section>
       <h2><a>NDEFRecordURI</a> Interface</h2>
       
-      <p>Record type "U", see "URI RTD Specification", NFC Forum, 2006.</p> <!-- The uri is the full URI http://w3c.org rather than the prefix and the shortened uri 0x3 w3.org -->      
+      <p>TNF 0x01, Record type "U", see "URI RTD Specification", NFC Forum, 2006.</p> <!-- The uri is the full URI http://w3c.org rather than the prefix and the shortened uri 0x3 w3.org -->      
   
       <dl title="[Constructor(DOMString uri)]
                  interface NDEFRecordURI : NDEFRecord"
@@ -579,7 +577,7 @@ Constructor(byte tnf,
     <section>
       <h2><a>NDEFRecordSmartPoster</a> Interface</h2>
 
-      <p>Record type "Sp", see "Smart Poster RTD Specification", NFC Forum, 2006.</p>
+      <p>TNF 0x01, Record type "Sp", see "Smart Poster RTD Specification", NFC Forum, 2006.</p>
       
       <dl title="[Constructor(DOMString uri,
                  optional NDEFRecordText［］titles,
@@ -620,7 +618,7 @@ Constructor(byte tnf,
     <section>
         <h2>Handover</h2>
         
-        <p>TODO can we use the generic NDEFRecord for Handover records: "ac", "Hc", "Hr", "Hs"?</p>
+        <p><b>TODO:</b> should we use the generic NDEFRecord for Handover records: "ac", "Hc", "Hr", "Hs" or create specific subclasses?</p>
         <!-- Handover Records are well known too 
         RTD_ALTERNATIVE_CARRIER: [0x61, 0x63], // "ac"
         RTD_HANDOVER_CARRIER: [0x48, 0x63], // "Hc"
@@ -638,19 +636,13 @@ Constructor(byte tnf,
 <section>
   <h2><a>NDEFRecordMedia</a> Interface</h2>
   
-  <p>Media records use a MIME Type in the type field to describe the contents of the payload. Media records have a TNF 0x02.</p>
-  
-  <p>TODO mimeType is in the constructor, but this is stored in type attribute. There is no need for an additional attribute.</p>
-  <p>TODO constructor should be overloaded to accept byte[] or DOMString for the payload.</p>
-  
-  <dl title="[Constructor(DOMString mimeType,
-             byte［］payload)]
+  <p>Media records have TNF 0x02 and use a MIME Type to describe the contents of the payload. The "NFC Data Exchange Format (NDEF)
+    Technical Specification", NFC Forum, 2006, specifies the MIME type should be in the format, as defined in <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>. The mimeType in the constructor, is stored in type attribute of the <code>NDEFRecord</code>. The payload may be constructed as a byte[] or DOMString.</p>
+    
+  <dl title="[Constructor(DOMString mimeType, byte［］payload),
+ Constructor(DOMString mimeType, DOMString payload)]
              interface NDEFRecordMedia : NDEFRecord"
-          class="idl">
-
-    <dt>readonly attribute DOMString mimeType</dt>
-    <dd>The MIME type of the payload, as defined in
-      <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>.</dd>
+          class="idl">    
   </dl>
 
   <pre class="example highlight">
@@ -664,20 +656,15 @@ Constructor(byte tnf,
 <section>
   <h2><a>NDEFRecordAbsoluteURI</a> Interface</h2>
   
-  <p>Absolute URI records use a URI in the type field to describe the contents of the payload. Absolute URI records have a TNF 0x03.</p>
-  <p>Note that the URI is used to describe the payload. Users that want to put a URI in the payload should use NDEFRecordURI.</p>
-  
-  <p>TODO clarify type is in the constructor, but this is stored in the type attribute. There is no need for an additional attribute.</p>
-  <p>TODO constructor should be overloaded to accept byte[] or DOMString for the payload.</p>
-  
-  <dl title="[Constructor(DOMString type,
-             byte［］payload)]
+  <p>Absolute URI records have TNF 0x03 and use a URI in the type field to describe the contents of the payload. The "NFC Data Exchange Format (NDEF)
+  Technical Specification", NFC Forum, 2006, specifies the type should be an absolute-URI, as defined in <a href="http://www.ietf.org/rfc/rfc3986.txt">[RFC 3986]</a>.</p>
+  <p>Note that the URI in an <code>NDEFRecordAbsoluteURI</code> describes the payload. Users who want to store a URI in an <code>NDEFRecord</code> should use <a>NDEFRecordURI</a>.</p>
+    
+  <dl title="[Constructor(DOMString type, byte［］payload),
+ Constructor(DOMString type, DOMString payload)]
              interface NDEFRecordAbsoluteURI : NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute DOMString type</dt>
-    <dd>The type of the payload, as defined in
-      <a href="http://www.ietf.org/rfc/rfc3986.txt">[RFC 3986]</a>.</dd>
   </dl>
   
   <pre class="example highlight">
@@ -705,19 +692,13 @@ Constructor(byte tnf,
 <section>
   <h2><a>NDEFRecordExternal</a> Interface</h2>
   
-  <p>External type records allow custom name spaces to be defined. External types should be being with the reverse domain name followed by a colon and the type. The type should be passed to the constructor without the <code>urn:nfc:ext:</code> prefix. External records have TNF 0x04. The record type is defined in the [NFC RTD] "NFC Record Type Definition (RTD) Specification", NFC Forum, 2006, Section 2.2.</p>
-  
-  <p>TODO clarify type is in the constructor, but this is stored in the type attribute. There is no need for an additional attribute.</p>
-  <p>TODO constructor should be overloaded to accept byte[] or DOMString for the payload.</p>
-  
-  <dl title="[Constructor(DOMString type,
-             byte［］payload)]
+  <p>External type records allow custom name spaces to be defined. External records have TNF 0x04. The external type begins with the reverse domain name followed by a colon and the type. The external type should be passed to the constructor without the <code>urn:nfc:ext:</code> prefix. The record type is defined in the "NFC Record Type Definition (RTD) Specification", NFC Forum, 2006, Section 2.2 NFC Forum External Type.</p>
+    
+  <dl title="[Constructor(DOMString type, byte［］payload),
+ Constructor(DOMString type, DOMString payload)]
              interface NDEFRecordExternal : NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute DOMString type</dt>
-    <dd>The type of the payload, as defined in NFC Record Type Definition (RTD)
-         Technical Specification.</dd>
   </dl>
   
   <pre class="example highlight">
@@ -727,19 +708,16 @@ Constructor(byte tnf,
 
 </section> <!-- NDEFRecordExternal -->
 
-
 <section>
     <h2>Record Chunking</h2>
-    <p>TODO: Assume the underlying implementation will read chunked data and combine any TNF Unchanged (0x06) into the first chunk creating a logical NDEF Record.</p>
+    
+    <p>When reading chunked content, implementations should combine TNF unchanged (0x06) records with the first chunk creating one logical <code>NDEFRecord</code>. Refer to "NFC Data Exchange Format (NDEF) Technical Specification" NFC Forum, 2006, Section 2.3.3 Record Chunks for more information.</p>
 </section>
-
 
 <!-- Interface Enumerations -->
 <section>
   <h2>Enumerations</h2>
-  
-  <p>TODO should TNF enum values be lowercase?</p>
-  
+    
   <p>NFC Type Name Format (TNF) constants are defined in the "NFC Data Exchange Format (NDEF) Technical Specification". The TNF field describes the format of the data in the record type field. The attribute <code>tnf</code> can have the following values:</p>
   <dl class="idl" title="enum TNF">
     <dt>Empty</dt>
