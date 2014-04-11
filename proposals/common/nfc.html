@@ -35,7 +35,7 @@
   </script>
 </head>
 
-<!-----------------------------------------------------------------------------
+<!--
 Style guide to contributors:
 ============================
 - this document uses ReSpec, see
@@ -45,15 +45,15 @@ Style guide to contributors:
 - put comments in front of sections, for better readability with syntax
   coloring editors
 - use indentation with care: it may improve readability, but at the expense of
-  line lenght
+  line length
 - when descriptions of attributes is short, use the <dd> elements even when
   the text also contains conformance statements (e.g. MUST, SHOULD, MAY).
   No use repeating the same information in a separate paragraph.
------------------------------------------------------------------------------->
+-->
 
 <body>
 
-<!------------------------------ Abstract ------------------------------------>
+<!-- Abstract -->
 <section id="abstract">
 Near Field Communication (NFC) is an international standard (ISO/IEC 18092) 
 that specifies an interface and protocol for simple wireless interconnection of
@@ -74,12 +74,12 @@ usually less than a few centimeters.
 </section>
 
 
-<!----------------------- Status of this document ---------------------------->
+<!-- Status of this document -->
 <section id="sotd">
 </section>
 
 
-<!----------------------------- Introduction --------------------------------->
+<!-- Introduction -->
 <section class="informative">
   <h2>Introduction</h2>
 The NFC API supports the following features:
@@ -125,7 +125,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!---------------------------- Conformance ----------------------------------->
+<!-- Conformance -->
 <section id="conformance">
   <p>This specification defines conformance criteria that apply to a single
   product: the <dfn id="ua">user agent</dfn> that implements the interfaces
@@ -138,7 +138,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!----------------------------- Terminology ---------------------------------->
+<!-- Terminology -->
 <section>
   <h2>Terminology</h2>
   <p>The <dfn>
@@ -182,7 +182,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!---------------------- Extended interface Navigator ------------------------>
+<!-- Extended interface Navigator -->
 <section>
   <h2>Extensions to <code>Navigator</code> object</h2>
   <p>The <a>NFCManager</a> interface is exposed on [[!HTML]]'s
@@ -196,7 +196,7 @@ using the <a>NFCTag</a> interface.</li>
 </section>
 
 
-<!------------------------ Interface NFCManager ------------------------------>
+<!-- Interface NFCManager -->
 <section>
   <h2><a>NFCManager</a> Interface</h2>
   <p>The <a>NFCManager</a> interface defines access to NFC functionality and
@@ -312,7 +312,7 @@ using the <a>NFCTag</a> interface.</li>
 </section> <!-- NFCManager -->      
 
 
-<!------------------------ Interface NFCTagEvent ----------------------------->
+<!-- Interface NFCTagEvent -->
 <section>
   <h2><a>NFCTagEvent</a> Interface</h2>
 
@@ -326,7 +326,7 @@ using the <a>NFCTag</a> interface.</li>
 </section><!-- NFCTagEvent -->
 
 
-<!------------------------ Interface NFCPeerEvent ---------------------------->
+<!-- Interface NFCPeerEvent -->
 <section>
   <h2><a>NFCPeerEvent</a> Interface</h2>
 
@@ -340,7 +340,7 @@ using the <a>NFCTag</a> interface.</li>
 </section><!-- NFCPeerEvent -->
 
 
-<!------------------------ Interface NDEFMessageEvent ------------------------>
+<!-- Interface NDEFMessageEvent -->
 <section>
   <h2><a>NDEFMessageEvent</a> Interface</h2>
 
@@ -354,7 +354,7 @@ using the <a>NFCTag</a> interface.</li>
 </section><!-- NDEFMessageEvent -->
 
 
-<!------------------------ Interface NFCTag ---------------------------------->
+<!-- Interface NFCTag -->
 <section>
   <h2><a>NFCTag</a> Interface</h2>
   
@@ -382,7 +382,7 @@ using the <a>NFCTag</a> interface.</li>
 </section> <!-- NFCTag -->
 
 
-<!------------------------ Interface NFCPeer --------------------------------->
+<!-- Interface NFCPeer -->
 <section>
   <h2><a>NFCPeer</a> Interface</h2>
   
@@ -446,12 +446,14 @@ using the <a>NFCTag</a> interface.</li>
 </section> <!-- NFCPeer -->
 
 
-<!------------------------ Interface NDEFMessage ----------------------------->
+<!-- Interface NDEFMessage -->
 <section>
   <h2><a>NDEFMessage</a> Interface</h2>
   
+  <p>A NDEFMessage contains one or more NDEFRecords.</p>
+  
   <dl title="[
-Constructor(byte［］bytes)
+Constructor(byte［］bytes),
 Constructor(NDEFRecord［］records)
 ]
              interface NDEFMessage"
@@ -459,7 +461,7 @@ Constructor(NDEFRecord［］records)
           
     <dt>readonly attribute NDEFRecord[] records</dt>
     <dd>MUST return an array of all <code>NDEFRecord</code> objects part of 
-    the <a>NDEF message</a>. Otherwise it MUST return an empty list.</dd>
+    the <a>NDEF message</a>.</dd>
 
     <dt><a>Promise</a> getBytes()</dt>
     <dd>Get the binary representation of the <a>NDEF message</a>. This method  
@@ -471,12 +473,12 @@ Constructor(NDEFRecord［］records)
 </section> <!-- NDEFMessage -->
 
 
-<!------------------------ Interface NDEFRecord ------------------------------>
+<!-- Interface NDEFRecord -->
 <section>
   <h2><a>NDEFRecord</a> Interface</h2>
-  
+    
   <dl title="[
-Constructor(byte tnf, 
+Constructor(TNF tnf, 
   optional DOMString type, 
   optional byte［］payload, 
   optional DOMString id)
@@ -484,12 +486,8 @@ Constructor(byte tnf,
              interface NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute NDEFRecordType recordType</dt>
-    <dd>The record type, according to the sub-interface in implements.</dd>
-
-    <dt>readonly attribute byte tnf</dt>
-    <dd>The record's Type Name Format. Possible values are 0 (Empty),
-      1 (Well known), 2 (Media), 3 (URI), 4 (External), 5 (Unknown)</dd>
+    <dt>readonly attribute TNF tnf</dt>
+    <dd>The record's 3-bit Type Name Format constant.</dd>
 
     <dt>readonly attribute DOMString? type</dt>
     <dd>A string identifier describing the type of the payload.</dd>
@@ -507,131 +505,257 @@ Constructor(byte tnf,
 </section> <!-- NDEFRecord -->
 
 
-<!------------------------ Interface NDEFRecordText -------------------------->
+<!-- Interface NDEFRecordEmpty -->
 <section>
-  <h2><a>NDEFRecordText</a> Interface</h2>
+  <h2><a>NDEFRecordEmpty</a> Interface</h2>
   
-  <dl title="[Constructor(DOMString text, 
-             optional DOMString languageCode,
-             optional DOMString encoding)]
-             interface NDEFRecordText : NDEFRecord"
+  <p>Empty NDEF record with TNF 0x00. Record type and payload must be null.</p>
+  
+  <dl title="[Constructor()]
+             interface NDEFRecordEmpty : NDEFRecord"
           class="idl">
-          
-    <dt>readonly attribute DOMString text</dt>
-    <dd>The encoded text.</dd>
-          
-    <dt>readonly attribute DOMString languageCode</dt>
-    <dd>The language code string value, followed by 
-      <a href="http://www.ietf.org/rfc/rfc3066.txt">IANA[RFC 3066]</a>
-      (ex: en-US, ko-KR).</dd>
-          
-    <dt>readonly attribute DOMString encoding</dt>
-    <dd>The encoding type MUST be either UTF-8 or UTF-16</dd>
   </dl>
 
-</section> <!-- NDEFRecordText -->
+</section> <!-- NDEFRecordEmpty -->
 
 
-<!------------------------ Interface NDEFRecordURI --------------------------->
 <section>
-  <h2><a>NDEFRecordURI</a> Interface</h2>
+    <h2>Well-known</h2>
+    <p>Well-known record types are defined in the "NFC Record Type Definition (RTD) Specification", NFC Forum, 2006. All well-known records have TNF 0x01.</p>
+
+    <!-- Interface NDEFRecordText -->
+    <section>
+      <h2><a>NDEFRecordText</a> Interface</h2>
+      
+      <p>TNF 0x01, Record type "T", see "NFC Text RTD Specification", NFC Forum, 2006.</p>
   
-  <dl title="[Constructor(DOMString uri)]
-             interface NDEFRecordURI : NDEFRecord"
-          class="idl">
+      <dl title="[Constructor(DOMString text, 
+                 optional DOMString languageCode,
+                 optional DOMString encoding)]
+                 interface NDEFRecordText : NDEFRecord"
+              class="idl">
           
-    <dt>readonly attribute DOMString uri</dt>
-    <dd>The URI string that will be stored in the payload.</dd>
-  </dl>
+        <dt>readonly attribute DOMString text</dt>
+        <dd>The encoded text.</dd>
+          
+        <dt>readonly attribute DOMString languageCode</dt>
+        <dd>The language code string value, followed by 
+          <a href="http://www.ietf.org/rfc/rfc3066.txt">IANA[RFC 3066]</a>
+          (ex: en-US, ko-KR).</dd>
+          
+        <dt>readonly attribute DOMString encoding</dt>
+        <dd>The encoding type MUST be either UTF-8 or UTF-16</dd>
+      </dl>
 
-</section> <!-- NDEFRecordURI -->
+    </section> <!-- NDEFRecordText -->
 
 
-<!------------------------ Interface NDEFRecordMedia -------------------------->
+    <!-- Interface NDEFRecordURI -->
+    <section>
+      <h2><a>NDEFRecordURI</a> Interface</h2>
+      
+      <p>TNF 0x01, Record type "U", see "URI RTD Specification", NFC Forum, 2006.</p> <!-- The uri is the full URI http://w3c.org rather than the prefix and the shortened uri 0x3 w3.org -->      
+  
+      <dl title="[Constructor(DOMString uri)]
+                 interface NDEFRecordURI : NDEFRecord"
+              class="idl">
+          
+        <dt>readonly attribute DOMString uri</dt>
+        <dd>The URI string that will be stored in the payload.</dd>
+      </dl>
+      
+      <pre class="example highlight">
+          var record = NDEFRecordURI("http://w3c.org"); 
+          // uri is stored payload as 0x03 + w3c.org          
+          console.log(record.uri); // prints http://w3c.org
+      </pre>
+      
+    </section> <!-- NDEFRecordURI -->
+    
+    
+    <!-- Interface NDEFRecordSmartPoster -->
+    <section>
+      <h2><a>NDEFRecordSmartPoster</a> Interface</h2>
+
+      <p>TNF 0x01, Record type "Sp", see "Smart Poster RTD Specification", NFC Forum, 2006.</p>
+      
+      <dl title="[Constructor(DOMString uri,
+                 optional NDEFRecordText［］titles,
+                 optional DOMString action,
+                 optional NDEFRecordMedia［］icons,
+                 optional unsigned long targetSize,
+                 optional DOMString targetMIME)]
+                 interface NDEFRecordSmartPoster : NDEFRecord"
+              class="idl">
+
+        <dt>readonly attribute DOMString uri</dt>
+        <dd>The URI field of the Smart Poster record, REQUIRED by the 
+          NFC forum specification.</dd>
+
+        <dt>readonly attribute NDEFRecordText[]? titles</dt>
+        <dd>The title in different languages. There MUST NOT be more than
+          one title record with the same language code string value.</dd>
+
+        <dt>readonly attribute SmartPosterAction? action</dt>
+        <dd>The possible actions defined by the NFC forum Smart Poster 
+        Record Type.</dd>
+
+        <dt>readonly attribute NDEFRecordMedia[]? icons</dt>
+        <dd>The Smart Poster Record can contain one or more icons, that can
+          also be animated.</dd>
+
+        <dt>readonly attribute unsigned long? targetSize</dt>
+        <dd>The size of the URI target in bytes.</dd>
+
+        <dt>readonly attribute DOMString? targetMIME</dt>
+        <dd>The MIME type of the URI target.</dd>
+
+      </dl>
+
+    </section> <!-- NDEFRecordSmartPoster -->
+    
+    
+    <section>
+        <h2>Handover</h2>
+        
+        <p><b>TODO:</b> should we use the generic NDEFRecord for Handover records: "ac", "Hc", "Hr", "Hs" or create specific subclasses?</p>
+        <!-- Handover Records are well known too 
+        RTD_ALTERNATIVE_CARRIER: [0x61, 0x63], // "ac"
+        RTD_HANDOVER_CARRIER: [0x48, 0x63], // "Hc"
+        RTD_HANDOVER_REQUEST: [0x48, 0x72], // "Hr"
+        RTD_HANDOVER_SELECT: [0x48, 0x73], // "Hs"
+        -->
+        
+    </section>
+    
+    
+</section> <!-- Well Known Record Types -->
+
+
+<!-- Interface NDEFRecordMedia -->
 <section>
   <h2><a>NDEFRecordMedia</a> Interface</h2>
   
-  <dl title="[Constructor(DOMString mimeType,
-             byte［］payload)]
+  <p>Media records have TNF 0x02 and use a MIME Type to describe the contents of the payload. The "NFC Data Exchange Format (NDEF)
+    Technical Specification", NFC Forum, 2006, specifies the MIME type should be in the format, as defined in <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>. The mimeType in the constructor, is stored in type attribute of the <code>NDEFRecord</code>. The payload may be constructed as a byte[] or DOMString.</p>
+    
+  <dl title="[Constructor(DOMString mimeType, byte［］payload),
+ Constructor(DOMString mimeType, DOMString payload)]
              interface NDEFRecordMedia : NDEFRecord"
-          class="idl">
-
-    <dt>readonly attribute DOMString mimeType</dt>
-    <dd>The MIME type of the payload, as defined in
-      <a href="http://www.ietf.org/rfc/rfc2046.txt">[RFC 2046]</a>.</dd>
+          class="idl">    
   </dl>
+
+  <pre class="example highlight">
+      var record = NDEFRecordMedia("application/json", '{"message" : "Hello, world"}');      
+  </pre>
 
 </section> <!-- NDEFRecordMedia -->
 
 
-<!------------------------ Interface NDEFRecordSmartPoster ------------------->
+<!-- Interface NDEFRecordAbsoluteURI -->
 <section>
-  <h2><a>NDEFRecordSmartPoster</a> Interface</h2>
+  <h2><a>NDEFRecordAbsoluteURI</a> Interface</h2>
   
-  <dl title="[Constructor(DOMString uri,
-             optional NDEFRecordText［］titles,
-             optional DOMString action,
-             optional NDEFRecordMedia［］icons,
-             optional unsigned long targetSize,
-             optional DOMString targetMIME)]
-             interface NDEFRecordSmartPoster : NDEFRecord"
+  <p>Absolute URI records have TNF 0x03 and use a URI in the type field to describe the contents of the payload. The "NFC Data Exchange Format (NDEF)
+  Technical Specification", NFC Forum, 2006, specifies the type should be an absolute-URI, as defined in <a href="http://www.ietf.org/rfc/rfc3986.txt">[RFC 3986]</a>.</p>
+  <p>Note that the URI in an <code>NDEFRecordAbsoluteURI</code> describes the payload. Users who want to store a URI in an <code>NDEFRecord</code> should use <a>NDEFRecordURI</a>.</p>
+    
+  <dl title="[Constructor(DOMString type, byte［］payload),
+ Constructor(DOMString type, DOMString payload)]
+             interface NDEFRecordAbsoluteURI : NDEFRecord"
           class="idl">
 
-    <dt>readonly attribute DOMString uri</dt>
-    <dd>The URI field of the Smart Poster record, REQUIRED by the 
-      NFC forum specification.</dd>
+  </dl>
+  
+  <pre class="example highlight">
+      // Windows LaunchApp Record
+      
+      // [00] 00 01 0C 57 69 6E 64 6F 77 73 50 68 6F 6E 65 26 |...WindowsPhone&|
+      // [10] 7B 66 35 38 37 34 32 35 32 2D 31 66 30 34 2D 34 |{f5874252-1f04-4|
+      // [20] 63 33 66 2D 61 33 33 35 2D 34 66 61 33 62 37 62 |c3f-a335-4fa3b7b|
+      // [30] 38 35 33 32 39 7D 00 01 20                      |85329}.. |
 
-    <dt>readonly attribute NDEFRecordText[]? titles</dt>
-    <dd>The title in different languages. There MUST NOT be more than
-      one title record with the same language code string value.</dd>
+      var payload = [ 
+        0x00, 0x01, 0x0C, 0x57, 0x69, 0x6E, 0x64, 0x6F, 0x77, 0x73, 0x50, 0x68, 0x6F, 0x6E, 0x65, 0x26,
+        0x7B, 0x66, 0x35, 0x38, 0x37, 0x34, 0x32, 0x35, 0x32, 0x2D, 0x31, 0x66, 0x30, 0x34, 0x2D, 0x34,
+        0x63, 0x33, 0x66, 0x2D, 0x61, 0x33, 0x33, 0x35, 0x2D, 0x34, 0x66, 0x61, 0x33, 0x62, 0x37, 0x62,
+        0x38, 0x35, 0x33, 0x32, 0x39, 0x7D, 0x00, 0x01, 0x20
+      ]
+            
+      var record = new NDEFRecordAbsoluteURI("windows.com/LaunchApp", payload);
+  </pre>
+  
+</section> <!-- NDEFRecordAbsoluteURI -->
 
-    <dt>readonly attribute SmartPosterAction? action</dt>
-    <dd>The possible actions defined by the NFC forum Smart Poster 
-    Record Type.</dd>
 
-    <dt>readonly attribute NDEFRecordMedia[]? icons</dt>
-    <dd>The Smart Poster Record can contain one or more icons, that can
-      also be animated.</dd>
-
-    <dt>readonly attribute unsigned long? targetSize</dt>
-    <dd>The size of the URI target in bytes.</dd>
-
-    <dt>readonly attribute DOMString? targetMIME</dt>
-    <dd>The MIME type of the URI target.</dd>
+<!-- Interface NDEFRecordExternal -->
+<section>
+  <h2><a>NDEFRecordExternal</a> Interface</h2>
+  
+  <p>External type records allow custom name spaces to be defined. External records have TNF 0x04. The external type begins with the reverse domain name followed by a colon and the type. The external type should be passed to the constructor without the <code>urn:nfc:ext:</code> prefix. The record type is defined in the "NFC Record Type Definition (RTD) Specification", NFC Forum, 2006, Section 2.2 NFC Forum External Type.</p>
+    
+  <dl title="[Constructor(DOMString type, byte［］payload),
+ Constructor(DOMString type, DOMString payload)]
+             interface NDEFRecordExternal : NDEFRecord"
+          class="idl">
 
   </dl>
+  
+  <pre class="example highlight">
+      // Android Application Record AAR
+      var record = new NDEFRecordExternal("android.com:pkg", "com.nxp.nfc.tagwriter");
+  </pre>
 
-</section> <!-- NDEFRecordSmartPoster -->
+</section> <!-- NDEFRecordExternal -->
+
+<section>
+    <h2>Record Chunking</h2>
     
+    <p>When reading chunked content, implementations should combine TNF unchanged (0x06) records with the first chunk creating one logical <code>NDEFRecord</code>. Refer to "NFC Data Exchange Format (NDEF) Technical Specification" NFC Forum, 2006, Section 2.3.3 Record Chunks for more information.</p>
+</section>
 
-<!------------------------ Interface Enumerations ---------------------------->
+<!-- Interface Enumerations -->
 <section>
   <h2>Enumerations</h2>
-  
-  <p>The attribute <code>recordType</code> can have the following values:
-  <dl class="idl" title="enum NDEFRecordType">
-    <dt>text</dt>
+    
+  <p>NFC Type Name Format (TNF) constants are defined in the "NFC Data Exchange Format (NDEF) Technical Specification". The TNF field describes the format of the data in the record type field. The attribute <code>tnf</code> can have the following values:</p>
+  <dl class="idl" title="enum TNF">
+    <dt>Empty</dt>
     <dd>
-      Corresponding to NDEFRecordText.
+        0x00. Empty.
     </dd>
-    <dt>uri</dt>
+    <dt>Well-known</dt> <!-- WellKnown -->
     <dd>
-      Corresponding to NDEFRecordURI.
+      0x01. NFC Forum well-known type as defined in the NFC RTD specification.
     </dd>
-    <dt>media</dt>
+    <dt>Media-type</dt>
     <dd>
-      Corresponding to NDEFRecordMedia.
+       0x02. Media-type as defined in RFC 2046
     </dd>
-    <dt>smartPoster</dt>
+    <dt>AbsoluteURI</dt>
     <dd>
-      Corresponding to NDEFRecordSmartPoster.
+       0x03. Absolute URI as defined in RFC 3986
     </dd>
-    <dt>unknown</dt>
+    <dt>External</dt>
     <dd>
-      Corresponding to the base NDEFRecord interface.
+       0x04. NFC Forum External type as defined in the NFC RTD specification.
     </dd>
+    <dt>Unknown</dt>
+    <dd>
+       0x05. Unknown.
+    </dd>    
+    <dt>Unchanged</dt>
+    <dd>
+       0x06. Unchanged.
+    </dd>
+    <dt>Reserved</dt>
+    <dd>
+       0x07. Reserved.
+    </dd>
+    
   </dl>
   
+    
   <p>The attribute <code>action</code> can have the following values:
   <dl class="idl" title="enum SmartPosterAction">
     <dt>do</dt>
