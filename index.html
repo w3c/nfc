@@ -183,8 +183,8 @@
     approves the permission of a <a>web app</a> to access the Web NFC API.
   </p>
   <p>
-    <code><a href="http://www.w3.org/TR/FileAPI/#blob"><dfn>Blob</dfn></a></code>
-    is defined in [[!FILEAPI]].
+    <code><a href="http://www.w3.org/TR/FileAPI/#blob"><dfn>Blob</dfn></a>
+    </code> is defined in [[!FILEAPI]].
   </p>
   <p>
     <a href="http://heycam.github.io/webidl/#idl-DOMString">
@@ -384,18 +384,20 @@
     this specification.
   </p>
   <pre title="Save and restore game progress" class="example highlight">
-    var registration = navigator.registerNfcTagHandler({ scope: "/jumpyjack" });
-
-    registration.onmessage = function(ev) {
-      if (this.appstate == "saving") {
-        registration.write({
-          progress: this.progress(),
-          player: this.player()
-        }, "/jumpyjack");
-      } else if (this.appstate == "playing" &amp&amp ev.data.player == this.player())
-        this.showRestoreLevelDialog(ev.data.progress);
+    navigator.nfc.requestTagRegistration({ scope: "/jumpyjack" }).then(
+      function(registration) {
+        registration.onmessage = function(ev) {
+          if (!self.isAwaitingSave)
+            return self.showRestoreLevelDialog(ev.data.progress);
+          registration.write({
+            progress: self.progress(),
+            player: self.player()
+          }, "/jumpyjack");
+        };
+      }, function(error) {
+        console.log("buggyjack");
       }
-    }.bind(this);
+    });
   </pre>
 </section> <!-- Usage examples -->
 
@@ -406,7 +408,7 @@
     <a title="user agent">User agents</a> MUST NOT provide Web NFC API access
     to <a>web app</a>s without the
     <a>expressed permission</a> of the user. User agents must acquire consent
-    for permission through a user interface for each call to the register*()
+    for permission through a user interface for each call to the request*()
     methods, unless a prearranged trust relationship applies.
   </p>
   <p>
@@ -563,19 +565,34 @@
   <p>
     The HTML specification defines a
     <a href="http://www.whatwg.org/specs/web-apps/current-work/#dom-navigator">
-    <code>Navigator</code></a> interface [HTML] which this specification extends
-    in a similar way to that of service worker extensions [[SERVICE-WORKERS]].
+    <code>Navigator</code></a> interface [HTML] which this specification
+    extends.
   </p>
   <dl title="partial interface Navigator" class="idl">
+    <dt>readonly attribute NFC nfc</dt>
+  </dl>
+  <!-- - - - - - - - - - - - nfc attribute  - - - - - - - - - - - -->
+  <section> <h3>The <strong>nfc</strong> attribute</h3>
+  <p>
+    When getting the <dfn id="widl-Navigator-nfc">nfc</dfn> attribute, the
+    <a>user agent</a> MUST return the <a>NFC</a> object, which provides
+    NFC related functionality.
+  </p>
+  </section> <!-- nfc attribute -->
+</section> <!-- Navigator -->
+
+<section> <h2>The <strong>NFC</strong> interface</h2>
+  <dl title="interface NFC" class="idl">
     <dt>Promise&lt;NfcTagRegistration&gt;
-        registerNfcTagHandler(NfcRegistrationOptions? options)</dt>
+        requestTagHandler(RegistrationOptions? options)</dt>
     <dt>Promise&lt;NfcPeerRegistration&gt;
-        registerNfcPeerHandler(NfcRegistrationOptions? options)</dt>
+        requestPeerHandler(RegistrationOptions? options)</dt>
   </dl>
   <p>
     By using these methods, <a>web app</a>s can obtain
     control objects providing NFC functionality, separately for handling passive
-    <a>NFC tag</a>s and communication with active <a>NFC peer</a>s.
+    <a>NFC tag</a>s and communication with active <a>NFC peer</a>s,
+    in a similar way to that of service worker extensions [[SERVICE-WORKERS]].
   </p>
   <p>
     As <a>web app</a>s might not be interested in all peer and tag messages,
@@ -597,13 +614,13 @@
     To describe which messages a registration should apply to, the following
     dictionary is used:
   </p>
-  <section> <h3>The <strong>NfcRegistrationOptions</strong> dictionary</h3>
-    <dl title="dictionary NfcRegistrationOptions" class="idl">
+  <section> <h3>The <strong>RegistrationOptions</strong> dictionary</h3>
+    <dl title="dictionary RegistrationOptions" class="idl">
       <dt>DOMString? scope</dt>
       <dt>DOMString[] contentTypes</dt>
     </dl>
     <p>
-      The <dfn id="widl-NfcRegistrationOptions-scope">scope</dfn> property
+      The <dfn id="widl-RegistrationOptions-scope">scope</dfn> property
       denotes the <a>URL scope</a> for which all messages MUST belong to for the
       given registration.
       If the value is <code>null</code> or <code>undefined</code>,
@@ -612,12 +629,12 @@
     </p>
     <p>
       The
-      <dfn id="widl-NfcRegistrationOptions-contentTypes">contentTypes</dfn>
+      <dfn id="widl-RegistrationOptions-contentTypes">contentTypes</dfn>
       property denotes the list of MIME types, that the registrations wants to
       handle.
     </p>
     <pre
-      title="Filter which only accept JSON based messages from http://www.w3.org"
+      title="Filter accepting only JSON based messages from http://www.w3.org"
       class="example highlight">
     var registrationOptions = {
       scope: "http://www.w3.org",
@@ -632,7 +649,7 @@
       contentTypes: ["application/json"]
     }
     </pre>
-  </section> <!-- NfcRegistrationOptions -->
+  </section> <!-- RegistrationOptions -->
 
   <!-- within-scope algorithm -->
   <section> <h3>The <strong><dfn>within-scope</dfn></strong> algorithm</h3>
@@ -640,7 +657,7 @@
       <strong>Preconditions</strong>: a registration object (either
       <code><a>NfcTagRegistration</a></code> or
       <code><a>NfcPeerRegistration</a></code>) exists with an associated
-      <var>regOptions</var> of type <code><a>NfcRegistrationOptions</a></code>,
+      <var>regOptions</var> of type <code><a>RegistrationOptions</a></code>,
       which contains <var>registeredScope</var> <a>URL scope</a>.
     </p>
     <p>
@@ -666,15 +683,15 @@
     </p>
   </section> <!-- within-scope algorithm -->
 
-  <!-- registerNfcTagHandler() method -->
-  <section> <h3>The <strong>registerNfcTagHandler()</strong> method</h3>
+  <!-- requestTagHandler() method -->
+  <section> <h3>The <strong>requestTagHandler()</strong> method</h3>
   <p>
     The <code>
-    <dfn id="widl-Navigator-registerNfcTagHandler-Promise-FilterOptions-filter">
-    registerNfcTagHandler</dfn>()</code> method provides a control object for
+    <dfn id="widl-Navigator-requestTagHandler-Promise-FilterOptions-filter">
+    requestTagHandler</dfn>()</code> method provides a control object for
     handling NFC functionality related to <a>NFC tag</a>s. When this method is
     invoked, the <a>user agent</a> MUST run the following steps:
-    <ol id="steps-registerNfcTagHandler">
+    <ol id="steps-requestTagHandler">
       <li>Let <var>promise</var> be a new <a><code>Promise</code></a> object.
       </li>
       <li>
@@ -723,17 +740,17 @@
       </li>
     </ol>
   </p>
-  </section>  <!-- registerNfcTagHandler() method -->
+  </section>  <!-- requestTagHandler() method -->
 
-  <!-- registerNfcPeerHandler() method -->
-  <section> <h3>The <strong>registerNfcPeerHandler()</strong> method</h3>
+  <!-- requestPeerHandler() method -->
+  <section> <h3>The <strong>requestPeerHandler()</strong> method</h3>
   <p>
     The <code>
-    <dfn id="widl-Navigator-registerNfcPeerHandler-Promise-FilterOptions-filter">
-    registerNfcPeerHandler</dfn>()</code> method provides a control object for
+    <dfn id="widl-Navigator-requestPeerHandler-Promise-FilterOptions-filter">
+    requestPeerHandler</dfn>()</code> method provides a control object for
     handling NFC functionality related to <a>NFC peer</a>s. When this method is
     invoked, the <a>user agent</a> MUST run the following steps:
-    <ol id="steps-registerNfcPeerHandler">
+    <ol id="steps-requestPeerHandler">
       <li>Let <var>promise</var> be a new <a><code>Promise</code></a> object.
       </li>
       <li>
@@ -782,7 +799,7 @@
       </li>
     </ol>
   </p>
-  </section> <!-- registerNfcPeerHandler() method -->
+  </section> <!-- requestPeerHandler() method -->
 </section> <!-- Navigator -->
 
 <!-- - - - - - - - - - - NfcTagRegistration interface - - - - - - - - - - - -->
