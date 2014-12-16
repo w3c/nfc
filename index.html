@@ -387,8 +387,8 @@
     navigator.nfc.requestTagRegistration({ scope: "/jumpyjack" }).then(
       function(registration) {
         registration.onmessage = function(ev) {
-          if (!self.isAwaitingSave)
-            return self.showRestoreLevelDialog(ev.data.progress);
+          if (!self.isAwaitingSave && message.length > 0)
+            return self.showRestoreLevelDialog(ev.message[0].progress);
           registration.write({
             progress: self.progress(),
             player: self.player()
@@ -475,7 +475,11 @@
         <td>
           <ul>
             <li>Media-type as defined in RFC 2046 (<a>TNF</a>=2)</li>
+            <li>NFC Forum External Type (<a>TNF</a>=4)</li>
             <li>Unknown (<a>TNF</a>=5)</li>
+            <li>Any <a>NDEF record</a> type that is not covered by DOMString,
+              URL and JSON types.
+            </li>
           </ul>
         </td>
       </tr>
@@ -545,15 +549,15 @@
   </p>
   <dl title="interface NfcMessageEvent : Event" class="idl">
     <dt>readonly attribute DOMString scope</dt>
-    <dt>readonly attribute NfcMessageData data</dt>
+    <dt>readonly attribute NfcMessageData[] message</dt>
   </dl>
   <p>
     The <code><dfn id="widl-NfcMessageEvent-scope">scope</dfn></code> property
     represents the <a>URL scope</a> of the <a>NDEF message</a>.
   </p>
   <p>
-    The <code><dfn id="widl-NfcMessageEvent-data">data</dfn></code> property
-    represents the <code><a>NfcMessageData</a></code> content of the
+    The <code><dfn id="widl-NfcMessageEvent-message">message</dfn></code>
+    property represents the <code><a>NfcMessageData</a></code> content of the
     <a>NDEF message</a>.
   </p>
   </section> <!-- NfcMessageEvent -->
