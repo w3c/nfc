@@ -384,12 +384,12 @@
     this specification.
   </p>
   <pre title="Save and restore game progress" class="example highlight">
-    navigator.nfc.requestTagRegistration({ scope: "/jumpyjack" }).then(
-      function(registration) {
-        registration.onmessage = function(ev) {
+    navigator.nfc.requestTagHandler({ scope: "/jumpyjack" }).then(
+      function(tagHandler) {
+        tagHandler.onmessage = function(ev) {
           if (!self.isAwaitingSave && message.length > 0)
             return self.showRestoreLevelDialog(ev.message[0].progress);
-          registration.write({
+          tagHandler.write({
             progress: self.progress(),
             player: self.player()
           }, "/jumpyjack");
