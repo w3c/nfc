@@ -384,7 +384,7 @@
     this specification.
   </p>
   <pre title="Save and restore game progress" class="example highlight">
-    navigator.nfc.requestTagHandler({ scope: "/jumpyjack" }).then(
+    navigator.nfc.requestTagRegistration({ scope: "/jumpyjack" }).then(
       function(tagHandler) {
         tagHandler.onmessage = function(ev) {
           if (!self.isAwaitingSave && message.length > 0)
@@ -588,9 +588,9 @@
 <section> <h2>The <strong>NFC</strong> interface</h2>
   <dl title="interface NFC" class="idl">
     <dt>Promise&lt;NfcTagRegistration&gt;
-        requestTagHandler(RegistrationOptions? options)</dt>
+        requestTagRegistration(RegistrationOptions? options)</dt>
     <dt>Promise&lt;NfcPeerRegistration&gt;
-        requestPeerHandler(RegistrationOptions? options)</dt>
+        requestPeerRegistration(RegistrationOptions? options)</dt>
   </dl>
   <p>
     By using these methods, <a>web app</a>s can obtain
@@ -687,15 +687,15 @@
     </p>
   </section> <!-- within-scope algorithm -->
 
-  <!-- requestTagHandler() method -->
-  <section> <h3>The <strong>requestTagHandler()</strong> method</h3>
+  <!-- requestTagRegistration() method -->
+  <section> <h3>The <strong>requestTagRegistration()</strong> method</h3>
   <p>
     The <code>
-    <dfn id="widl-Navigator-requestTagHandler-Promise-FilterOptions-filter">
-    requestTagHandler</dfn>()</code> method provides a control object for
+    <dfn id="widl-Navigator-requestTagRegistration-Promise-FilterOptions-filter">
+    requestTagRegistration</dfn>()</code> method provides a control object for
     handling NFC functionality related to <a>NFC tag</a>s. When this method is
     invoked, the <a>user agent</a> MUST run the following steps:
-    <ol id="steps-requestTagHandler">
+    <ol id="steps-requestTagRegistration">
       <li>Let <var>promise</var> be a new <a><code>Promise</code></a> object.
       </li>
       <li>
@@ -744,17 +744,17 @@
       </li>
     </ol>
   </p>
-  </section>  <!-- requestTagHandler() method -->
+  </section>  <!-- requestTagRegistration() method -->
 
-  <!-- requestPeerHandler() method -->
-  <section> <h3>The <strong>requestPeerHandler()</strong> method</h3>
+  <!-- requestPeerRegistration() method -->
+  <section> <h3>The <strong>requestPeerRegistration()</strong> method</h3>
   <p>
     The <code>
-    <dfn id="widl-Navigator-requestPeerHandler-Promise-FilterOptions-filter">
-    requestPeerHandler</dfn>()</code> method provides a control object for
+    <dfn id="widl-Navigator-requestPeerRegistration-Promise-FilterOptions-filter">
+    requestPeerRegistration</dfn>()</code> method provides a control object for
     handling NFC functionality related to <a>NFC peer</a>s. When this method is
     invoked, the <a>user agent</a> MUST run the following steps:
-    <ol id="steps-requestPeerHandler">
+    <ol id="steps-requestPeerRegistration">
       <li>Let <var>promise</var> be a new <a><code>Promise</code></a> object.
       </li>
       <li>
@@ -803,7 +803,7 @@
       </li>
     </ol>
   </p>
-  </section> <!-- requestPeerHandler() method -->
+  </section> <!-- requestPeerRegistration() method -->
 </section> <!-- Navigator -->
 
 <!-- - - - - - - - - - - NfcTagRegistration interface - - - - - - - - - - - -->
