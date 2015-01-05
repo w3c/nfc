@@ -385,17 +385,17 @@
   </p>
   <pre title="Save and restore game progress" class="example highlight">
     navigator.nfc.requestTagRegistration({ scope: "/jumpyjack" }).then(
-      function(tagHandler) {
-        tagHandler.onmessage = function(ev) {
-          if (!self.isAwaitingSave && message.length > 0)
-            return self.showRestoreLevelDialog(ev.message[0].progress);
-          tagHandler.write({
-            progress: self.progress(),
-            player: self.player()
-          }, "/jumpyjack");
+      (registration) => {
+        // Listen for any incoming messages (tag reads).
+        registration.onmessage = (ev) => {
+          if (ev.message.length > 0)
+            console.log("Current stored progress: " + ev.message[0].progress);
+          // Write new progress (level 42) to tag.
+          registration.write({ progress: 42 }, "/jumpyjack");
         };
-      }, function(error) {
-        console.log("buggyjack");
+      },
+      (error) => {
+        console.log("Oops something went wrong: " + error);
       }
     });
   </pre>
