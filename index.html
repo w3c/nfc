@@ -661,12 +661,12 @@
       <strong>Preconditions</strong>: a registration object (either
       <code><a>NfcTagRegistration</a></code> or
       <code><a>NfcPeerRegistration</a></code>) exists with an associated
-      <var>regOptions</var> of type <code><a>RegistrationOptions</a></code>,
-      which contains <var>registeredScope</var> <a>URL scope</a>.
+      object of type <code><a>RegistrationOptions</a></code>,
+      which contains <code>registeredScope</code> <a>URL scope</a>.
     </p>
     <p>
       <strong>Input</strong>: <var>url</var>, a URL to be checked for being
-      within scope.
+      <a>within-scope</a>.
     </p>
     <p><strong>Output</strong>: <code>true</code> or <code>false</code></p>
     <p>
@@ -674,14 +674,15 @@
       on <a>URL scope</a>, run the following steps atomically.
       <ol>
         <li>
-          If <var>registeredScope</var> defined in <var>regOptions</var> is
-          <code>undefined</code>, then let <var>scope</var> be the
-          calling <a>web app</a>'s <a>document base URL</a>.
+          If <var>registeredScope</var> is <code>undefined</code>, then let
+          <var>scope</var> be the calling <a>web app</a>'s <a>document base
+          URL</a>, otherwise let <var>scope</var> be <var>registeredScope</var>.
         </li>
-        <li>Otherwise let <var>scope</var> be <var>registeredScope</var>.
-        </li>
-        <li>If <var>url</var> is a substring of <var>scope</var>,
-          return <code>true</code>, otherwise return <code>false</code>.
+        <li>
+          If <var>url</var> is same origin as <var>scope</var> and
+          <var>url</var>'s <code>pathname</code> starts with <var>scope</var>s
+          <code>pathname</code>, return <code>true</code>,
+          otherwise return <code>false</code>.
         </li>
       </ol>
     </p>
