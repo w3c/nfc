@@ -60,8 +60,8 @@
     NFC is an international standard (ISO/IEC 18092) defining an interface and
     protocol for simple wireless interconnection of closely coupled devices
     operating at 13.56 MHz
-    (see <a href="http://www.nfc-forum.org/specs/spec_list/">
-    http://www.nfc-forum.org/specs/spec_list/</a>).
+    (see <a href="http://www.nfc-forum.org/specs/spec_list">
+    http://www.nfc-forum.org/specs/spec_list</a>).
   </p>
   <p>
     This specification defines an API to manage selected NFC use-cases from Web
@@ -189,6 +189,8 @@
   <p>
     <a href="http://heycam.github.io/webidl/#idl-DOMString">
       <code><dfn>DOMString</dfn></code></a>,
+    <a href="http://heycam.github.io/webidl/#idl-USVString">
+      <code><dfn>USVString</dfn></code></a>,
     <a href="http://heycam.github.io/webidl/#idl-ArrayBuffer">
       <code><dfn>ArrayBuffer</dfn></code></a>,
     <a href="http://heycam.github.io/webidl/#common-BufferSource">
@@ -383,7 +385,7 @@
     This section shows how developers can make use of the various features of
     this specification.
   </p>
-  <pre title="Save and restore game progress" class="example highlight">
+  <pre title="Read and write data from tag" class="example highlight">
     navigator.nfc.requestTagRegistration({ scope: "/jumpyjack" }).then(
       (registration) => {
         // Listen for any incoming messages (tag reads).
@@ -492,9 +494,9 @@
       The content of the <a>NDEF message</a> is exposed by the following
       interface:
     </p>
-    <dl title="[NoInterfaceObject] interface NfcMessageData" class="idl">
+    <dl title="interface NfcMessageData" class="idl">
       <dt>readonly attribute DOMString contentType</dt>
-      <dt>DOMString url ()</dt>
+      <dt>USVString url ()</dt>
       <dt>ArrayBuffer arrayBuffer ()</dt>
       <dt>Blob blob ()</dt>
       <dt>any json ()</dt>
@@ -512,8 +514,8 @@
       <code>"text/plain;charset=UTF-8;"</code>
     </p>
     <p>
-      The <code><dfn id="widl-NfcMessageData-url-DOMString">url()</dfn></code>
-      method, when invoked, MUST return a <a><code>DOMString</code></a>
+      The <code><dfn id="widl-NfcMessageData-url-USVString">url()</dfn></code>
+      method, when invoked, MUST return a <a><code>USVString</code></a>
       representing any URL stored in the <a>NDEF message</a> or
       <code>undefined</code>.
     </p>
@@ -548,7 +550,7 @@
     <a>NfcMessageEvent</a> event.
   </p>
   <dl title="interface NfcMessageEvent : Event" class="idl">
-    <dt>readonly attribute DOMString scope</dt>
+    <dt>readonly attribute USVString scope</dt>
     <dt>readonly attribute NfcMessageData[] message</dt>
   </dl>
   <p>
@@ -620,7 +622,7 @@
   </p>
   <section> <h3>The <strong>RegistrationOptions</strong> dictionary</h3>
     <dl title="dictionary RegistrationOptions" class="idl">
-      <dt>DOMString? scope</dt>
+      <dt>USVString? scope</dt>
       <dt>DOMString[] contentTypes</dt>
     </dl>
     <p>
@@ -809,9 +811,9 @@
 
 <!-- - - - - - - - - - - NfcTagRegistration interface - - - - - - - - - - - -->
 <section> <h2>The <strong>NfcTagRegistration</strong> interface</h2>
-  <dl title="[NoInterfaceObject] interface NfcTagRegistration : EventHandler"
+  <dl title="interface NfcTagRegistration : EventHandler"
       class="idl">
-    <dt>Promise write(NfcMessageType message, DOMString scope)</dt>
+    <dt>Promise write(NfcMessageType message, USVString scope)</dt>
     <dt>attribute EventHandler onmessage</dt>
   </dl>
   <p>
@@ -844,7 +846,7 @@
   <section><h3>The <strong>write</strong>() method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcTagRegistration-write-Promise-NfcMessageType-message-DOMString-scope">
+      <dfn id="widl-NfcTagRegistration-write-Promise-NfcMessageType-message-USVString-scope">
       write</dfn>()</code> method is used for writing an <a>NFC tag</a>, if
       possible. When this method is invoked, the <a>user agent</a> MUST run the
       following steps:
@@ -886,7 +888,7 @@
         object whose <var>name</var> property is set
         to <code>"<a>SyntaxError</a>"</code>, and terminate these steps.
         If the value is <code>undefined</code>, then attribute to
-        <var>scope</var> the <code>DOMString</code> describing the
+        <var>scope</var> the <code>USVString</code> describing the
         <a>document base URL</a>.
       </li>
       <li>
@@ -905,9 +907,9 @@
 
 <!-- - - - - - - - - - - NfcPeerRegistration interface  - - - - - - - - - - -->
 <section> <h2>The <strong>NfcPeerRegistration</strong> interface</h2>
-  <dl title="[NoInterfaceObject] interface NfcPeerRegistration : EventHandler"
+  <dl title="interface NfcPeerRegistration : EventHandler"
       class="idl">
-    <dt>Promise setPushMessage(NfcMessageType message, DOMString scope)</dt>
+    <dt>Promise setPushMessage(NfcMessageType message, USVString scope)</dt>
     <dt>attribute EventHandler onmessagepushed</dt>
     <dt>attribute EventHandler onmessage</dt>
   </dl>
@@ -957,7 +959,7 @@
   <section><h3>The <strong>setPushMessage()</strong> method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcPeerRegistration-setPushMessage-NfcMessageType-message-DOMString-scope">
+      <dfn id="widl-NfcPeerRegistration-setPushMessage-NfcMessageType-message-USVString-scope">
       setPushMessage</dfn>()</code> method is used for setting the messages
       which the user can push to another peer when it gets into proximity range.
       When this method is invoked, the <a>user agent</a> MUST run the following
@@ -1043,8 +1045,9 @@
 <section> <h2>Acknowledgements</h2>
   <p>
     The editors would like to express their gratitude to the former editors
-    Luc Yriarte and Samuel Ortiz, and also to Don Coleman and Salvatore Iovene
-    for their technical guidance, implementation feedback and support.
+    Luc Yriarte and Samuel Ortiz, and also to Don Coleman, Marcos Caceres and
+    Salvatore Iovene for their technical guidance, implementation feedback and
+    support.
   </p>
 </section>
 
