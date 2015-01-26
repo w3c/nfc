@@ -200,6 +200,15 @@
     are defined in [[!WEBIDL]].
   </p>
   <p>
+    <dfn>NFC</dfn> stands for Near Field Communications, short-range wireless
+    technology operating at 13.56 MHz which enables communication between
+    devices at a distance less than 10 cm. The NFC communications protocols and
+    data exchange formats, and are based on existing radio-frequency
+    identification (RFID) standards, including ISO/IEC 14443 and FeliCa.
+    The NFC standards include ISO/IEC 18092[5] and those defined by the NFC
+    Forum. See http://www.nfc-forum.org/specs/spec_list/ for a complete listing.
+  </p>
+  <p>
     An <dfn>NFC tag</dfn> is a passive, unpowered NFC device.
     The <a>NFC tag</a> is powered by magnetic induction when an active NFC
     device is in proximity range. A <a>NFC tag</a> contains a single
@@ -275,6 +284,14 @@
     <i>URI</i>, <i>Smart Poster</i> (containing a URI or other
     data and possible actions).
   </p>
+  <p>An <dfn>NFC handover</dfn> defines NFC Forum Well Known Types and the
+    corresponding message structure that allows negotiation and activation of
+    an alternative communication carrier, such as Bluetooth or WiFi.
+    The negotiated communication carrier would then be used (separately) to
+    perform certain activities between the two devices, such as sending photos
+    to the other device, printing to a Bluetooth printer or streaming video to
+    a television set.
+  </p>
   <p>
     The term <dfn>sufficient permission</dfn> in this document means that a
     <a>web app</a> which is invoking the methods of this API has been checked to
@@ -301,7 +318,9 @@
     There are three groups of application scenarios for NFC:
     <ul>
       <li>
-        Hold a device close to a passive wireless tag to read and write data.
+        Hold a device close to a passive wireless tag (which could be in the
+        form of a plastic card) to read and write or overwrite data (in the
+        case the tag is not read-only).
       </li>
       <li>
         Hold two powered devices, e.g. phones or tablets, close to each other
@@ -311,13 +330,11 @@
       <li>Card emulation
        <ol>
         <li>
-          For payments by holding your phone close to a point-of-sales terminal,
-          instead of swiping a payment card.
+          With a secure element: for payments by holding your phone close to a
+          point-of-sales terminal, instead of swiping a payment card.
         </li>
-        <li>
-          For emulating tags, allowing use-cases like being able to open your
-          hotel room using just your phone instead of using a NFC-enabled tag
-          or smart card.
+        <li>With host card emulation: for allowing use-cases like using a phone
+          as a hotel room key card.
         </li>
        </ol>
       </li>
@@ -335,6 +352,49 @@
     data is read the same way as for tags.
   </p>
   <p>
+    As <a>NFC</a> is based on existing RFID standards, many NFC chipsets support
+    reading legacy RFIDs tags, but many of these are only supported by single
+    vendors and not part of the NFC standards. Though certain devices support reading and writing to these, it is not a goal of this specification to
+    support proprietary tags or support interoperability with legacy systems.
+  </p>
+  <p>
+    The NFC Forum has mandated the support of four different tag types to be
+    operable with NFC devices. The same is required on operating systems such as
+    Android.
+    <ol>
+      <li>
+        <b>NFC Forum Type 1</b>: This tag is based on the ISO/IEC 14443-3A
+        (also known as NFC-A,  as defined in ISO/IEC 14443-3:2011, Part 3:
+        Initialization and anticollision). The tags are rewritable and can be
+        configured to become read-only. Memory size can be between 96 bytes and
+        2 Kbytes. Communication speed is 106 kbit/sec.
+      </li>
+      <li><b>NFC Forum Type 2</b>: This tag is also based on the
+        ISO/IEC 14443-3A (NFC-A). The tags are rewritable and can be configured
+        to become read-only. Memory size can be between 48 bytes and 2 Kbytes.
+        Communication speed is 106 kbit/sec. In contrast to Type 1, Type 2 has
+        anti-collision protection for dealing with multiple tags within the NFC
+        field.
+      </li>
+      <li><b>NFC Forum Type 3</b>: This tag is based on the Japanese Industrial
+        Standard (JIS) X 6319-4, commonly known as FeliCa. The tags are
+        preconfigured to be either rewritable or read-only. Memory availability
+        is variable, theoretical memory limit is 1MByte per service.
+        Communication speed is 106 kbit/sec.  Like Type 2, it supports
+        anti-collision protection.
+      </li>
+      <li><b>NFC Forum Type 4</b> (November 2010): This tag is based on the
+        ISO/IEC 14443 like Type 1 and 2, but it support either NFC-A or NFC-B
+        for communication. On top of that the tag may support the Data Exchange
+        Protocol (aka ISO-DEP) defined in ISO/IEC 14443 (ISO/IEC 14443-4:2008
+        Part 4: Transmission protocol). Like Type 3, the tags are preconfigured
+        to be either rewritable or read-only. Variable memory, up to 32 KB per
+        service. Supports three different communication speeds 106 or 212 or
+        424 Kbits/s.
+      </li>
+    </ol>
+  </p>
+  <p>
     In addition to data types standardized for <a>NDEF record</a>s by the NFC
     Forum, many commercial products, e.g. bus cards, door openers etc, use
     different card specific data and protocol extensions which require specific
@@ -344,38 +404,85 @@
     Card emulation mode capabilities also depend on the NFC chip in the device.
     For payments, a Secure Element is often needed.
   </p>
-  <p>
-    NFC is usually deeply integrated into device platforms (e.g. Android, Tizen,
-    etc), because end-to-end user experience implications (e.g. users need to
-    be presented platform specific dialogs for selecting applications and
-    actions). Also, privacy and security related issues require platform
-    specific solutions.
-  </p>
-  <p>
-    The various integrated technologies, wide variety of use cases, and platform
-    integration issues make standardization of NFC for the web a challenge.
-    Therefore this specification makes a few simplifications in what use cases
-    and data types are possible to handle by users of this API:
-    <ul>
-      <li> expose data types already known to web browsers as MIME types</li>
-      <li> use the web security model</li>
-      <li> implementations encapsulate <a>NDEF record</a> handling and the API
-        exposes only data and control events.
-      </li>
-    </ul>
-  </p>
-  <p class="note">
-    Handover scenarios are expected to be completely encapsulated by
-    implementations. A later version of this API may expose initiating a
-    handover over Bluetooth or WiFi, but in either case implementations and
-    underlying platforms are assumed to handle handover records according to
-    their capabilities.
+  <section> <h3>Use Cases</h3>
+    <p>High level use cases for the Web NFC specification include the following:
+      <ol>
+        <li>Support devices with single or multiple NFC adapters.</li>
+        <li>Support communication with active (powered devices such as readers,
+          phones) and passive (smart cards, tags, etc) devices.</li>
+        <li>Allow users to act on (e.g. read, write or transceive) discovered
+          NFC devices (passive and active) as well as access the NDEF records
+          which were read in the process.</li>
+        <li>Allow the user to write a payload via NDEF records to compatible
+          devices, such as writeable tags, when they come in range.</li>
+        <li>Allow manual connection for various technologies such as NFC-A and
+          NFC-F depending on secondary device.</li>
+        <li>Allow <a>NFC handover</a> to Bluetooth or WiFi.</li>
+        <li>Allow card emulation with secure element or host card emulation.
+        </li>
+      </ol>
     </p>
-  <p class="note">
-    Implementations MAY handle Smart Poster
-    (see "Smart Poster RTD Specification", NFC Forum, 2006) record types,
-    and may expose their data to <a>web app</a>s through this API.
-  </p>
+    <p class="note">Note that the last 3 use cases are not supported in this
+      version of the specification.
+    </p>
+    <p>
+      NFC is usually deeply integrated into device platforms (e.g. Android,
+      Windows, etc), because end-to-end user experience implications (e.g.
+      users need to be presented platform specific dialogs for selecting
+      applications and actions). Also, privacy and security related issues
+      require platform specific solutions.
+    </p>
+    <p>
+      The various integrated technologies, wide variety of use cases, and platform
+      integration issues make standardization of NFC for the web a challenge.
+      Therefore this specification makes a few simplifications in what use cases
+      and data types are possible to handle by users of this API:
+      <ul>
+        <li>Expose data types already known to web browsers as MIME types.</li>
+        <li>Use the web security model.</li>
+        <li>Implementations encapsulate <a>NDEF record</a> handling and the API
+          exposes only data and control events.
+        </li>
+      </ul>
+    </p>
+    <p class="note">
+      Handover scenarios are expected to be completely encapsulated by
+      implementations. A later version of this API may expose initiating a
+      handover over Bluetooth or WiFi, but in either case implementations and
+      underlying platforms are assumed to handle handover records according to
+      their capabilities.
+      </p>
+    <p class="note">
+      Implementations MAY handle Smart Poster
+      (see "Smart Poster RTD Specification", NFC Forum, 2006) record types,
+      and may expose their data to <a>web app</a>s through this API.
+    </p>
+  </section> <!-- Use Cases -->
+  <section> <h3>Technical requirements</h3>
+    <p>The following high level technical requirements result from the
+      enumerated use cases:
+      <ol>
+        <li>Enumerate NFC adapters.</li>
+        <li>Set up watchers to read for a given scope (a default scope being
+          set by implementations to the origin of the page).</li>
+        <li>Provide event for read completed as NDEF records from tag or peer
+          device. Expose payload as MIME type. Eventually expose binary content
+          of NDEF records.</li>
+        <li>Set a predefined payload, or full binary NDEF records that the user
+          can push to another device when within range. Provide event for
+          completed push.
+        </li>
+        <li>Manage manual connections for various NFC technologies. Provide
+          proximity events when tags and peers appear and disappears</li>
+        <li>Set up the card content to be read by other devices for Host Card
+          Emulation.</li>
+        <li>Configure a predefined handover to Bluetooth or WiFi.</li>
+      </ol>
+    </p>
+    <p class="note">Note that the last 3 technical requirements are not
+      supported in this version of the specification.
+    </p>
+  </section> <!-- Technical requirements -->
 </section> <!-- Introduction -->
 
 
