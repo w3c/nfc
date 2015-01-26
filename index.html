@@ -317,8 +317,8 @@
     <ul>
       <li>
         Hold a device close to a passive wireless tag (which could be in the
-        form of a plastic card) to read and write or overwrite data (if the tag
-        is not read-only).
+        form of a plastic card) to read and write or overwrite data (in the
+        case the tag is not read-only).
       </li>
       <li>
         Hold two powered devices, e.g. phones or tablets, close to each other
@@ -424,11 +424,11 @@
       version of the specification.
     </p>
     <p>
-      NFC is usually deeply integrated into device platforms (e.g. Android, Tizen,
-      etc), because end-to-end user experience implications (e.g. users need to
-      be presented platform specific dialogs for selecting applications and
-      actions). Also, privacy and security related issues require platform
-      specific solutions.
+      NFC is usually deeply integrated into device platforms (e.g. Android,
+      Windows, etc), because end-to-end user experience implications (e.g.
+      users need to be presented platform specific dialogs for selecting
+      applications and actions). Also, privacy and security related issues
+      require platform specific solutions.
     </p>
     <p>
       The various integrated technologies, wide variety of use cases, and platform
@@ -436,9 +436,9 @@
       Therefore this specification makes a few simplifications in what use cases
       and data types are possible to handle by users of this API:
       <ul>
-        <li> expose data types already known to web browsers as MIME types</li>
-        <li> use the web security model</li>
-        <li> implementations encapsulate <a>NDEF record</a> handling and the API
+        <li>Expose data types already known to web browsers as MIME types.</li>
+        <li>Use the web security model.</li>
+        <li>Implementations encapsulate <a>NDEF record</a> handling and the API
           exposes only data and control events.
         </li>
       </ul>
