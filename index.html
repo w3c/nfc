@@ -14,7 +14,7 @@
           publishDate:          "",
           previousPublishDate:  "",
           previousMaturity:     "",
-          edDraftURI:           "http://www.w3.org/2012/nfc/web-api/",
+          edDraftURI:           "http://w3c.github.io/nfc/index.html",
           // lcEnd:                "",
           crEnd:                "",
           editors: [
@@ -42,6 +42,9 @@
                 }, {
                     value: "Commit history.",
                     href: "https://github.com/w3c/nfc/commits/gh-pages"
+                }, {
+                    value: "Previous Editors Draft passing CfC",
+                    href: "http://w3c.github.io/nfc/wg-cfc.html"
                 }
               ]
             },
@@ -436,8 +439,9 @@
       require platform specific solutions.
     </p>
     <p>
-      The various integrated technologies, wide variety of use cases, and platform
-      integration issues make standardization of NFC for the web a challenge.
+      The various integrated technologies, wide variety of use cases, and
+      platform integration issues make standardization of NFC for the web a
+      challenge.
       Therefore this specification makes a few simplifications in what use cases
       and data types are possible to handle by users of this API:
       <ul>
@@ -670,7 +674,8 @@
         that is, to use NFC technology from the calling <a>web app</a>,
         then reject <var>promise</var> with a new
         <code><a>DOMException</a></code> object whose <var>name</var> property
-        is set to <code>"<a>SecurityError</a>"</code>, and terminate these steps.
+        is set to <code>"<a>SecurityError</a>"</code>, and terminate these
+        steps.
       </li>
       <li>
         If there is no support for <a>NFC adapter</a> handling functionality in
