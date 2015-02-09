@@ -610,8 +610,8 @@
     <a title="user agent">User agents</a> MUST NOT provide Web NFC API access
     to <a>web app</a>s without the
     <a>expressed permission</a> of the user. User agents must acquire consent
-    for permission through a user interface for each call to the request*()
-    methods, unless a prearranged trust relationship applies.
+    for permission through a user interface for each call to the methods of this
+    API, unless a prearranged trust relationship applies.
   </p>
   <p>
     User agents may support prearranged trust relationships that do not require
@@ -711,8 +711,8 @@
     <dt>Promise watch(WatchOptions? options)</dt>
     <dt>Promise clearWatch(optional long id)</dt>
     <dt>Promise write((NdefData[] data, optional USVString scope)</dt>
-    <dt>void setPushMessage((NdefData[] data, optional USVString scope)</dt>
-    <dt>void clearPushMessage(optional USVString scope)</dt>
+    <dt>Promise setPushMessage((NdefData[] data, optional USVString scope)</dt>
+    <dt>Promise clearPushMessage(optional USVString scope)</dt>
   </dl>
   <p>
     The <code>NfcAdapter</code> interface handles incoming <a>NDEF message</a>s,
@@ -1161,7 +1161,7 @@
   <section><h3>The <strong>write</strong>() method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcAdapter-write-Promise-NdefData-data-USVString-scope">
+      <dfn id="widl-NfcAdapter-write-Promise-NdefDataArray-data-USVString-scope">
       write</dfn>()</code> method is used for writing an <a>NFC tag</a>, if
       possible. When this method is invoked, the <a>user agent</a> MUST run the
       following steps:
@@ -1214,6 +1214,7 @@
         </li>
         <li>
           Make a request to the underlying platform to write <var>output</var>
+          with the <a>URL scope</a> provided by <var>scope</var>
           to the <a>NFC tag</a> in proximity range. If the request fails, then
           reject <var>promise</var> with a new <code><a>DOMException</a></code>
           object whose <var>name</var> property is set to
@@ -1229,7 +1230,7 @@
   <section><h3>The <strong>setPushMessage()</strong> method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcAdapter-setPushMessage-void-NdefData-data-USVString-scope">
+      <dfn id="widl-NfcAdapter-setPushMessage-Promise-NdefDataArray-data-USVString-scope">
       setPushMessage</dfn>()</code> method is used for setting the messages
       which the user can push to another peer when it gets into proximity range.
       When this method is invoked, the <a>user agent</a> MUST run the following
@@ -1299,7 +1300,7 @@
   <section><h3>The <strong>clearPushMessage</strong>() method</h3>
   <p>
     When the <code>
-    <dfn id="widl-NfcAdapter-clearPushMessage-void-USVString-scope">
+    <dfn id="widl-NfcAdapter-clearPushMessage-Promise-USVString-scope">
     clearPushMessage</dfn>()</code> method is invoked, the
     <a>user agent</a> MUST run the following steps:
     <ol id="steps-clearPushMessage">
