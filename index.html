@@ -711,8 +711,8 @@
     <dt>Promise watch(WatchOptions? options)</dt>
     <dt>Promise clearWatch(optional long id)</dt>
     <dt>Promise write((NdefData[] data, optional USVString scope)</dt>
-    <dt>void setPushMessage((NdefData[] data, optional USVString scope)</dt>
-    <dt>void clearPushMessage(optional USVString scope)</dt>
+    <dt>Promise setPushMessage((NdefData[] data, optional USVString scope)</dt>
+    <dt>Promise clearPushMessage(optional USVString scope)</dt>
   </dl>
   <p>
     The <code>NfcAdapter</code> interface handles incoming <a>NDEF message</a>s,
@@ -1161,7 +1161,7 @@
   <section><h3>The <strong>write</strong>() method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcAdapter-write-Promise-NdefData-data-USVString-scope">
+      <dfn id="widl-NfcAdapter-write-Promise-NdefDataArray-data-USVString-scope">
       write</dfn>()</code> method is used for writing an <a>NFC tag</a>, if
       possible. When this method is invoked, the <a>user agent</a> MUST run the
       following steps:
@@ -1229,7 +1229,7 @@
   <section><h3>The <strong>setPushMessage()</strong> method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcAdapter-setPushMessage-void-NdefData-data-USVString-scope">
+      <dfn id="widl-NfcAdapter-setPushMessage-Promise-NdefDataArray-data-USVString-scope">
       setPushMessage</dfn>()</code> method is used for setting the messages
       which the user can push to another peer when it gets into proximity range.
       When this method is invoked, the <a>user agent</a> MUST run the following
@@ -1299,7 +1299,7 @@
   <section><h3>The <strong>clearPushMessage</strong>() method</h3>
   <p>
     When the <code>
-    <dfn id="widl-NfcAdapter-clearPushMessage-void-USVString-scope">
+    <dfn id="widl-NfcAdapter-clearPushMessage-Promise-USVString-scope">
     clearPushMessage</dfn>()</code> method is invoked, the
     <a>user agent</a> MUST run the following steps:
     <ol id="steps-clearPushMessage">
