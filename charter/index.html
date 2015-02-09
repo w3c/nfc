@@ -208,6 +208,23 @@
       may consider both an API for use by an untrusted website, as well as an
       enhanced API available to a Website is considered trusted. </p>
 
+      <p>The WG will consider requiring that User Agents implement the Web NFC
+      API to be HTTPS-only.  The WG will consider requiring that for riskier
+      API's that the User Agent knows which user is logged into the User Agent
+      and knows what types of permissions that user is allowed to set, and the
+      user has agreed to allowing a risky or experimental API for a particular
+      trusted website.  The identity of the user would be known by the User
+      Agent (but not the web page), to know what is permitted for use by that
+      Web site.  The Web site is known through use of https so some APIs could
+      be restricted to use by particular users and only by known, trusted
+      websites.  The Working Group could also consider use of some APIs only
+      for sites in the local network (if permitted by the user).  For example,
+      where a device in the local network offers a web page (using https), the
+      user could grant that web page permissions beyond what normally is allowed
+      for random web pages.  That would allow for a set of APIs, one safe for
+      any website and then perhaps others that require higher levels of trust
+      and permission.</p>
+
       <!--p>It is recommended that the NDEF messages participating in interaction
       with web pages, are linked to the client web page origin, in order that
       the browser security model could be used by implementations.</p-->
