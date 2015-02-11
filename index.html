@@ -653,12 +653,13 @@
 
 <section> <h2>The <strong>NFC</strong> interface</h2>
   <dl title="interface NFC" class="idl">
-    <dt>Promise findAdapters()</dt>
+    <dt>Promise&ltsequence&ltNfcAdapter>> findAdapters()</dt>
   </dl>
   <p>
     Implementations might expose multiple NFC adapters. By using the
-    <dfn id="widl-NFC-findAdapters-Promise">findAdapters</dfn>() method,
-    <a>web app</a>s can obtain adapter objects providing NFC functionality,
+    <dfn id="widl-NFC-findAdapters-Promise-sequence-NfcAdapter">
+    findAdapters</dfn>() method, <a>web app</a>s can obtain adapter objects
+    providing NFC functionality,
     in a similar way to that of service worker extensions [[SERVICE-WORKERS]].
     When this method is invoked, the <a>user agent</a> MUST run the following
     steps:
@@ -708,11 +709,11 @@
     <dt>attribute EventHandler onread</dt>
     <!--dt>attribute EventHandler onbeforepush</dt-->
     <dt>attribute EventHandler onpush</dt>
-    <dt>Promise watch(WatchOptions? options)</dt>
-    <dt>Promise clearWatch(optional long id)</dt>
-    <dt>Promise write((NdefData[] data, optional USVString scope)</dt>
-    <dt>Promise setPushMessage((NdefData[] data, optional USVString scope)</dt>
-    <dt>Promise clearPushMessage(optional USVString scope)</dt>
+    <dt>Promise&ltlong> watch(WatchOptions? options)</dt>
+    <dt>Promise&ltvoid> clearWatch(optional long id)</dt>
+    <dt>Promise&ltvoid> write((NdefData[] data, optional USVString scope)</dt>
+    <dt>Promise&ltvoid> setPushMessage((NdefData[] data, optional USVString scope)</dt>
+    <dt>Promise&ltvoid> clearPushMessage(optional USVString scope)</dt>
   </dl>
   <p>
     The <code>NfcAdapter</code> interface handles incoming <a>NDEF message</a>s,
@@ -909,7 +910,7 @@
   <section> <h3>The <strong>watch()</strong> method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcAdapter-watch-Promise-WatchOptions-options">
+      <dfn id="widl-NfcAdapter-watch-Promise-long--WatchOptions-options">
       watch</dfn>()</code> method enables listening to incoming
       <a>NDEF message</a>s.
     </p>
@@ -1056,8 +1057,8 @@
 
     <p>
       When the <code>
-      <dfn id="widl-NfcAdapter-watch-Promise-WatchOptions-options">
-      watch</dfn>()</code> method is invoked, the <a>user agent</a> MUST run
+      <a id="widl-NfcAdapter-watch-Promise-WatchOptions-options">
+      watch</a>()</code> method is invoked, the <a>user agent</a> MUST run
       the following steps:
       <ol id="steps-watch">
         <li>Let <var>promise</var> be a new <a><code>Promise</code></a> object.
@@ -1117,7 +1118,7 @@
   <!-- The clearWatch() method -->
   <section><h3>The <strong>clearWatch</strong>() method</h3>
     <p>
-      When the <code><dfn id="widl-NfcAdapter-clearWatch-Promise-long-id">
+      When the <code><dfn id="widl-NfcAdapter-clearWatch-Promise-void--long-id">
       clearWatch</dfn>()</code> method is invoked, the <a>user agent</a>
       MUST run the following steps:
       <ol id="steps-clearWatch">
@@ -1160,8 +1161,7 @@
   <!-- The write() method -->
   <section><h3>The <strong>write</strong>() method</h3>
     <p>
-      The <code>
-      <dfn id="widl-NfcAdapter-write-Promise-NdefDataArray-data-USVString-scope">
+      The <code><dfn id="widl-NfcAdapter-write-Promise-void--NdefDataArray-data-USVString-scope">
       write</dfn>()</code> method is used for writing an <a>NFC tag</a>, if
       possible. When this method is invoked, the <a>user agent</a> MUST run the
       following steps:
@@ -1230,7 +1230,7 @@
   <section><h3>The <strong>setPushMessage()</strong> method</h3>
     <p>
       The <code>
-      <dfn id="widl-NfcAdapter-setPushMessage-Promise-NdefDataArray-data-USVString-scope">
+      <dfn id="widl-NfcAdapter-setPushMessage-Promise-void--NdefDataArray-data-USVString-scope">
       setPushMessage</dfn>()</code> method is used for setting the messages
       which the user can push to another peer when it gets into proximity range.
       When this method is invoked, the <a>user agent</a> MUST run the following
@@ -1300,7 +1300,7 @@
   <section><h3>The <strong>clearPushMessage</strong>() method</h3>
   <p>
     When the <code>
-    <dfn id="widl-NfcAdapter-clearPushMessage-Promise-USVString-scope">
+    <dfn id="widl-NfcAdapter-clearPushMessage-Promise-void--USVString-scope">
     clearPushMessage</dfn>()</code> method is invoked, the
     <a>user agent</a> MUST run the following steps:
     <ol id="steps-clearPushMessage">
