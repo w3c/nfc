@@ -45,6 +45,9 @@
                 }, {
                     value: "Latest Editors Draft passing CfC",
                     href: "http://w3c.github.io/nfc/wd-cfc.html"
+                }, {
+                    value: "Usage scenarios",
+                    href: "http://w3c.github.io/nfc/use-cases.html"
                 }
               ]
             },
@@ -322,7 +325,7 @@
 <!-- - - - - - - - - - - - - - -  Introduction  - - - - - - - - - - - - - - -->
 <section class="informative"> <h2>Introduction</h2>
   <p>
-    There are three groups of application scenarios for NFC:
+    There are three groups of user scenarios for NFC:
     <ul>
       <li>
         Hold a device close to a passive wireless tag (which could be in the
@@ -412,8 +415,94 @@
     Card emulation mode capabilities also depend on the NFC chip in the device.
     For payments, a Secure Element is often needed.
   </p>
-  <section> <h3>Use Cases</h3>
-    <p>High level use cases for the Web NFC specification include the following:
+  <section class="informative"> <h3>Use Cases</h3>
+    <p>
+      A few Web NFC user scenarios are described in
+      <a href="http://w3c.github.io/nfc/use-cases.html">this</a> document.
+      These user scenarios can be grouped along
+      criteria based on security, privacy and feature categories, resulting in
+      generic flows as follows.
+    </p>
+    <section> <h3>Reading <a>NFC tag</a>s</h3>
+      <ol>
+        <li>
+          Reading arbitrary tags when no web site is open:
+          when the user touches a device to an <a>NFC tag</a> when no web site
+          is currently open, the <a>user agent</a> can open a website to handle
+          that tag. If multiple websites can handle the tag, a choice is
+          presented to the user to pick the preferred web site for handling the
+          tag.
+          Web sites have a programmatic means to tell the <a>user agent</a>
+          they are able and interested to handle <a>NFC tag</a>s of certain
+          type.
+        </li>
+        <li>
+          Reading arbitrary tags when a website is currently open:
+          if the user has a website open and that website has indicated that
+          it's able to read a set of tags, it might be fine to allow that
+          website to read a readonly tag that the user taps without presenting
+          any permission or security dialog to the user.
+        </li>
+        <li>
+          Reading "Web NFC" tags: if there is a mechanism which <a>NFC tag</a>s
+          use to indicate which website that they can be read by, the user can
+          tap on the tag and we can open the web site automatically. There is
+          no need for the user to have visited the web site first or to have
+          the website open, and the <a>user agent</a> is not required to display
+          a dialogue asking the user which website to use.
+        </li>
+      </ol>
+    </section>
+    <section> <h3>Writing <a>NFC tag</a>s</h3>
+      <ol>
+        <li>
+          Writing to arbitrary writable tags: the user opens a web page which
+          can write an <a>NFC tag</a>. This use case should be restricted or
+          de-scoped for security and privacy reasons.
+        </li>
+        <li>
+          Writing to "Web NFC" tags: if a tag indicates that it is connected to
+          a given website, then <a>user agent</a>s may allow that web site to
+          write to the tag without any special security dialogs.
+        </li>
+      </ol>
+    </section>
+    <section> <h3>Sending data to <a>NFC peer</a>s</h3>
+      <p>
+        In general, sending data to another Web NFC capable device requires that
+        on the initiating device the user would first have to navigate to a web
+        site. The user would then touch the device against another Web NFC
+        equipped device, and data transfer would occur. On the receiving device
+        the <a>user agent</a> will dispatch the content to a web site registered
+        to handle the content and in case of multiple such web sites, the one
+        chosen by the second user.
+      </p>
+    </section>
+    <section> <h3>Handover to another wireless connection type</h3>
+      <p>
+        NFC supports handover protocols to Bluetooth or WiFi connectivity for
+        the purpose of larger volume data transfer. The user touches another
+        NFC capable device, and as a result configuration data is sent for a
+        new Bluetooth or WiFi connection, which is then established between the
+        devices.
+      </p>
+    </section>
+    <section> <h3>Payment scenarios</h3>
+      <p>
+        The user buys goods in a store, and payments options include NFC.
+        In general, touching the device to the point of sales terminal receiver
+        area will result in a transaction between the secure element from the
+        device and the point of sales terminal. With the Web NFC API, if the
+        user navigates to a web site before paying, there may be interaction
+        with that site regarding the payment, e.g. the user could get points and
+        discounts, or get delivered application or service specific data (e.g.
+        tickets, keys, etc) to the device.
+      </p>
+    </section>
+  </section> <!-- Use Cases -->
+
+  <section> <h3>Features</h3>
+    <p>High level features for the Web NFC specification include the following:
       <ol>
         <li>Support devices with single or multiple NFC adapters.</li>
         <li>Support communication with active (powered devices such as readers,
@@ -452,10 +541,11 @@
         </li>
       </ul>
     </p>
-  </section> <!-- Use Cases -->
+  </section> <!-- Features-->
+
   <section> <h3>Technical requirements</h3>
     <p>The following high level technical requirements result from the
-      enumerated use cases:
+      enumerated use cases and high level features:
       <ol>
         <li>Enumerate NFC adapters.</li>
         <li>Set up watchers to read for a given scope (a default scope being
@@ -539,7 +629,7 @@
 
 
 <!-- - - - - - - - - - - - - - - Usage Examples - - - - - - - - - - - - - - -->
-<section class="informative"> <h2>Usage Examples</h2>
+<section class="informative"> <h2>Examples</h2>
   <p>
     This section shows how developers can make use of the various features of
     this specification.
@@ -653,7 +743,7 @@
 
 <section> <h2>The <strong>NFC</strong> interface</h2>
   <dl title="interface NFC" class="idl">
-    <dt>Promise&ltsequence&ltNfcAdapter>> findAdapters()</dt>
+    <dt>Promise&lt;sequence&lt;NfcAdapter&gt;&gt; findAdapters()</dt>
   </dl>
   <p>
     Implementations might expose multiple NFC adapters. By using the
@@ -709,11 +799,11 @@
     <dt>attribute EventHandler onread</dt>
     <!--dt>attribute EventHandler onbeforepush</dt-->
     <dt>attribute EventHandler onpush</dt>
-    <dt>Promise&ltlong> watch(WatchOptions? options)</dt>
-    <dt>Promise&ltvoid> clearWatch(optional long id)</dt>
-    <dt>Promise&ltvoid> write((NdefData[] data, optional USVString scope)</dt>
-    <dt>Promise&ltvoid> setPushMessage((NdefData[] data, optional USVString scope)</dt>
-    <dt>Promise&ltvoid> clearPushMessage(optional USVString scope)</dt>
+    <dt>Promise&lt;long&gt; watch(WatchOptions? options)</dt>
+    <dt>Promise&lt;void&gt; clearWatch(optional long id)</dt>
+    <dt>Promise&lt;void&gt; write((NdefData[] data, optional USVString scope)</dt>
+    <dt>Promise&lt;void&gt; setPushMessage((NdefData[] data, optional USVString scope)</dt>
+    <dt>Promise&lt;void&gt; clearPushMessage(optional USVString scope)</dt>
   </dl>
   <p>
     The <code>NfcAdapter</code> interface handles incoming <a>NDEF message</a>s,
@@ -1363,8 +1453,9 @@
 <section> <h2>Acknowledgements</h2>
   <p>
     The editors would like to express their gratitude to the former editors
-    Luc Yriarte and Samuel Ortiz, and also to Don Coleman and Salvatore Iovene
-    for their technical guidance, implementation feedback and support.
+    Luc Yriarte and Samuel Ortiz, and also to Don Coleman, Salvatore Iovene and
+    Jeffrey Yasskin for their technical guidance, implementation feedback and
+    support.
   </p>
 </section>
 
