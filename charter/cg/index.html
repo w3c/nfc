@@ -1,8 +1,25 @@
-<!DOCTYPE html>
-<html>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>
+    [DRAFT] Web Near Field Communications Community Group Charter
+  </title>
+  <link rel="stylesheet" href="https://www.w3.org/2005/10/w3cdoc.css" type=
+  "text/css" media="screen" />
+  <link rel="stylesheet" type="text/css" href=
+  "https://www.w3.org/Guide/pubrules-style.css" />
+  <link rel="stylesheet" type="text/css" href=
+  "https://www.w3.org/2006/02/charter-style.css" />
+  <style type="text/css">
+/*<![CDATA[*/
+    .editorial { background-color: yellow }
+    dt { font-weight: bold; margin-top: 0.3em }
+  /*]]>*/
+  </style>
 </head>
 
 <body>
@@ -13,7 +30,8 @@
     Web NFC API Community Group Charter
   </h1>
   <ul>
-    <li>This Charter: {TBD: URI}</li>
+    <li>This Charter: <a href=”http://w3c.github.io/nfc/charter/cg/index.html”>
+    http://w3c.github.io/nfc/charter/cg/index.html</a></li>
     <li>none</li>
     <li>Start Date: 2015-03-15</li>
     <li>Last Modified 2015-03-15</li>
@@ -63,7 +81,7 @@
   </p>
 
   <p>
-    The Web Near Field Communication Working Group will define an API for Web
+    The Web Near Field Communication Community Group will define an API for Web
     page scripts to use the NFC data exchange format and APDUs, enabling a
     range of use cases for reading, writing, emulating cards and data exchange
     with peer NFC devices. Further background information can be found on the
@@ -80,7 +98,7 @@
     with unnecessary or complex permission requests.
   </p>
   <p>
-    The scope of the Web Near Field Communications Working Group is limited to
+    The scope of the Web Near Field Communications Community Group is limited to
     the development of APIs for Web page scripts to perform the following
     operations with NFC devices:
     <ul>
@@ -107,32 +125,45 @@
     involvement under circumstances will need to be explored.
   </p>
   <p>
-    The Working Group will explore permission models that recognize the special
-    role of the frontmost, foreground tab when NFC devices are brought into
-    close proximity by the user. The Working Group will also explore the
+    The CG will explore permission models that take advantage of the
+    physical properties of the NFC connection to align user expectations with
+    the permissions actually granted to script. Aspects of the environment that
+    might go into the permission model include:
+    <ul>
+      <li>Whether the script is running in the frontmost tab.</li>
+      <li>Whether the script is running in an open tab at all (vs. a Service
+        Worker)</li>
+      <li>Whether the script has been vouched for by a trusted authority, such
+        as applications installed from a store or shipped with a device.</li>
+      <li>The user's interactions with permission prompts and choosers.</li>
+      <li>Preferences expressed by the tag or peer NFC device itself.</li>
+      <li>Whether the application has been added to homescreen (using Web App
+        Manifest).</li>
+    </ul>
+    The Community Group will also explore the
     possibility of sites registering with the user agent for particular types
     of messages. When multiple registrations are made for a particular type of
     message, a chooser is shown to the user to select among sites to handle the
     available message. Considerations like these could simplify user
     interactions for granting permissions while preserving privacy and security.
-    However, answering “yes” to a security question must not enable a page to
-    overwrite a writable tag in a way the user did not expect. Nor can it mean
-    that a website can initiate a P2P communication with an NFC device which
-    can have effects that the user did not intend. The Working Group may
-    consider both an API for use by an untrusted website, as well as an
-    enhanced API available to a Website is considered trusted.
+    The CG will explore permission systems that allows users to control in a
+    clear and concise way the nature of NFC interaction between pages and NFC
+    tags or devices. For instance, answering “yes” to a permission dialog for
+    using NFC during a read use case must not enable NFC usage in general, and
+    particularly must not enable a page to overwrite a writable tag in a way
+    the user did not clearly expect. Nor can it mean that a website can initiate
+    a P2P communication with an NFC device which can have effects that the user
+    did not intend.
+    The Community Group may consider both an API for use by an untrusted
+    website, as well as an enhanced API available to a Website is considered
+    trusted.
   </p>
   <p>
-    The WG will consider requiring that User Agents implement the Web NFC API
-    to be HTTPS-only. The WG will consider requiring that for riskier API's
-    that the User Agent knows which user is logged into the User Agent and
-    knows what types of permissions that user is allowed to set, and the user
-    has agreed to allowing a risky or experimental API for a particular trusted
-    website. The identity of the user would be known by the User Agent (but not
-    the web page), to know what is permitted for use by that Web site. The Web
-    site is known through use of HTTPS so some APIs could be restricted to use
-    by particular users and only by known, trusted websites. The Working Group
-    could also consider use of some APIs only for sites in the local network
+    The CG will consider requiring that for riskier API's the user has agreed
+    to allowing a risky or experimental API for a particular trusted website.
+    The web site is known through use of HTTPS so some APIs could be restricted
+    to use only by known, trusted websites. The CG could also consider use of
+    some APIs only for sites in the local network
     (if permitted by the user). For example, where a device in the local network
     offers a web page (using https), the user could grant that web page
     permissions beyond what normally is allowed for random web pages. That
@@ -166,7 +197,9 @@
   <section><h3>Community Group Reports that are not Specifications </h3>
     <p>
       The group MAY produce other Community Group Reports within the scope of
-      this charter but that are not Specifications covered by the CLA.
+      this charter but that are not Specifications covered by the CLA, for
+      instance use cases, permission ceremonies, security hardening reports,
+      etc.
     </p>
   </section>
   <section><h3>Test Suites and Other Software</h3>
@@ -189,13 +222,13 @@
   <dl>
     <dt>Device APIs Working Group</dt>
     <dd>
-      The NFC Working Group will coordinate with the Device APIs Working Group
+      The NFC Community Group will coordinate with the Device APIs Working Group
       to ensure that the NFC API can be used effectively together with Web
       Intents.
     </dd>
     <dt>HTML Working Group</dt>
     <dd>
-      The NFC Working Group will coordinate with the HTML Working Group to
+      The NFC Community Group will coordinate with the HTML Working Group to
       ensure that the NFC APIs conform to the privacy and security model for
       Web browsers.
     </dd>
@@ -220,7 +253,7 @@
     <dd>
       The Web Bluetooth Community Group should be asked to review deliverables
       to take advantage of their general expertise in exposing wireless
-      technologies for Web standards. The NFC WG will closely follow the work
+      technologies for Web standards. The NFC CG will closely follow the work
       of the Web Bluetooth CG, exploring the similarities of the approach on
       using these technologies by Web pages.
     </dd>
@@ -241,18 +274,18 @@
     </dd>
     <dt>Internationalization Activity</dt>
     <dd>
-      The Working Group will ask for reviews to ensure any I18N issues in the
+      The Community Group will ask for reviews to ensure any I18N issues in the
       API are addressed.
     </dd>
     <dt>NFC Forum</dt>
     <dd>
-      The NFC Working Group will liaise with the NFC Forum to ensure that the
+      The NFC Community Group will liaise with the NFC Forum to ensure that the
       W3C NFC API is compatible with the NDEF specifications defined by the
       NFC Forum.
     </dd>
     <dt>ISO and ECMA</dt>
     <dd>
-      The NFC Working Group will build upon the capabilities provided by NFC
+      The NFC Community Group will build upon the capabilities provided by NFC
       related standards developed by ISO/IEC/JTC 1 SC 6 and SC 17, and by Ecma
       International.
     </dd>
