@@ -67,7 +67,7 @@
   <p>
     The main benefit of NFC is the speed and simplicity of operation for end
     users. Touch a card to a reader to pay for ride on the metro. Touch an NFC
-    phone to a tag on a poster to view the website for the associated event.
+    phone to a tag on a poster to view the web site for the associated event.
     Touch two NFC phones together to exchange business cards.
   </p>
 
@@ -130,15 +130,15 @@
     the permissions actually granted to script. Aspects of the environment that
     might go into the permission model include:
     <ul>
-      <li>Whether the script is running in the frontmost tab.</li>
-      <li>Whether the script is running in an open tab at all (vs. a Service
+      <li>Whether the script is running in the frontmost tab or window.</li>
+      <li>Whether the script is running in an open tab or window (vs. a Service
         Worker)</li>
       <li>Whether the script has been vouched for by a trusted authority, such
         as applications installed from a store or shipped with a device.</li>
-      <li>The user's interactions with permission prompts and choosers.</li>
+      <li>The user's interactions with permission and choice prompts.</li>
       <li>Preferences expressed by the tag or peer NFC device itself.</li>
-      <li>Whether the application has been added to homescreen (using Web App
-        Manifest).</li>
+      <li>Whether the application has been given additional trust by being
+        "installed", ie. added to the home screen.</li>
     </ul>
     The Community Group will also explore the
     possibility of sites registering with the user agent for particular types
@@ -151,23 +151,24 @@
     tags or devices. For instance, answering “yes” to a permission dialog for
     using NFC during a read use case must not enable NFC usage in general, and
     particularly must not enable a page to overwrite a writable tag in a way
-    the user did not clearly expect. Nor can it mean that a website can initiate
-    a P2P communication with an NFC device which can have effects that the user
-    did not intend.
+    the user did not clearly expect. Nor can it mean that a web site can
+    initiate a P2P communication with an NFC device which can have effects that
+    the user did not intend.
     The Community Group may consider both an API for use by an untrusted
-    website, as well as an enhanced API available to a Website is considered
+    web site, as well as an enhanced API available to a Website is considered
     trusted.
   </p>
   <p>
-    The CG will consider requiring that for riskier API's the user has agreed
-    to allowing a risky or experimental API for a particular trusted website.
+    The CG will consider requiring that for riskier API's, the user has agreed
+    to allowing a potentially risky or experimental API for a particular trusted
+    web site.
     The web site is known through use of HTTPS so some APIs could be restricted
-    to use only by known, trusted websites. The CG could also consider use of
+    to use only by known, trusted web sites. The CG could also consider use of
     some APIs only for sites in the local network
     (if permitted by the user). For example, where a device in the local network
     offers a web page (using https), the user could grant that web page
     permissions beyond what normally is allowed for random web pages. That
-    would allow for a set of APIs, one safe for any website and then perhaps
+    would allow for a set of APIs, one safe for any web site and then perhaps
     others that require higher levels of trust and permission.
   </p>
 </section>
@@ -260,7 +261,7 @@
     <dt>Trust and Permissions Community Group</dt>
     <dd>
       The Trust and Permission Community Group may explore the notion of trusted
-      websites, which would allow use of enhanced APIs that are available for
+      web sites, which would allow use of enhanced APIs that are available for
       use only in trusted pages.
     </dd>
     <dt>WAI Protocols and Formats Working Group</dt>
