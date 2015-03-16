@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Web NFC API</title>
+  <title>Low-level Web NFC API for Trusted Applications</title>
   <meta charset="UTF-8">
   <script src='https://www.w3.org/Tools/respec/respec-w3c-common'
           class='remove'></script>
@@ -54,6 +54,19 @@ Style guide to contributors:
 <body>
 
 <!-- Abstract -->
+<div style="padding: 10px; border: solid 4px red; color: red; font-weight: bold;">
+  <p>
+    Work on this document has been discontinued. For the active
+    specification work, please refer to the <a href=
+    "https://w3c.github.io/web-nfc/">Web NFC API</a> that is being worked
+    on in the <a href="https://www.w3.org/community/web-nfc/">W3C Web NFC
+    Community Group</a>.
+  </p>
+  <p>
+    For more information, please consult the <a href="#sotd">Status of This
+    Document</a> section.
+  </p>
+</div>
 <section id="abstract">
 Near Field Communication (NFC) is an international standard (ISO/IEC 18092) 
 that specifies an interface and protocol for simple wireless interconnection of
@@ -76,6 +89,31 @@ usually less than a few centimeters.
 
 <!-- Status of this document -->
 <section id="sotd">
+  <p>
+    The <a href="http://www.w3.org/2012/nfc/">NFC Working Group</a> was
+    <a href=
+    "http://www.w3.org/2012/09/nfc-wg-charter.html#scope">chartered</a> to
+    produce a specification that "will be designed to permit execution in
+    the Web browser context, and otherwise to conform to the execution and
+    security model defined by the System Applications Working Group."
+    Specifically, the API that was worked on in the NFC Working Group did
+    not adhere to the Web's security model. The latest Editor's Draft
+    reflecting this direction is the 20 October 2014 specification.
+    To more clearly communicate the scope of this specification, it is
+    herein referred to as the "Low-level Web NFC API for Trusted
+    Applications".
+  </p>
+  <p>
+    The <a href="https://www.w3.org/community/web-nfc/">Web NFC Community
+    Group</a> is creating a Near Field Communication API that is
+    browser-friendly and adheres to the Web's security model. The API will
+    not expose full, low level NFC functionality, but rather a higher level
+    subset that is safe for Web pages, protects user privacy, and does not
+    annoy users with unnecessary or complex permission requests. See the
+    <a href="https://w3c.github.io/web-nfc/charter/">Web NFC Community
+    Group Charter</a> and the <a href="https://w3c.github.io/web-nfc/">Web
+    NFC specification</a> for more information.
+  </p>
 </section>
 
 
