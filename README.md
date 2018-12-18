@@ -1,7 +1,7 @@
 Web NFC API
 ===========
 
-On behalf of the W3C [Web NFC Working Group](http://www.w3.org/2012/nfc/).
+Initial attempt at an NFC API from W3C [Web NFC Working Group](http://www.w3.org/2012/nfc/) - current work replacing this is happening in the [web-nfc](https://github.com/w3c/web-nfc) repository of the [Web NFC Community Group](https://www.w3.org/community/web-nfc/)
 
 [index.html](http://w3c.github.io/nfc/index.html): the current Editor's Draft specification of the Web NFC API.
 
